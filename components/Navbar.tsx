@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { useLang } from "@/contexts/LanguageContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,11 +25,19 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  const navLinks = [
-    { label: "WORK", href: "#work" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
-  ];
+  const { lang, toggleLang } = useLang();
+
+  const navLinks = lang === "en"
+    ? [
+        { label: "WORK", href: "#work" },
+        { label: "About", href: "#about" },
+        { label: "Contact", href: "#contact" },
+      ]
+    : [
+        { label: "DỰ ÁN", href: "#work" },
+        { label: "GIỚI THIỆU", href: "#about" },
+        { label: "LIÊN HỆ", href: "#contact" },
+      ];
 
   return (
     <>
@@ -89,10 +98,13 @@ export default function Navbar() {
                 </a>
               ))}
             </div>
-            <div className="border border-[rgba(0,0,0,0.2)] rounded-full h-8 flex items-center gap-[7px] px-4 py-2 backdrop-blur-sm bg-[rgba(255,255,255,0.1)]">
-              <span className="font-inter text-[11px] text-[#1f1f1f] font-semibold">EN.</span>
-              <span className="font-inter text-[11px] text-[#666] uppercase">VI</span>
-            </div>
+            <button
+              onClick={toggleLang}
+              className="border border-[rgba(0,0,0,0.1)] rounded-full h-8 flex items-center gap-[7px] px-4 py-2 backdrop-blur-[8px] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,0,0,0.08)] transition-colors cursor-pointer"
+            >
+              <span className={`font-inter text-[11px] ${lang === "en" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>EN</span>
+              <span className={`font-inter text-[11px] ${lang === "vi" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>.VI</span>
+            </button>
           </div>
         </motion.nav>
       </div>

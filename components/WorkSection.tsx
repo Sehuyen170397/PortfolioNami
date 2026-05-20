@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLang } from "@/contexts/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,15 +17,16 @@ const ASSETS = {
     "https://www.figma.com/api/mcp/asset/f5e69061-701f-4d9a-8eeb-3a4ea54483b1",
 };
 
-const projects = [
+const projectsEN = [
   {
     id: "nami-exchange",
     category: "Nami Exchange / Mobile app & Website",
-    title:
-      "Digital Asset Exchange Platform with Spot, Futures, and Auto-Invest Products",
+    title: "Digital Asset Exchange Platform with Spot, Futures, and Auto-Invest Products",
     domain: "Crypto",
     years: "3+",
     label: "Years partnership",
+    domainLabel: "Domain",
+    cta: "View Project",
     image: ASSETS.containerNamiExchange,
     dark: false,
   },
@@ -35,6 +37,8 @@ const projects = [
     domain: "Dafi Insurance",
     years: "1+",
     label: "Years partnership",
+    domainLabel: "Domain",
+    cta: "View Project",
     image: ASSETS.containerInsurance,
     dark: true,
   },
@@ -45,6 +49,47 @@ const projects = [
     domain: "Crypto",
     years: "1+",
     label: "Years partnership",
+    domainLabel: "Domain",
+    cta: "View Project",
+    image: ASSETS.containerHighway,
+    dark: true,
+  },
+];
+
+const projectsVI = [
+  {
+    id: "nami-exchange",
+    category: "Nami Exchange / Mobile app & Website",
+    title: "Nền tảng giao dịch tài sản số với các sản phẩm Spot, Futures và Auto-Invest",
+    domain: "Crypto",
+    years: "3+",
+    label: "Thời gian đồng hành",
+    domainLabel: "Lĩnh vực",
+    cta: "Xem dự án",
+    image: ASSETS.containerNamiExchange,
+    dark: false,
+  },
+  {
+    id: "nami-insurance",
+    category: "Nami Insurance / Website",
+    title: "Giải pháp tài chính phi tập trung, linh hoạt",
+    domain: "Dafi Insurance",
+    years: "1+",
+    label: "Thời gian đồng hành",
+    domainLabel: "Lĩnh vực",
+    cta: "Xem dự án",
+    image: ASSETS.containerInsurance,
+    dark: true,
+  },
+  {
+    id: "highway",
+    category: "Highway / Mobile app",
+    title: "Sở hữu tài sản số trở nên dễ dàng hơn",
+    domain: "Crypto",
+    years: "1+",
+    label: "Thời gian đồng hành",
+    domainLabel: "Lĩnh vực",
+    cta: "Xem dự án",
     image: ASSETS.containerHighway,
     dark: true,
   },
@@ -64,7 +109,7 @@ function ArrowUpRight({ color = "currentColor" }: { color?: string }) {
   );
 }
 
-function WorkCardDesktop({ project }: { project: (typeof projects)[0] }) {
+function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
   const tc = project.dark ? "text-white" : "text-[#1f1f1f]";
   const arrowColor = project.dark ? "white" : "#1f1f1f";
 
@@ -99,7 +144,7 @@ function WorkCardDesktop({ project }: { project: (typeof projects)[0] }) {
           </div>
           <button className="flex items-center gap-4 bg-[rgba(0,0,0,0.1)] backdrop-blur-[8px] border border-[rgba(0,0,0,0.2)] rounded-full px-6 py-2 w-fit hover:bg-[rgba(0,0,0,0.18)] transition-colors">
             <span className={`font-inter font-semibold text-[24px] ${tc}`}>
-              View Project
+              {project.cta}
             </span>
             <ArrowUpRight color={arrowColor} />
           </button>
@@ -111,7 +156,7 @@ function WorkCardDesktop({ project }: { project: (typeof projects)[0] }) {
               {project.domain}
             </span>
             <span className={`font-inter font-normal text-[16px] leading-normal ${tc} opacity-70`}>
-              Domain
+              {project.domainLabel}
             </span>
           </div>
           <div className="flex flex-col gap-3">
@@ -128,7 +173,7 @@ function WorkCardDesktop({ project }: { project: (typeof projects)[0] }) {
   );
 }
 
-function WorkCardMobile({ project }: { project: (typeof projects)[0] }) {
+function WorkCardMobile({ project }: { project: (typeof projectsEN)[0] }) {
   const tc = project.dark ? "text-white" : "text-[#1f1f1f]";
   const arrowColor = project.dark ? "white" : "#1f1f1f";
   const cardBg = project.dark ? "" : "bg-[#f2f2f2]";
@@ -158,13 +203,13 @@ function WorkCardMobile({ project }: { project: (typeof projects)[0] }) {
           </h3>
         </div>
         <button className="flex items-center gap-3 bg-[rgba(0,0,0,0.1)] backdrop-blur-[8px] border border-[rgba(0,0,0,0.2)] rounded-full px-5 py-2 w-fit mt-2 hover:bg-[rgba(0,0,0,0.15)] transition-colors">
-          <span className={`font-inter font-semibold text-[18px] ${tc}`}>View Project</span>
+          <span className={`font-inter font-semibold text-[18px] ${tc}`}>{project.cta}</span>
           <ArrowUpRight color={arrowColor} />
         </button>
         <div className="flex gap-8 pt-3 border-t border-[rgba(0,0,0,0.08)] mt-1">
           <div className="flex flex-col gap-1.5">
             <span className={`font-inter font-semibold text-[18px] ${tc}`}>{project.domain}</span>
-            <span className={`font-inter font-light text-[13px] ${tc} opacity-70`}>Domain</span>
+            <span className={`font-inter font-light text-[13px] ${tc} opacity-70`}>{project.domainLabel}</span>
           </div>
           <div className="flex flex-col gap-1.5">
             <span className={`font-inter font-semibold text-[18px] ${tc}`}>{project.years}</span>
@@ -191,6 +236,8 @@ function ViewMoreIcon() {
 }
 
 export default function WorkSection() {
+  const { lang } = useLang();
+  const projects = lang === "en" ? projectsEN : projectsVI;
   const sectionRef = useRef<HTMLElement>(null);
   const headerWrapRef = useRef<HTMLDivElement>(null);
   const headerTextRef = useRef<HTMLHeadingElement>(null);
@@ -240,7 +287,7 @@ export default function WorkSection() {
           className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
           style={{ fontSize: "clamp(36px, 7vw, 100px)" }}
         >
-          Selected Work
+          {lang === "en" ? "Selected Work" : "Dự án tiêu biểu"}
         </h2>
       </div>
 
@@ -268,16 +315,18 @@ export default function WorkSection() {
       >
         <div className="flex flex-col gap-1.5">
           <p className="font-inter font-semibold text-[14px] text-[#1f1f1f] leading-normal">
-            Looking for more?
+            {lang === "en" ? "Looking for more?" : "Chưa hết đâu nhé"}
           </p>
           <p className="font-inter font-normal text-[13px] text-[#666] leading-[1.6]">
-            Discover more of my work, including projects that haven&apos;t launched yet
+            {lang === "en"
+              ? "Discover more of my work, including projects that haven't launched yet"
+              : "Xem thêm các thiết kế khác của mình — có cả những dự án chưa kịp ra mắt nữa 👀"}
           </p>
         </div>
         <button className="h-8 flex items-center">
           <div className="flex items-center gap-[7px] border border-[rgba(0,0,0,0.2)] bg-[rgba(255,255,255,0.1)] rounded-full h-8 px-[13px] py-2 hover:bg-[rgba(0,0,0,0.05)] transition-colors">
             <span className="font-inter font-normal text-[11px] text-[#1f1f1f] uppercase">
-              View More
+              {lang === "en" ? "View More" : "Xem thêm"}
             </span>
             <ViewMoreIcon />
           </div>

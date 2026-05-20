@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLang } from "@/contexts/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -47,6 +48,7 @@ function ViewMoreIcon() {
 }
 
 export default function AboutSection() {
+  const { lang } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const headerWrapRef = useRef<HTMLDivElement>(null);
   const headerTextRef = useRef<HTMLHeadingElement>(null);
@@ -96,7 +98,7 @@ export default function AboutSection() {
           className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal"
           style={{ fontSize: "clamp(32px, 4vw, 56px)" }}
         >
-          My Story
+          {lang === "en" ? "My Story" : "Giới thiệu"}
         </h2>
       </div>
 
@@ -112,41 +114,92 @@ export default function AboutSection() {
           className="flex flex-col gap-6"
         >
           <p className="font-inter font-light text-[22px] leading-[35.64px] text-[#1f1f1f] max-md:text-[17px] max-md:leading-[28px]">
-            UI/UX Designer with 3+ years at Nami Foundation.{" "}
-            <span className="text-[#666]">
-              Designing crypto products such as exchanges and decentralized
-              insurance, while supporting growth through campaigns, events, and
-              product-driven initiatives.
-            </span>
+            {lang === "en" ? (
+              <>
+                UI/UX Designer with 3+ years at Nami Foundation.{" "}
+                <span className="text-[#666]">
+                  Designing crypto products such as exchanges and decentralized
+                  insurance, while supporting growth through campaigns, events, and
+                  product-driven initiatives.
+                </span>
+              </>
+            ) : (
+              <>
+                UI/UX Designer với hơn 3 năm kinh nghiệm tại Nami Foundation.{" "}
+                <span className="text-[#666]">
+                  Thiết kế các sản phẩm crypto như sàn giao dịch và bảo hiểm
+                  phi tập trung, đồng thời hỗ trợ tăng trưởng qua các chiến
+                  dịch, sự kiện và sáng kiến sản phẩm.
+                </span>
+              </>
+            )}
           </p>
           <p className="font-inter font-light text-[22px] leading-[35.64px] text-[#666] max-md:text-[17px] max-md:leading-[28px]">
-            I collaborate closely with cross-functional teams including Business
-            Analysts, Developers, QA/QC, and Product Managers throughout the
-            development process.{" "}
-            <span className="text-[#1f1f1f]">
-              I prioritize understanding the problem or feature requirements
-              first
-            </span>
-            , rather than jumping straight into Figma.
+            {lang === "en" ? (
+              <>
+                I collaborate closely with cross-functional teams including Business
+                Analysts, Developers, QA/QC, and Product Managers throughout the
+                development process.{" "}
+                <span className="text-[#1f1f1f]">
+                  I prioritize understanding the problem or feature requirements
+                  first
+                </span>
+                , rather than jumping straight into Figma.
+              </>
+            ) : (
+              <>
+                Mình cộng tác chặt chẽ với các nhóm đa chức năng gồm BA,
+                Developer, QA/QC và Product Manager trong suốt quá trình phát
+                triển sản phẩm.{" "}
+                <span className="text-[#1f1f1f]">
+                  Mình luôn ưu tiên hiểu rõ vấn đề và yêu cầu tính năng trước
+                </span>
+                , thay vì mở Figma ngay lập tức.
+              </>
+            )}
           </p>
           <p className="font-inter font-light text-[22px] leading-[35.64px] text-[#666] max-md:text-[17px] max-md:leading-[28px]">
-            My transition from engineer to UI/UX Designer enables me to work
-            effectively in teams and approach{" "}
-            <span className="text-[#1f1f1f]">
-              design with a structured, process-driven mindset
-            </span>
-            .
+            {lang === "en" ? (
+              <>
+                My transition from engineer to UI/UX Designer enables me to work
+                effectively in teams and approach{" "}
+                <span className="text-[#1f1f1f]">
+                  design with a structured, process-driven mindset
+                </span>
+                .
+              </>
+            ) : (
+              <>
+                Xuất phát điểm từ kỹ sư giúp mình làm việc hiệu quả trong nhóm
+                và tiếp cận{" "}
+                <span className="text-[#1f1f1f]">
+                  thiết kế với tư duy có cấu trúc và định hướng theo quy trình
+                </span>
+                .
+              </>
+            )}
           </p>
           <p className="font-inter font-light text-[22px] leading-[35.64px] text-[#666] max-md:text-[17px] max-md:leading-[28px]">
-            In 2024, I was honored to receive the "
-            <span className="text-[#1f1f1f]">UI/UX Designer of the Year</span>"
-            award at Nami Foundation. This recognition motivates me to continue
-            growing toward a Lead UI/UX Designer role.
+            {lang === "en" ? (
+              <>
+                In 2024, I was honored to receive the "
+                <span className="text-[#1f1f1f]">UI/UX Designer of the Year</span>"
+                award at Nami Foundation. This recognition motivates me to continue
+                growing toward a Lead UI/UX Designer role.
+              </>
+            ) : (
+              <>
+                Năm 2024, mình vinh dự nhận giải "
+                <span className="text-[#1f1f1f]">UI/UX Designer của Năm</span>"
+                tại Nami Foundation. Phần thưởng này là động lực để mình tiếp
+                tục phát triển trên con đường trở thành Lead UI/UX Designer.
+              </>
+            )}
           </p>
 
           <button className="flex items-center gap-[7px] border border-[rgba(0,0,0,0.2)] bg-[rgba(255,255,255,0.1)] rounded-full h-8 px-[13px] py-2 w-fit hover:bg-[rgba(0,0,0,0.05)] transition-colors mt-2">
             <span className="font-inter font-normal text-[11px] text-[#1f1f1f] uppercase">
-              View CV
+              {lang === "en" ? "View CV" : "Ghé xem CV"}
             </span>
             <ViewMoreIcon />
           </button>
@@ -163,7 +216,7 @@ export default function AboutSection() {
           {/* Experience */}
           <div className="flex flex-col gap-4">
             <p className="font-playfair font-semibold text-[10px] text-[#666] tracking-[1.4px] uppercase">
-              Experience
+              {lang === "en" ? "Experience" : "Kinh nghiệm"}
             </p>
             <div className="flex flex-col">
               {experience.map((item) => (
@@ -190,7 +243,7 @@ export default function AboutSection() {
           {/* Awards */}
           <div className="flex flex-col gap-4">
             <p className="font-playfair font-semibold text-[10px] text-[#666] tracking-[1.4px] uppercase">
-              Awards
+              {lang === "en" ? "Awards" : "Giải thưởng"}
             </p>
             <div className="flex flex-col">
               {awards.map((item) => (
@@ -217,7 +270,7 @@ export default function AboutSection() {
           {/* Skills */}
           <div className="flex flex-col gap-6">
             <p className="font-playfair font-semibold text-[10px] text-[#666] tracking-[1.4px] uppercase">
-              Skills
+              {lang === "en" ? "Skills" : "Kỹ năng"}
             </p>
             <div className="flex flex-wrap gap-[10px]">
               {skills.map((skill) => (

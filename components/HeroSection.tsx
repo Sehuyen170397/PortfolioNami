@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import { useLang } from "@/contexts/LanguageContext";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -26,6 +27,7 @@ const ASSETS = {
 const PARALLAX_Y = [60, 30, 45, 25, 50, 35, 40, 55, 30, 20, 45, 35];
 
 export default function HeroSection() {
+  const { lang } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   // floatRefs → inner wrapper, oscillation target
@@ -347,7 +349,7 @@ export default function HeroSection() {
          * Plain div for absolute centering (prevents Framer Motion transform:none
          * at rest from overwriting the CSS translate), also the GSAP scroll target.
          */}
-        <div ref={contentRef}>
+        <div ref={contentRef} className="-mt-[120px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -358,12 +360,12 @@ export default function HeroSection() {
               className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
               style={{ fontSize: "clamp(48px, 6.5vw, 100px)" }}
             >
-              Welcome!
+              {lang === "en" ? "Welcome!" : "Xin chào!"}
             </h1>
             <p className="font-inter font-light text-[15px] text-[#666] text-center leading-[24px]">
-              Vung Tau raised, Ho Chi Minh based. More than three years of
-              experience across crypto, fintech and insurance. More than four
-              years in design industry include graphic design.
+              {lang === "en"
+                ? "Vung Tau raised, Ho Chi Minh based. More than three years of experience across crypto, fintech and insurance. More than four years in design industry include graphic design."
+                : `Lớn lên ở Vũng Tàu, hiện đang "đóng đô" tại TP.HCM. Mình có hơn 3 năm làm việc trong crypto, fintech và bảo hiểm, cùng 4+ năm "lăn lộn" trong ngành thiết kế, từ graphic design đến UX/UI.`}
             </p>
           </motion.div>
         </div>

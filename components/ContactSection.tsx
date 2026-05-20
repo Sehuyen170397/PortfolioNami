@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import { useLang } from "@/contexts/LanguageContext";
 
-const TICKER_TEXT = "Ready to contact?";
 const MAILTO = "mailto:truyen17031997@gmail.com";
 
 const footerLinks = [
@@ -48,6 +48,7 @@ function ArrowTopRight() {
 }
 
 export default function ContactSection() {
+  const { lang } = useLang();
   const tickerRef = useRef<HTMLDivElement>(null);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
 
@@ -64,7 +65,7 @@ export default function ContactSection() {
     return () => {
       tweenRef.current?.kill();
     };
-  }, []);
+  }, [lang]);
 
   const handleMouseEnter = () => tweenRef.current?.pause();
   const handleMouseLeave = () => tweenRef.current?.resume();
@@ -108,7 +109,7 @@ export default function ContactSection() {
                     className="font-playfair font-medium italic text-[#1f1f1f] whitespace-nowrap select-none"
                     style={{ fontSize: "clamp(32px, 4vw, 60px)" }}
                   >
-                    {TICKER_TEXT}
+                    {lang === "en" ? "Ready to get in touch?" : "Sẵn sàng kết nối chưa?"}
                   </span>
                   {/* Let's talk pill — color transitions on group hover */}
                   <span
@@ -121,7 +122,7 @@ export default function ContactSection() {
                         text-[#1f1f1f] group-hover:text-white
                         transition-colors duration-300"
                     >
-                      Let&apos;s talk <ArrowTopRight />
+                      {lang === "en" ? "Let's talk" : "Kết nối ngay"} <ArrowTopRight />
                     </span>
                   </span>
                 </div>
