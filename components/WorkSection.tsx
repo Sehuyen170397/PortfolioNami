@@ -16,10 +16,6 @@ const ASSETS = {
     "https://www.figma.com/api/mcp/asset/f5e69061-701f-4d9a-8eeb-3a4ea54483b1",
 };
 
-// Card height is set explicitly via inline style — no measurement needed
-const CARD_H = 700;
-const PEEK = 80;
-
 const projects = [
   {
     id: "nami-exchange",
@@ -68,23 +64,18 @@ function ArrowUpRight({ color = "currentColor" }: { color?: string }) {
   );
 }
 
-function WorkCardDesktop({
-  project,
-  index,
-  cardRef,
-}: {
-  project: (typeof projects)[0];
-  index: number;
-  cardRef: (el: HTMLDivElement | null) => void;
-}) {
+function WorkCardDesktop({ project }: { project: (typeof projects)[0] }) {
   const tc = project.dark ? "text-white" : "text-[#1f1f1f]";
   const arrowColor = project.dark ? "white" : "#1f1f1f";
 
   return (
-    <div
-      ref={cardRef}
-      className="absolute inset-0 overflow-hidden rounded-[40px] border border-[rgba(0,0,0,0.1)] flex"
-      style={{ zIndex: (index + 1) * 10 }}
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      className="relative overflow-hidden rounded-[40px] border border-[rgba(0,0,0,0.1)] flex w-full"
+      style={{ height: 700 }}
     >
       {/* Image — full bleed background */}
       <div className="flex-1 overflow-hidden rounded-xl relative min-w-0">
@@ -133,7 +124,7 @@ function WorkCardDesktop({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -200,87 +191,52 @@ function ViewMoreIcon() {
 }
 
 export default function WorkSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const counterRef = useRef<HTMLSpanElement>(null);
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerWrapRef = useRef<HTMLDivElement>(null);
+  const headerTextRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 768px)", () => {
-      const [c0, c1, c2] = cardRefs.current;
-      if (!c0 || !c1 || !c2) return;
-
-      /*
-       * Deck-of-cards stacking (yellowpeach-style):
-       *
-       * All cards are position:absolute inset:0 inside a CARD_H-tall container.
-       * c0 is at y=0 (fully visible).
-       * c1 starts at y = CARD_H - PEEK so only PEEK px peek at the bottom.
-       * c2 starts at y = CARD_H (fully below the clipping container).
-       *
-       * z-index order: c0=10 < c1=20 < c2=30  so each new card slides on top.
-       *
-       * CARD_H is used directly — the container has an explicit inline style
-       * matching this constant, so measuring is unnecessary.
-       */
-      gsap.set(c0, { y: 0 });
-      gsap.set(c1, { y: CARD_H - PEEK }); // 620px down → 80px visible at bottom
-      gsap.set(c2, { y: CARD_H });         // 700px down → fully hidden
-
-      const tl = gsap.timeline({
+    const ctx = gsap.context(() => {
+      // Clip reveal: h2 rises up through overflow-hidden wrapper on enter
+      gsap.from(headerTextRef.current, {
+        y: 80,
+        opacity: 0,
+        duration: 1.1,
+        ease: "power3.out",
         scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: `+=${CARD_H * 2}`, // 1400px of scroll for 2 transitions
-          scrub: 0.8,
-          pin: true,
-          anticipatePin: 1,
-          onUpdate(self) {
-            if (!counterRef.current) return;
-            const idx = Math.min(2, Math.floor(self.progress * 2.99));
-            counterRef.current.textContent = String(idx + 1).padStart(2, "0");
-          },
-          onLeave() {
-            // After last card is fully visible, scroll to About
-            document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
-          },
+          trigger: headerWrapRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
         },
       });
 
-      // Header fades out during the first ~35% of scroll progress
-      if (headerRef.current) {
-        tl.to(headerRef.current, { opacity: 0, duration: 0.35, ease: "none" }, 0);
-      }
+      // Exit parallax: header fades and rises as section scrolls past viewport top
+      gsap.to(headerWrapRef.current, {
+        y: -50,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "25% top",
+          scrub: 1,
+        },
+      });
+    }, sectionRef);
 
-      // Transition 1 (tl position 0 → 1): c1 covers c0, c2 moves to peek position
-      tl.to(c1, { y: 0, duration: 1, ease: "none" }, 0)
-        .to(c2, { y: CARD_H - PEEK, duration: 1, ease: "none" }, 0);
-
-      // Transition 2 (tl position 1 → 2): c2 covers c1
-      tl.to(c2, { y: 0, duration: 1, ease: "none" }, 1);
-    });
-
-    return () => mm.revert();
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
       id="work"
       ref={sectionRef}
-      /*
-       * z-[50]: ensures this section stays above AboutSection (z-auto) when
-       * GSAP makes it position:fixed during the pin phase.
-       */
-      className="flex flex-col gap-6 items-start pb-[120px] pt-[120px] px-[40px] relative w-full bg-white max-md:pt-[80px] max-md:pb-[60px] max-md:px-6 z-[50]"
+      className="flex flex-col gap-6 items-start pb-[120px] pt-[120px] px-[40px] w-full bg-white max-md:pt-[80px] max-md:pb-[60px] max-md:px-6"
     >
-      {/* Header — starts visible, GSAP fades to opacity:0 on first scroll */}
-      <div
-        ref={headerRef}
-        className="w-full flex flex-col items-center justify-center pb-6"
-      >
+      {/* Header */}
+      <div ref={headerWrapRef} className="w-full flex flex-col items-center justify-center pb-6 overflow-hidden">
         <h2
+          ref={headerTextRef}
           className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
           style={{ fontSize: "clamp(36px, 7vw, 100px)" }}
         >
@@ -288,44 +244,21 @@ export default function WorkSection() {
         </h2>
       </div>
 
-      {/* ── Desktop card stack ── */}
-      <div className="relative hidden md:block w-full" style={{ height: CARD_H }}>
-        {/* Clipping container */}
-        <div className="relative overflow-hidden w-full h-full">
-          {projects.map((project, i) => (
-            <WorkCardDesktop
-              key={project.id}
-              project={project}
-              index={i}
-              cardRef={(el) => {
-                cardRefs.current[i] = el;
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Counter — 01 / 03 */}
-        <div className="absolute bottom-7 right-0 flex items-baseline gap-[6px] pointer-events-none select-none">
-          <span
-            ref={counterRef}
-            className="font-inter font-light text-[44px] text-[#1f1f1f] tabular-nums leading-none"
-          >
-            01
-          </span>
-          <span className="font-inter font-light text-[15px] text-[#bbb] leading-none">
-            /&nbsp;03
-          </span>
-        </div>
+      {/* Desktop: vertical list */}
+      <div className="hidden md:flex flex-col gap-6 w-full">
+        {projects.map((project) => (
+          <WorkCardDesktop key={project.id} project={project} />
+        ))}
       </div>
 
-      {/* ── Mobile: plain vertical list ── */}
+      {/* Mobile: vertical list */}
       <div className="md:hidden w-full flex flex-col gap-4">
         {projects.map((project) => (
           <WorkCardMobile key={project.id} project={project} />
         ))}
       </div>
 
-      {/* ── "Looking for more?" footer ── */}
+      {/* "Looking for more?" footer */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}

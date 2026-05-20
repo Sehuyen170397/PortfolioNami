@@ -1,6 +1,11 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const experience = [
   { company: "Nami Foundation", role: "Lead UI/UX Designer", years: "2025 - Now" },
@@ -42,26 +47,58 @@ function ViewMoreIcon() {
 }
 
 export default function AboutSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerWrapRef = useRef<HTMLDivElement>(null);
+  const headerTextRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Clip reveal: h2 rises up through overflow-hidden wrapper on enter
+      gsap.from(headerTextRef.current, {
+        y: 60,
+        opacity: 0,
+        duration: 1.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headerWrapRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      // Exit parallax: header fades and rises as section scrolls past viewport top
+      gsap.to(headerWrapRef.current, {
+        y: -50,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "25% top",
+          scrub: 1,
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
       id="about"
+      ref={sectionRef}
       className="flex flex-col gap-10 items-start px-10 py-[120px] relative w-full bg-white max-md:px-6 max-md:py-[60px] max-md:gap-8"
     >
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col items-start w-full"
-      >
+      <div ref={headerWrapRef} className="flex flex-col items-start w-full overflow-hidden">
         <h2
+          ref={headerTextRef}
           className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal"
           style={{ fontSize: "clamp(32px, 4vw, 56px)" }}
         >
           My Story
         </h2>
-      </motion.div>
+      </div>
 
       {/* Two-column grid */}
       <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-x-[80px] gap-y-[60px] w-full">

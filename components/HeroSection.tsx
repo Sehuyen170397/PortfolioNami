@@ -3,6 +3,9 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Figma node 2022:24517 assets
 // Frame images — left-constrained frames use `left:`, right-constrained use `right:`
@@ -19,11 +22,20 @@ const ASSETS = {
   f06: "https://www.figma.com/api/mcp/asset/8774e628-b070-4701-8c94-f19887df7a3b",
 };
 
+// Per-frame parallax depth (how many px each frame travels upward per full hero scroll)
+const PARALLAX_Y = [60, 30, 45, 25, 50, 35, 40, 55, 30, 20, 45, 35];
+
 export default function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  // floatRefs → inner wrapper, oscillation target
   const floatRefs = useRef<(HTMLDivElement | null)[]>([]);
+  // parallaxRefs → outer wrapper, scroll-parallax target
+  const parallaxRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // ── Oscillating float (unchanged) ──
       floatRefs.current.forEach((el, i) => {
         if (!el) return;
         gsap.to(el, {
@@ -35,217 +47,326 @@ export default function HeroSection() {
           delay: i * 0.2,
         });
       });
+
+      // ── Scroll parallax on each frame outer wrapper ──
+      parallaxRefs.current.forEach((el, i) => {
+        if (!el) return;
+        gsap.to(el, {
+          y: -PARALLAX_Y[i],
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+
+      // ── Center content: scale + fade + rise as hero scrolls out ──
+      if (contentRef.current) {
+        gsap.to(contentRef.current, {
+          y: -100,
+          scale: 0.9,
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "55% top",
+            scrub: 1.2,
+          },
+        });
+      }
     });
+
     return () => ctx.revert();
   }, []);
 
-  const setRef = (i: number) => (el: HTMLDivElement | null) => {
+  const setFloatRef = (i: number) => (el: HTMLDivElement | null) => {
     floatRefs.current[i] = el;
+  };
+  const setParallaxRef = (i: number) => (el: HTMLDivElement | null) => {
+    parallaxRefs.current[i] = el;
   };
 
   return (
     <section
+      ref={sectionRef}
       className="relative bg-white w-full overflow-x-clip"
       style={{ minHeight: "max(100vh, 1110px)" }}
     >
+      {/* ── Page-load curtain: slides upward to reveal the page ── */}
+      <motion.div
+        className="fixed inset-0 z-[300] bg-white pointer-events-none origin-top"
+        initial={{ y: "0%" }}
+        animate={{ y: "-100%" }}
+        transition={{ duration: 1.0, delay: 0.05, ease: [0.76, 0, 0.24, 1] }}
+      />
+
       {/* ── Frame 01 — left:424, top:-172, 246×418, -rotate-10, colored border ── */}
       <div
-        ref={setRef(0)}
+        ref={setParallaxRef(0)}
         className="absolute pointer-events-none"
         style={{ left: 424, top: -172, width: 246, height: 418 }}
       >
-        <div
-          className="-rotate-[10deg]"
-          style={{ width: 181, height: 393, marginLeft: "auto", marginRight: "auto" }}
-        >
+        <div ref={setFloatRef(0)}>
           <div
-            className="w-full h-full rounded-[18px]"
-            style={{ border: "1.5px solid #c3ffdd", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
-          />
+            className="-rotate-[10deg]"
+            style={{ width: 181, height: 393, marginLeft: "auto", marginRight: "auto" }}
+          >
+            <div
+              className="w-full h-full rounded-[18px] overflow-hidden"
+              style={{ border: "1.5px solid #c3ffdd", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
+            >
+              <video
+                src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733637/creative_suggest_welcome-video-780x1688-compressed_2_quwwwb.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ── Frame 02 — right:448, top:29, 80×80, round photo ── */}
       <div
-        ref={setRef(1)}
+        ref={setParallaxRef(1)}
         className="absolute pointer-events-none"
         style={{ right: 448, top: 29, width: 80, height: 80 }}
       >
-        <img
-          src={ASSETS.f02}
-          alt=""
-          className="w-full h-full rounded-full object-cover"
-        />
+        <div ref={setFloatRef(1)}>
+          <img
+            src={ASSETS.f02}
+            alt=""
+            className="w-full h-full rounded-full object-cover"
+          />
+        </div>
       </div>
 
       {/* ── Frame 03 — right:-204, top:220, 487×327, -rotate-10, colored border ── */}
       <div
-        ref={setRef(2)}
+        ref={setParallaxRef(2)}
         className="absolute pointer-events-none"
         style={{ right: -204, top: 220, width: 487, height: 327 }}
       >
-        <div className="-rotate-[10deg]" style={{ width: 450, height: 253 }}>
-          <div
-            className="w-full h-full rounded-[18px]"
-            style={{ border: "1.5px solid #4f00bd", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
-          />
+        <div ref={setFloatRef(2)}>
+          <div className="-rotate-[10deg]" style={{ width: 450, height: 253 }}>
+            <div
+              className="w-full h-full rounded-[18px] overflow-hidden"
+              style={{ border: "1.5px solid #4f00bd", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
+            >
+              <video
+                src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733576/SCI_Lab_lqdaou.mov"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ── Frame 04 — left:287, top:55, 80×80, round photo ── */}
       <div
-        ref={setRef(3)}
+        ref={setParallaxRef(3)}
         className="absolute pointer-events-none"
         style={{ left: 287, top: 55, width: 80, height: 80 }}
       >
-        <img
-          src={ASSETS.f04}
-          alt=""
-          className="w-full h-full rounded-full object-cover"
-        />
+        <div ref={setFloatRef(3)}>
+          <img
+            src={ASSETS.f04}
+            alt=""
+            className="w-full h-full rounded-full object-cover"
+          />
+        </div>
       </div>
 
       {/* ── Frame 05 — left:-215, top:228, 494×331, rotate-10, colored border ── */}
       <div
-        ref={setRef(4)}
+        ref={setParallaxRef(4)}
         className="absolute pointer-events-none"
         style={{ left: -215, top: 228, width: 494, height: 331 }}
       >
-        <div className="rotate-[10deg]" style={{ width: 457, height: 256 }}>
-          <div
-            className="w-full h-full rounded-[18px]"
-            style={{ border: "1.5px solid #05261a", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
-          />
+        <div ref={setFloatRef(4)}>
+          <div className="rotate-[10deg]" style={{ width: 457, height: 256 }}>
+            <div
+              className="w-full h-full rounded-[18px] overflow-hidden"
+              style={{ border: "1.5px solid #05261a", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
+            >
+              <video
+                src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733701/Screen_Recording_2026-04-25_at_11.31.09_mkvixd.mov"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ── Frame 06 — left:268, top:743, 216×367, -rotate-10, app screenshot ── */}
       <div
-        ref={setRef(5)}
+        ref={setParallaxRef(5)}
         className="absolute pointer-events-none"
         style={{ left: 268, top: 743, width: 216, height: 367 }}
       >
-        <div className="-rotate-[10deg]">
-          <div
-            className="overflow-hidden rounded-[18px]"
-            style={{ width: 159, height: 345, border: "1.5px solid rgba(0,0,0,0.1)", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
-          >
-            <img src={ASSETS.f06} alt="" className="w-full h-full object-cover" />
+        <div ref={setFloatRef(5)}>
+          <div className="-rotate-[10deg]">
+            <div
+              className="overflow-hidden rounded-[18px]"
+              style={{ width: 159, height: 345, border: "1.5px solid rgba(0,0,0,0.1)", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
+            >
+              <img src={ASSETS.f06} alt="" className="w-full h-full object-cover" />
+            </div>
           </div>
         </div>
       </div>
 
       {/* ── Frame 07 — left:562, top:695, 98×98, round photo, -rotate-15 ── */}
       <div
-        ref={setRef(6)}
+        ref={setParallaxRef(6)}
         className="absolute pointer-events-none"
         style={{ left: 562, top: 695, width: 98, height: 98 }}
       >
-        <div className="-rotate-[15deg]">
-          <img
-            src={ASSETS.f07}
-            alt=""
-            className="w-[80px] h-[80px] rounded-full object-cover"
-          />
+        <div ref={setFloatRef(6)}>
+          <div className="-rotate-[15deg]">
+            <img
+              src={ASSETS.f07}
+              alt=""
+              className="w-[80px] h-[80px] rounded-full object-cover"
+            />
+          </div>
         </div>
       </div>
 
       {/* ── Frame 08 — right:448.5, top:704, 212×361, rotate-10, colored border ── */}
       <div
-        ref={setRef(7)}
+        ref={setParallaxRef(7)}
         className="absolute pointer-events-none"
         style={{ right: 448.5, top: 704, width: 212, height: 361 }}
       >
-        <div className="rotate-[10deg]">
-          <div
-            className="rounded-[17px]"
-            style={{ width: 156, height: 339, border: "1.5px solid #cd0518", boxShadow: "0 0 42px rgba(0,0,0,0.1)" }}
-          />
+        <div ref={setFloatRef(7)}>
+          <div className="rotate-[10deg]">
+            <div
+              className="rounded-[17px] overflow-hidden"
+              style={{ width: 156, height: 339, border: "1.5px solid #cd0518", boxShadow: "0 0 42px rgba(0,0,0,0.1)" }}
+            >
+              <video
+                src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733412/Insurance_takxqq.mov"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* ── Frame 09 — left:-52, top:799, 147×147, rotate-15 ── */}
       <div
-        ref={setRef(8)}
+        ref={setParallaxRef(8)}
         className="absolute pointer-events-none"
         style={{ left: -52, top: 799, width: 147, height: 147 }}
       >
-        <div className="rotate-[15deg]">
-          <img
-            src={ASSETS.f09}
-            alt=""
-            className="w-[120px] h-[120px] object-cover"
-          />
+        <div ref={setFloatRef(8)}>
+          <div className="rotate-[15deg]">
+            <img
+              src={ASSETS.f09}
+              alt=""
+              className="w-[120px] h-[120px] object-cover"
+            />
+          </div>
         </div>
       </div>
 
       {/* ── Frame 10 — right:93, top:22, 60×60, round, glass shadow ── */}
       <div
-        ref={setRef(9)}
-        className="absolute pointer-events-none backdrop-blur-[9px] overflow-hidden rounded-full glass-shadow"
+        ref={setParallaxRef(9)}
+        className="absolute pointer-events-none"
         style={{ right: 93, top: 22, width: 60, height: 60 }}
       >
-        <img
-          src={ASSETS.f10}
-          alt=""
-          className="w-full h-full object-cover rounded-full"
-        />
+        <div
+          ref={setFloatRef(9)}
+          className="w-full h-full backdrop-blur-[9px] overflow-hidden rounded-full glass-shadow"
+        >
+          <img
+            src={ASSETS.f10}
+            alt=""
+            className="w-full h-full object-cover rounded-full"
+          />
+        </div>
       </div>
 
       {/* ── Frame 11 — right:-29, top:773, 171×171, round photo, -rotate-15 ── */}
       <div
-        ref={setRef(10)}
+        ref={setParallaxRef(10)}
         className="absolute pointer-events-none"
         style={{ right: -29, top: 773, width: 171, height: 171 }}
       >
-        <div className="-rotate-[15deg]">
-          <img
-            src={ASSETS.f11}
-            alt=""
-            className="w-[140px] h-[140px] rounded-full object-cover"
-          />
+        <div ref={setFloatRef(10)}>
+          <div className="-rotate-[15deg]">
+            <img
+              src={ASSETS.f11}
+              alt=""
+              className="w-[140px] h-[140px] rounded-full object-cover"
+            />
+          </div>
         </div>
       </div>
 
       {/* ── Frame 12 — right:268, top:617, 98×98, round photo, -rotate-15 ── */}
       <div
-        ref={setRef(11)}
+        ref={setParallaxRef(11)}
         className="absolute pointer-events-none"
         style={{ right: 268, top: 617, width: 98, height: 98 }}
       >
-        <div className="-rotate-[15deg]">
-          <img
-            src={ASSETS.f12}
-            alt=""
-            className="w-[80px] h-[80px] rounded-full object-cover"
-          />
+        <div ref={setFloatRef(11)}>
+          <div className="-rotate-[15deg]">
+            <img
+              src={ASSETS.f12}
+              alt=""
+              className="w-[80px] h-[80px] rounded-full object-cover"
+            />
+          </div>
         </div>
       </div>
 
       {/* ── Center text ── */}
-      {/*
-       * Plain div for absolute centering so Framer Motion's transform:none
-       * at rest doesn't overwrite the CSS translate.
-       */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="flex flex-col items-center gap-[10px] w-[460px] max-md:w-[300px] max-md:px-6"
-        >
-          <h1
-            className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
-            style={{ fontSize: "clamp(48px, 6.5vw, 100px)" }}
+        {/*
+         * Plain div for absolute centering (prevents Framer Motion transform:none
+         * at rest from overwriting the CSS translate), also the GSAP scroll target.
+         */}
+        <div ref={contentRef}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
+            className="flex flex-col items-center gap-[10px] w-[460px] max-md:w-[300px] max-md:px-6"
           >
-            Welcome!
-          </h1>
-          <p className="font-inter font-light text-[15px] text-[#666] text-center leading-[24px]">
-            Vung Tau raised, Ho Chi Minh based. More than three years of
-            experience across crypto, fintech and insurance. More than four
-            years in design industry include graphic design.
-          </p>
-        </motion.div>
+            <h1
+              className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
+              style={{ fontSize: "clamp(48px, 6.5vw, 100px)" }}
+            >
+              Welcome!
+            </h1>
+            <p className="font-inter font-light text-[15px] text-[#666] text-center leading-[24px]">
+              Vung Tau raised, Ho Chi Minh based. More than three years of
+              experience across crypto, fintech and insurance. More than four
+              years in design industry include graphic design.
+            </p>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

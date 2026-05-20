@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 
-const TICKER_TEXT = "Ready to get in touch?";
+const TICKER_TEXT = "Ready to contact?";
+const MAILTO = "mailto:truyen17031997@gmail.com";
 
 const footerLinks = [
-  { label: "Email", href: "mailto:truyen17031997@gmail.com" },
+  { label: "Email", href: MAILTO },
   { label: "LinkedIn", href: "#" },
   { label: "Dribbble", href: "#" },
   { label: "Resume", href: "#" },
@@ -26,23 +27,47 @@ function CopyIcon() {
   );
 }
 
+function ArrowTopRight() {
+  return (
+    <svg
+      width="0.7em"
+      height="0.7em"
+      viewBox="0 0 18 18"
+      fill="none"
+      style={{ display: "inline-block", verticalAlign: "middle", marginBottom: "0.12em" }}
+    >
+      <path
+        d="M3 15L15 3M15 3H5M15 3V13"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export default function ContactSection() {
   const tickerRef = useRef<HTMLDivElement>(null);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     if (!tickerRef.current) return;
     const el = tickerRef.current;
     const totalW = el.scrollWidth / 2;
-    const tween = gsap.to(el, {
+    tweenRef.current = gsap.to(el, {
       x: -totalW,
       duration: 18,
       ease: "none",
       repeat: -1,
     });
     return () => {
-      tween.kill();
+      tweenRef.current?.kill();
     };
   }, []);
+
+  const handleMouseEnter = () => tweenRef.current?.pause();
+  const handleMouseLeave = () => tweenRef.current?.resume();
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text).catch(() => {});
@@ -61,9 +86,13 @@ export default function ContactSection() {
         transition={{ duration: 0.6 }}
         className="w-full overflow-hidden relative"
       >
+        {/* Ticker container — group enables child hover transitions */}
         <div
-          className="h-[152px] overflow-hidden relative rounded-[100px] w-full max-w-[1360px] mx-auto"
+          className="group h-[152px] overflow-hidden relative rounded-[100px] w-full max-w-[1360px] mx-auto cursor-pointer"
           style={{ background: "#f2f2f2" }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onClick={() => { window.location.href = MAILTO; }}
         >
           {/* Left fade */}
           <div className="absolute left-0 top-0 bottom-0 w-[100px] z-10 bg-gradient-to-r from-[#f2f2f2] to-transparent pointer-events-none" />
@@ -76,16 +105,25 @@ export default function ContactSection() {
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="flex items-center gap-[48px] flex-shrink-0">
                   <span
-                    className="font-playfair font-medium italic text-[#1f1f1f] whitespace-nowrap"
+                    className="font-playfair font-medium italic text-[#1f1f1f] whitespace-nowrap select-none"
                     style={{ fontSize: "clamp(32px, 4vw, 60px)" }}
                   >
                     {TICKER_TEXT}
                   </span>
-                  <div className="bg-white rounded-full px-6 py-[7px] flex-shrink-0">
-                    <span className="font-inter font-semibold text-[32px] text-black tracking-[-1px]">
-                      Let&apos;s talk
+                  {/* Let's talk pill — color transitions on group hover */}
+                  <span
+                    className="flex items-center gap-2 rounded-full px-6 py-[7px] flex-shrink-0
+                      bg-white group-hover:bg-[#37c473]
+                      transition-colors duration-300"
+                  >
+                    <span
+                      className="font-inter font-semibold text-[32px] tracking-[-1px] leading-none
+                        text-[#1f1f1f] group-hover:text-white
+                        transition-colors duration-300"
+                    >
+                      Let&apos;s talk <ArrowTopRight />
                     </span>
-                  </div>
+                  </span>
                 </div>
               ))}
             </div>

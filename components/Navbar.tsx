@@ -45,8 +45,8 @@ export default function Navbar() {
                   width: 800,
                   borderRadius: 200,
                   backgroundColor: "rgba(255,255,255,0.6)",
-                  backdropFilter: "blur(10px)",
-                  borderColor: "rgba(0,0,0,0.2)",
+                  backdropFilter: "blur(40px)",
+                  borderColor: "rgba(0,0,0,0.1)",
                   paddingLeft: 40,
                   paddingRight: 24,
                   paddingTop: 22,
@@ -68,7 +68,7 @@ export default function Navbar() {
           }
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="flex items-center justify-between border pointer-events-auto"
-          style={{ borderWidth: 1, borderStyle: "solid" }}
+          style={{ borderWidth: 0.5, borderStyle: "solid" }}
         >
           <a
             href="#"
