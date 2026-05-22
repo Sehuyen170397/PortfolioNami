@@ -15,6 +15,12 @@ const ASSETS = {
     "https://www.figma.com/api/mcp/asset/ae7b3cdf-c097-4ffe-8790-4f94315d49f6",
   containerHighway:
     "https://www.figma.com/api/mcp/asset/f5e69061-701f-4d9a-8eeb-3a4ea54483b1",
+  mobileNamiExchange:
+    "https://www.figma.com/api/mcp/asset/b64f17ce-2f3f-42b2-afd3-c90ab4ab1f17",
+  mobileInsurance:
+    "https://www.figma.com/api/mcp/asset/e45f26c6-1a62-4067-875b-d179e94bfe6e",
+  mobileHighway:
+    "https://www.figma.com/api/mcp/asset/e1fbe6f7-0d9e-4a62-b4ed-8f5572f65f4e",
 };
 
 const projectsEN = [
@@ -28,7 +34,10 @@ const projectsEN = [
     domainLabel: "Domain",
     cta: "View Project",
     image: ASSETS.containerNamiExchange,
+    mobileImage: ASSETS.mobileNamiExchange,
     dark: false,
+    desktopLink: "/work/nami-exchange",
+    mobileLink: "/work/nami-exchange",
   },
   {
     id: "nami-insurance",
@@ -40,7 +49,10 @@ const projectsEN = [
     domainLabel: "Domain",
     cta: "View Project",
     image: ASSETS.containerInsurance,
+    mobileImage: ASSETS.mobileInsurance,
     dark: true,
+    desktopLink: "",
+    mobileLink: "",
   },
   {
     id: "highway",
@@ -52,7 +64,10 @@ const projectsEN = [
     domainLabel: "Domain",
     cta: "View Project",
     image: ASSETS.containerHighway,
+    mobileImage: ASSETS.mobileHighway,
     dark: true,
+    desktopLink: "",
+    mobileLink: "",
   },
 ];
 
@@ -67,7 +82,10 @@ const projectsVI = [
     domainLabel: "Lĩnh vực",
     cta: "Xem dự án",
     image: ASSETS.containerNamiExchange,
+    mobileImage: ASSETS.mobileNamiExchange,
     dark: false,
+    desktopLink: "/work/nami-exchange",
+    mobileLink: "/work/nami-exchange",
   },
   {
     id: "nami-insurance",
@@ -79,7 +97,10 @@ const projectsVI = [
     domainLabel: "Lĩnh vực",
     cta: "Xem dự án",
     image: ASSETS.containerInsurance,
+    mobileImage: ASSETS.mobileInsurance,
     dark: true,
+    desktopLink: "",
+    mobileLink: "",
   },
   {
     id: "highway",
@@ -91,7 +112,10 @@ const projectsVI = [
     domainLabel: "Lĩnh vực",
     cta: "Xem dự án",
     image: ASSETS.containerHighway,
+    mobileImage: ASSETS.mobileHighway,
     dark: true,
+    desktopLink: "",
+    mobileLink: "",
   },
 ];
 
@@ -112,6 +136,14 @@ function ArrowUpRight({ color = "currentColor" }: { color?: string }) {
 function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
   const tc = project.dark ? "text-white" : "text-[#1f1f1f]";
   const arrowColor = project.dark ? "white" : "#1f1f1f";
+  const handleClick = () => {
+    if (!project.desktopLink) return;
+    if (project.desktopLink.startsWith("/")) {
+      window.location.href = project.desktopLink;
+    } else {
+      window.open(project.desktopLink, "_blank", "noopener,noreferrer");
+    }
+  };
 
   return (
     <motion.div
@@ -119,8 +151,9 @@ function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden rounded-[40px] border border-[rgba(0,0,0,0.1)] flex w-full"
+      className={`relative overflow-hidden rounded-[40px] border border-[rgba(0,0,0,0.1)] flex w-full ${project.desktopLink ? "cursor-pointer" : ""}`}
       style={{ height: 700 }}
+      onClick={handleClick}
     >
       {/* Image — full bleed background */}
       <div className="flex-1 overflow-hidden rounded-xl relative min-w-0">
@@ -142,12 +175,12 @@ function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
               {project.title}
             </h3>
           </div>
-          <button className="flex items-center gap-4 bg-[rgba(0,0,0,0.1)] backdrop-blur-[8px] border border-[rgba(0,0,0,0.2)] rounded-full px-6 py-2 w-fit hover:bg-[rgba(0,0,0,0.18)] transition-colors">
+          <div className="flex items-center gap-4 bg-[rgba(0,0,0,0.1)] backdrop-blur-[8px] border border-[rgba(0,0,0,0.2)] rounded-full px-6 py-2 w-fit hover:bg-[rgba(0,0,0,0.18)] transition-colors">
             <span className={`font-inter font-semibold text-[24px] ${tc}`}>
               {project.cta}
             </span>
             <ArrowUpRight color={arrowColor} />
-          </button>
+          </div>
         </div>
 
         <div className="flex gap-8 pt-5">
@@ -174,9 +207,14 @@ function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
 }
 
 function WorkCardMobile({ project }: { project: (typeof projectsEN)[0] }) {
-  const tc = project.dark ? "text-white" : "text-[#1f1f1f]";
-  const arrowColor = project.dark ? "white" : "#1f1f1f";
-  const cardBg = project.dark ? "" : "bg-[#f2f2f2]";
+  const handleClick = () => {
+    if (!project.mobileLink) return;
+    if (project.mobileLink.startsWith("/")) {
+      window.location.href = project.mobileLink;
+    } else {
+      window.open(project.mobileLink, "_blank", "noopener,noreferrer");
+    }
+  };
 
   return (
     <motion.div
@@ -184,36 +222,40 @@ function WorkCardMobile({ project }: { project: (typeof projectsEN)[0] }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className={`w-full overflow-hidden rounded-[24px] border border-[rgba(0,0,0,0.1)] flex flex-col ${cardBg}`}
+      className={`w-full overflow-hidden rounded-[24px] flex flex-col bg-[#f2f2f2] ${project.mobileLink ? "cursor-pointer" : ""}`}
+      style={{ border: "0.5px solid rgba(0,0,0,0.1)" }}
+      onClick={handleClick}
     >
-      <div className="h-[220px] overflow-hidden relative rounded-t-[12px]">
+      <div className="h-[342px] overflow-hidden relative rounded-t-[12px] shrink-0">
         <img
-          src={project.image}
+          src={project.mobileImage}
           alt={project.title}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
         />
       </div>
-      <div className="flex flex-1 flex-col gap-4 px-4 pt-3 pb-5">
-        <div className="flex flex-col gap-4 pt-2">
-          <p className={`font-inter font-normal text-[14px] leading-normal ${tc}`}>
-            {project.category}
-          </p>
-          <h3 className={`font-inter font-semibold text-[22px] leading-tight ${tc}`}>
-            {project.title}
-          </h3>
-        </div>
-        <button className="flex items-center gap-3 bg-[rgba(0,0,0,0.1)] backdrop-blur-[8px] border border-[rgba(0,0,0,0.2)] rounded-full px-5 py-2 w-fit mt-2 hover:bg-[rgba(0,0,0,0.15)] transition-colors">
-          <span className={`font-inter font-semibold text-[18px] ${tc}`}>{project.cta}</span>
-          <ArrowUpRight color={arrowColor} />
-        </button>
-        <div className="flex gap-8 pt-3 border-t border-[rgba(0,0,0,0.08)] mt-1">
-          <div className="flex flex-col gap-1.5">
-            <span className={`font-inter font-semibold text-[18px] ${tc}`}>{project.domain}</span>
-            <span className={`font-inter font-light text-[13px] ${tc} opacity-70`}>{project.domainLabel}</span>
+      <div className="flex flex-1 flex-col gap-5 px-4 pt-3 pb-4">
+        <div className="flex flex-1 flex-col justify-between pt-2 pb-3">
+          <div className="flex flex-col gap-6">
+            <p className="font-inter font-normal text-[16px] text-[#1f1f1f] leading-normal">
+              {project.category}
+            </p>
+            <h3 className="font-inter font-semibold text-[26px] text-[#1f1f1f] leading-tight">
+              {project.title}
+            </h3>
           </div>
-          <div className="flex flex-col gap-1.5">
-            <span className={`font-inter font-semibold text-[18px] ${tc}`}>{project.years}</span>
-            <span className={`font-inter font-light text-[13px] ${tc} opacity-70`}>{project.label}</span>
+          <div className="flex items-center gap-4 bg-[rgba(0,0,0,0.1)] backdrop-blur-[8px] border border-[rgba(0,0,0,0.1)] rounded-full px-6 py-2 w-fit mt-6 hover:bg-[rgba(0,0,0,0.15)] transition-colors">
+            <span className="font-inter font-semibold text-[20px] text-[#1f1f1f]">{project.cta}</span>
+            <ArrowUpRight color="#1f1f1f" />
+          </div>
+        </div>
+        <div className="flex gap-8 pt-3 border-t border-[rgba(0,0,0,0.08)]">
+          <div className="flex flex-col gap-3">
+            <span className="font-inter font-semibold text-[20px] text-[#1f1f1f]">{project.domain}</span>
+            <span className="font-inter font-light text-[15px] text-[#1f1f1f]">{project.domainLabel}</span>
+          </div>
+          <div className="flex flex-col gap-3">
+            <span className="font-inter font-semibold text-[20px] text-[#1f1f1f]">{project.years}</span>
+            <span className="font-inter font-light text-[15px] text-[#1f1f1f]">{project.label}</span>
           </div>
         </div>
       </div>
@@ -278,14 +320,14 @@ export default function WorkSection() {
     <section
       id="work"
       ref={sectionRef}
-      className="flex flex-col gap-6 items-start pb-[120px] pt-[120px] px-[40px] w-full bg-white max-md:pt-[80px] max-md:pb-[60px] max-md:px-6"
+      className="flex flex-col gap-6 items-start pb-[120px] pt-[120px] px-[40px] w-full bg-white max-md:pt-[80px] max-md:pb-[60px] max-md:px-6 max-md:gap-6"
     >
       {/* Header */}
-      <div ref={headerWrapRef} className="w-full flex flex-col items-center justify-center pb-6 overflow-hidden">
+      <div ref={headerWrapRef} className="w-full flex flex-col items-center justify-center pb-6 max-md:pb-0 overflow-hidden">
         <h2
           ref={headerTextRef}
           className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
-          style={{ fontSize: "clamp(36px, 7vw, 100px)" }}
+          style={{ fontSize: "clamp(40px, 7vw, 100px)" }}
         >
           {lang === "en" ? "Selected Work" : "Dự án tiêu biểu"}
         </h2>
@@ -311,7 +353,7 @@ export default function WorkSection() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="border-t border-[rgba(0,0,0,0.1)] flex flex-wrap items-center justify-between pt-12 w-full gap-4"
+        className="flex flex-wrap items-center justify-between pt-12 w-full gap-4"
       >
         <div className="flex flex-col gap-1.5">
           <p className="font-inter font-semibold text-[14px] text-[#1f1f1f] leading-normal">

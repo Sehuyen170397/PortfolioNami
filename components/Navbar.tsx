@@ -4,30 +4,51 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useLang } from "@/contexts/LanguageContext";
 
+function MenuIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <line x1="2" y1="8.5" x2="22" y2="8.5" stroke="#1f1f1f" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="2" y1="15.5" x2="22" y2="15.5" stroke="#1f1f1f" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M6 6L18 18M18 6L6 18" stroke="#1f1f1f" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [navWidth, setNavWidth] = useState(0);
+  const [viewportWidth, setViewportWidth] = useState(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 60);
+    if (menuOpen) setMenuOpen(false);
   });
 
   useEffect(() => {
     const updateWidth = () => {
       if (wrapperRef.current) setNavWidth(wrapperRef.current.offsetWidth);
+      setViewportWidth(window.innerWidth);
     };
     updateWidth();
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
+
   const { lang, toggleLang } = useLang();
 
-  const navLinks = lang === "en"
+  const desktopLinks = lang === "en"
     ? [
         { label: "WORK", href: "#work" },
         { label: "About", href: "#about" },
@@ -38,6 +59,20 @@ export default function Navbar() {
         { label: "GIỚI THIỆU", href: "#about" },
         { label: "LIÊN HỆ", href: "#contact" },
       ];
+
+  const mobileLinks = lang === "en"
+    ? [
+        { label: "Work", href: "#work" },
+        { label: "About", href: "#about" },
+        { label: "Contact", href: "#contact" },
+      ]
+    : [
+        { label: "Dự án", href: "#work" },
+        { label: "Giới thiệu", href: "#about" },
+        { label: "Liên hệ", href: "#contact" },
+      ];
+
+  const pillWidth = viewportWidth > 0 ? viewportWidth - 32 : 358;
 
   return (
     <>
@@ -80,7 +115,7 @@ export default function Navbar() {
           style={{ borderWidth: 0.5, borderStyle: "solid" }}
         >
           <a
-            href="#"
+            href="/"
             className="font-playfair italic font-semibold text-[20px] text-[#1f1f1f] tracking-[-0.3px] leading-normal"
           >
             Truyen
@@ -88,7 +123,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-9">
             <div className="flex items-center gap-7">
-              {navLinks.map(({ label, href }) => (
+              {desktopLinks.map(({ label, href }) => (
                 <a
                   key={label}
                   href={href}
@@ -109,62 +144,106 @@ export default function Navbar() {
         </motion.nav>
       </div>
 
-      {/* ── Mobile ── */}
-      <nav className="fixed top-0 left-0 right-0 z-[100] flex md:hidden items-center justify-between px-5 py-5 bg-white/80 backdrop-blur-[10px] border-b border-[rgba(0,0,0,0.06)]">
-        <a
-          href="#"
-          className="font-playfair italic font-semibold text-[15px] text-[#1f1f1f] tracking-[-0.3px]"
-        >
-          Truyen
-        </a>
-        <button
-          onClick={() => setMenuOpen((v) => !v)}
-          className="flex flex-col gap-[5px] w-6 items-end p-1"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-        >
-          <span
-            className={`block h-[1.5px] w-full bg-[#1f1f1f] transition-all duration-300 origin-center ${
-              menuOpen ? "rotate-45 translate-y-[6.75px]" : ""
-            }`}
-          />
-          <span
-            className={`block h-[1.5px] bg-[#1f1f1f] transition-all duration-300 ${
-              menuOpen ? "opacity-0 w-0" : "w-4"
-            }`}
-          />
-          <span
-            className={`block h-[1.5px] w-full bg-[#1f1f1f] transition-all duration-300 origin-center ${
-              menuOpen ? "-rotate-45 -translate-y-[6.75px]" : ""
-            }`}
-          />
-        </button>
-      </nav>
+      {/* ── Mobile backdrop — closes menu on outside tap ── */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-[99] md:hidden"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
 
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            key="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed top-[65px] inset-x-0 z-[99] md:hidden bg-white/95 backdrop-blur-md border-b border-[rgba(0,0,0,0.1)]"
-          >
-            <div className="flex flex-col px-6">
-              {navLinks.map(({ label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  onClick={() => setMenuOpen(false)}
-                  className="font-inter font-normal text-[13px] text-[#1f1f1f] uppercase tracking-wide py-4 border-b border-[rgba(0,0,0,0.08)] last:border-0 hover:opacity-60 transition-opacity"
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* ── Mobile ── */}
+      <div className="fixed inset-x-0 top-0 z-[100] flex md:hidden justify-center pointer-events-none">
+        <motion.nav
+          initial={false}
+          animate={
+            scrolled
+              ? {
+                  width: pillWidth,
+                  borderRadius: menuOpen ? 32 : 200,
+                  backgroundColor: "rgba(255,255,255,0.6)",
+                  backdropFilter: "blur(10px)",
+                  borderColor: "rgba(0,0,0,0.1)",
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                  paddingTop: 16,
+                  paddingBottom: 16,
+                  y: 16,
+                }
+              : {
+                  width: viewportWidth || 390,
+                  borderRadius: 0,
+                  backgroundColor: menuOpen ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0)",
+                  backdropFilter: menuOpen ? "blur(10px)" : "blur(0px)",
+                  borderColor: "rgba(0,0,0,0)",
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  y: 0,
+                }
+          }
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col pointer-events-auto border"
+          style={{ borderWidth: 0.5, borderStyle: "solid" }}
+        >
+          {/* Header row */}
+          <div className="flex items-center justify-between w-full">
+            <a
+              href="/"
+              className="font-playfair italic font-semibold text-[15px] text-[#1f1f1f] tracking-[-0.3px]"
+            >
+              Truyen
+            </a>
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              className="w-6 h-6 flex items-center justify-center"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+            >
+              {menuOpen ? <CloseIcon /> : <MenuIcon />}
+            </button>
+          </div>
+
+          {/* Expandable menu — inside the nav */}
+          <AnimatePresence initial={false}>
+            {menuOpen && (
+              <motion.div
+                key="mobile-links"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="flex flex-col overflow-hidden"
+              >
+                <div className="flex flex-col gap-4 pt-4">
+                  {mobileLinks.map(({ label, href }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      onClick={() => setMenuOpen(false)}
+                      className="font-inter font-light text-[15px] text-[#1f1f1f] py-[2px] hover:opacity-60 transition-opacity"
+                    >
+                      {label}
+                    </a>
+                  ))}
+                  <div className="flex items-center justify-between py-[2px]">
+                    <span className="font-inter font-light text-[15px] text-[#1f1f1f]">
+                      {lang === "en" ? "Language" : "Ngôn ngữ"}
+                    </span>
+                    <button
+                      onClick={toggleLang}
+                      className="border border-[rgba(0,0,0,0.1)] rounded-full h-8 flex items-center gap-[7px] px-4 py-2 backdrop-blur-[8px] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,0,0,0.08)] transition-colors cursor-pointer"
+                    >
+                      <span className={`font-inter text-[11px] ${lang === "en" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>EN.</span>
+                      <span className={`font-inter text-[11px] ${lang === "vi" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>VI</span>
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.nav>
+      </div>
     </>
   );
 }

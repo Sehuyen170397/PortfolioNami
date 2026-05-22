@@ -89,14 +89,14 @@ export default function AboutSection() {
     <section
       id="about"
       ref={sectionRef}
-      className="flex flex-col gap-10 items-start px-10 py-[120px] relative w-full bg-white max-md:px-6 max-md:py-[60px] max-md:gap-8"
+      className="flex flex-col gap-10 items-start px-10 py-[120px] relative w-full bg-white max-md:px-6 max-md:py-[60px] max-md:gap-6"
     >
       {/* Header */}
       <div ref={headerWrapRef} className="flex flex-col items-start w-full overflow-hidden">
         <h2
           ref={headerTextRef}
           className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal"
-          style={{ fontSize: "clamp(32px, 4vw, 56px)" }}
+          style={{ fontSize: "clamp(40px, 4vw, 56px)" }}
         >
           {lang === "en" ? "My Story" : "Giới thiệu"}
         </h2>
@@ -197,12 +197,17 @@ export default function AboutSection() {
             )}
           </p>
 
-          <button className="flex items-center gap-[7px] border border-[rgba(0,0,0,0.2)] bg-[rgba(255,255,255,0.1)] rounded-full h-8 px-[13px] py-2 w-fit hover:bg-[rgba(0,0,0,0.05)] transition-colors mt-2">
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-[7px] border border-[rgba(0,0,0,0.2)] bg-[rgba(255,255,255,0.1)] rounded-full h-8 px-[13px] py-2 w-fit hover:bg-[rgba(0,0,0,0.05)] transition-colors mt-2"
+          >
             <span className="font-inter font-normal text-[11px] text-[#1f1f1f] uppercase">
               {lang === "en" ? "View CV" : "Ghé xem CV"}
             </span>
             <ViewMoreIcon />
-          </button>
+          </a>
         </motion.div>
 
         {/* Right — lists */}

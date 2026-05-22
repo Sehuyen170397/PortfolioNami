@@ -23,8 +23,11 @@ const ASSETS = {
   f06: "https://www.figma.com/api/mcp/asset/8774e628-b070-4701-8c94-f19887df7a3b",
 };
 
-// Per-frame parallax depth (how many px each frame travels upward per full hero scroll)
-const PARALLAX_Y = [60, 30, 45, 25, 50, 35, 40, 55, 30, 20, 45, 35];
+// Per-frame parallax depth — indices 0-11 desktop, 12-23 mobile
+const PARALLAX_Y = [
+  60, 30, 45, 25, 50, 35, 40, 55, 30, 20, 45, 35, // desktop
+  30, 15, 22, 12, 25, 17, 20, 27, 15, 10, 22, 17,  // mobile
+];
 
 export default function HeroSection() {
   const { lang } = useLang();
@@ -95,7 +98,7 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-white w-full overflow-x-clip"
+      className="relative bg-white w-full overflow-x-clip max-md:!min-h-screen"
       style={{ minHeight: "max(100vh, 1110px)" }}
     >
       {/* ── Page-load curtain: slides upward to reveal the page ── */}
@@ -109,7 +112,7 @@ export default function HeroSection() {
       {/* ── Frame 01 — left:424, top:-172, 246×418, -rotate-10, colored border ── */}
       <div
         ref={setParallaxRef(0)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ left: 424, top: -172, width: 246, height: 418 }}
       >
         <div ref={setFloatRef(0)}>
@@ -137,7 +140,7 @@ export default function HeroSection() {
       {/* ── Frame 02 — right:448, top:29, 80×80, round photo ── */}
       <div
         ref={setParallaxRef(1)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ right: 448, top: 29, width: 80, height: 80 }}
       >
         <div ref={setFloatRef(1)}>
@@ -152,7 +155,7 @@ export default function HeroSection() {
       {/* ── Frame 03 — right:-204, top:220, 487×327, -rotate-10, colored border ── */}
       <div
         ref={setParallaxRef(2)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ right: -204, top: 220, width: 487, height: 327 }}
       >
         <div ref={setFloatRef(2)}>
@@ -177,7 +180,7 @@ export default function HeroSection() {
       {/* ── Frame 04 — left:287, top:55, 80×80, round photo ── */}
       <div
         ref={setParallaxRef(3)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ left: 287, top: 55, width: 80, height: 80 }}
       >
         <div ref={setFloatRef(3)}>
@@ -192,7 +195,7 @@ export default function HeroSection() {
       {/* ── Frame 05 — left:-215, top:228, 494×331, rotate-10, colored border ── */}
       <div
         ref={setParallaxRef(4)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ left: -215, top: 228, width: 494, height: 331 }}
       >
         <div ref={setFloatRef(4)}>
@@ -217,7 +220,7 @@ export default function HeroSection() {
       {/* ── Frame 06 — left:268, top:743, 216×367, -rotate-10, app screenshot ── */}
       <div
         ref={setParallaxRef(5)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ left: 268, top: 743, width: 216, height: 367 }}
       >
         <div ref={setFloatRef(5)}>
@@ -235,7 +238,7 @@ export default function HeroSection() {
       {/* ── Frame 07 — left:562, top:695, 98×98, round photo, -rotate-15 ── */}
       <div
         ref={setParallaxRef(6)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ left: 562, top: 695, width: 98, height: 98 }}
       >
         <div ref={setFloatRef(6)}>
@@ -252,7 +255,7 @@ export default function HeroSection() {
       {/* ── Frame 08 — right:448.5, top:704, 212×361, rotate-10, colored border ── */}
       <div
         ref={setParallaxRef(7)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ right: 448.5, top: 704, width: 212, height: 361 }}
       >
         <div ref={setFloatRef(7)}>
@@ -277,7 +280,7 @@ export default function HeroSection() {
       {/* ── Frame 09 — left:-52, top:799, 147×147, rotate-15 ── */}
       <div
         ref={setParallaxRef(8)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ left: -52, top: 799, width: 147, height: 147 }}
       >
         <div ref={setFloatRef(8)}>
@@ -294,7 +297,7 @@ export default function HeroSection() {
       {/* ── Frame 10 — right:93, top:22, 60×60, round, glass shadow ── */}
       <div
         ref={setParallaxRef(9)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ right: 93, top: 22, width: 60, height: 60 }}
       >
         <div
@@ -312,7 +315,7 @@ export default function HeroSection() {
       {/* ── Frame 11 — right:-29, top:773, 171×171, round photo, -rotate-15 ── */}
       <div
         ref={setParallaxRef(10)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ right: -29, top: 773, width: 171, height: 171 }}
       >
         <div ref={setFloatRef(10)}>
@@ -329,7 +332,7 @@ export default function HeroSection() {
       {/* ── Frame 12 — right:268, top:617, 98×98, round photo, -rotate-15 ── */}
       <div
         ref={setParallaxRef(11)}
-        className="absolute pointer-events-none"
+        className="absolute pointer-events-none max-md:hidden"
         style={{ right: 268, top: 617, width: 98, height: 98 }}
       >
         <div ref={setFloatRef(11)}>
@@ -343,18 +346,134 @@ export default function HeroSection() {
         </div>
       </div>
 
+      {/* ── Mobile Frames — only visible below md breakpoint ── */}
+
+      {/* Mobile Frame 01 — left:116, top:-78, -rotate-10, green border, video */}
+      <div ref={setParallaxRef(12)} className="absolute pointer-events-none md:hidden" style={{ left: 116, top: -78, width: 123, height: 209 }}>
+        <div ref={setFloatRef(12)}>
+          <div className="-rotate-[10deg]" style={{ width: 90.5, height: 196.5, marginLeft: "auto", marginRight: "auto" }}>
+            <div className="w-full h-full rounded-[9px] overflow-hidden" style={{ border: "0.75px solid #c3ffdd", boxShadow: "0 0 22px rgba(0,0,0,0.1)" }}>
+              <video src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733637/creative_suggest_welcome-video-780x1688-compressed_2_quwwwb.mp4" autoPlay muted loop playsInline className="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Frame 02 — right:155, top:172, 40×40 round */}
+      <div ref={setParallaxRef(13)} className="absolute pointer-events-none md:hidden" style={{ right: 155, top: 172, width: 40, height: 40 }}>
+        <div ref={setFloatRef(13)}>
+          <img src={ASSETS.f02} alt="" className="w-full h-full rounded-full object-cover" />
+        </div>
+      </div>
+
+      {/* Mobile Frame 03 — right:-115, top:130, -rotate-10, purple border, video */}
+      <div ref={setParallaxRef(14)} className="absolute pointer-events-none md:hidden" style={{ right: -115, top: 130, width: 243, height: 163 }}>
+        <div ref={setFloatRef(14)}>
+          <div className="-rotate-[10deg]" style={{ width: 225, height: 126.5 }}>
+            <div className="w-full h-full rounded-[9px] overflow-hidden" style={{ border: "0.75px solid #4f00bd", boxShadow: "0 0 22px rgba(0,0,0,0.1)" }}>
+              <video src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733576/SCI_Lab_lqdaou.mov" autoPlay muted loop playsInline className="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Frame 04 — left:50, top:71, -rotate-15, round photo */}
+      <div ref={setParallaxRef(15)} className="absolute pointer-events-none md:hidden" style={{ left: 50, top: 71, width: 49, height: 49 }}>
+        <div ref={setFloatRef(15)}>
+          <div className="-rotate-[15deg]">
+            <img src={ASSETS.f04} alt="" className="w-[40px] h-[40px] rounded-full object-cover" />
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Frame 05 — left:-102, top:148, rotate-10, dark green border, video */}
+      <div ref={setParallaxRef(16)} className="absolute pointer-events-none md:hidden" style={{ left: -102, top: 148, width: 247, height: 165 }}>
+        <div ref={setFloatRef(16)}>
+          <div className="rotate-[10deg]" style={{ width: 228.5, height: 128 }}>
+            <div className="w-full h-full rounded-[9px] overflow-hidden" style={{ border: "0.75px solid #05261a", boxShadow: "0 0 22px rgba(0,0,0,0.1)" }}>
+              <video src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733701/Screen_Recording_2026-04-25_at_11.31.09_mkvixd.mov" autoPlay muted loop playsInline className="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Frame 06 — left:74, bottom:80, -rotate-10, app screenshot */}
+      <div ref={setParallaxRef(17)} className="absolute pointer-events-none md:hidden" style={{ left: 74, top: 698, width: 108, height: 183 }}>
+        <div ref={setFloatRef(17)}>
+          <div className="-rotate-[10deg]">
+            <div className="overflow-hidden rounded-[9px]" style={{ width: 79.5, height: 172, border: "0.75px solid rgba(0,0,0,0.1)", boxShadow: "0 0 22px rgba(0,0,0,0.1)" }}>
+              <img src={ASSETS.f06} alt="" className="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Frame 07 — left:162, bottom:80, -rotate-15, round photo */}
+      <div ref={setParallaxRef(18)} className="absolute pointer-events-none md:hidden" style={{ left: 162, top: 614, width: 49, height: 49 }}>
+        <div ref={setFloatRef(18)}>
+          <div className="-rotate-[15deg]">
+            <img src={ASSETS.f07} alt="" className="w-[40px] h-[40px] rounded-full object-cover" />
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Frame 08 — left:207, bottom:80, rotate-10, red border, video */}
+      <div ref={setParallaxRef(19)} className="absolute pointer-events-none md:hidden" style={{ left: 207, top: 668, width: 106, height: 180 }}>
+        <div ref={setFloatRef(19)}>
+          <div className="rotate-[10deg]">
+            <div className="rounded-[8.5px] overflow-hidden" style={{ width: 78, height: 169.5, border: "0.75px solid #cd0518", boxShadow: "0 0 21px rgba(0,0,0,0.1)" }}>
+              <video src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733412/Insurance_takxqq.mov" autoPlay muted loop playsInline className="w-full h-full object-cover" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Frame 09 — left:-49, bottom:80, rotate-15 */}
+      <div ref={setParallaxRef(20)} className="absolute pointer-events-none md:hidden" style={{ left: -49, top: 630, width: 98, height: 98 }}>
+        <div ref={setFloatRef(20)}>
+          <div className="rotate-[15deg]">
+            <img src={ASSETS.f09} alt="" className="w-[80px] h-[80px] object-cover" />
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Frame 10 — right:36, top:51, 40×40 glass round */}
+      <div ref={setParallaxRef(21)} className="absolute pointer-events-none md:hidden" style={{ right: 36, top: 51, width: 40, height: 40 }}>
+        <div ref={setFloatRef(21)} className="w-full h-full backdrop-blur-[9px] overflow-hidden rounded-full glass-shadow">
+          <img src={ASSETS.f10} alt="" className="w-full h-full object-cover rounded-full" />
+        </div>
+      </div>
+
+      {/* Mobile Frame 11 — left:322, bottom:80, -rotate-15, 100×100 round */}
+      <div ref={setParallaxRef(22)} className="absolute pointer-events-none md:hidden" style={{ left: 322, top: 714, width: 122, height: 122 }}>
+        <div ref={setFloatRef(22)}>
+          <div className="-rotate-[15deg]">
+            <img src={ASSETS.f11} alt="" className="w-[100px] h-[100px] rounded-full object-cover" />
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Frame 12 — left:341, bottom:80, -rotate-15, 40×40 round */}
+      <div ref={setParallaxRef(23)} className="absolute pointer-events-none md:hidden" style={{ left: 341, top: 575, width: 49, height: 49 }}>
+        <div ref={setFloatRef(23)}>
+          <div className="-rotate-[15deg]">
+            <img src={ASSETS.f12} alt="" className="w-[40px] h-[40px] rounded-full object-cover" />
+          </div>
+        </div>
+      </div>
+
       {/* ── Center text ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         {/*
          * Plain div for absolute centering (prevents Framer Motion transform:none
          * at rest from overwriting the CSS translate), also the GSAP scroll target.
          */}
-        <div ref={contentRef} className="-mt-[120px]">
+        <div ref={contentRef} className="md:-mt-[120px] max-md:-mt-[40px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
-            className="flex flex-col items-center gap-[10px] w-[460px] max-md:w-[300px] max-md:px-6"
+            className="flex flex-col items-center gap-[10px] w-[460px] max-md:w-full max-md:px-6"
           >
             <h1
               className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
