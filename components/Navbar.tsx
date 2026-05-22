@@ -220,7 +220,14 @@ export default function Navbar() {
                     <a
                       key={label}
                       href={href}
-                      onClick={() => setMenuOpen(false)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setMenuOpen(false);
+                        setTimeout(() => {
+                          const el = document.getElementById(href.replace("#", ""));
+                          if (el) el.scrollIntoView({ behavior: "smooth" });
+                        }, 300);
+                      }}
                       className="font-inter font-light text-[15px] text-[#1f1f1f] py-[2px] hover:opacity-60 transition-opacity"
                     >
                       {label}

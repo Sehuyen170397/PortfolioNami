@@ -1,11 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { useLang } from "@/contexts/LanguageContext";
 
 // Desktop asset URLs (Figma MCP — expire 7 days)
 const ASSETS = {
   heroBg: "https://www.figma.com/api/mcp/asset/4dc00ef2-41b6-45e0-b75d-8b57c7753fa1",
+  heroBgMobile: "https://www.figma.com/api/mcp/asset/57402029-0024-4982-a5f1-4ca2872ee1dd",
   competitorResearch1: "https://www.figma.com/api/mcp/asset/da11db04-f405-4274-bfe4-5245d4dc8796",
   competitorResearch2: "https://www.figma.com/api/mcp/asset/087970bd-c6dc-42b7-a88d-6ce8bcc87ae4",
   competitorResearch3: "https://www.figma.com/api/mcp/asset/1834085c-cee3-4474-8983-17c864cf9dd3",
@@ -46,6 +48,9 @@ const ASSETS = {
   // Nami Insurance banner — VI
   namiInsuranceBgVI: "https://www.figma.com/api/mcp/asset/4730dd0b-fe23-413c-8792-a8d38cda3eb0",
   namiInsuranceArrowVI: "https://www.figma.com/api/mcp/asset/862f68ee-54ec-4001-a943-b020efc49d42",
+  // Nami Insurance banner — Mobile
+  namiInsuranceBgMobile: "https://www.figma.com/api/mcp/asset/2c293006-fa7a-4dee-9594-4a059a53a883",
+  namiInsuranceArrowMobile: "https://www.figma.com/api/mcp/asset/7ae3e4f5-f891-4a76-8376-e6351f50fd2b",
 };
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -87,47 +92,68 @@ function Hero() {
   const { lang } = useLang();
   const stats = lang === "en"
     ? [
-        { label: "COMPANY", value: "Nami Foundation",           padCls: "pl-[40px] pr-[20px] max-md:px-4" },
-        { label: "TIME",    value: "2022 - 2026",               padCls: "px-[20px] max-md:px-4" },
-        { label: "DOMAIN",  value: "Crypto · Platform trading", padCls: "px-[20px] max-md:px-4" },
-        { label: "ROLE",    value: "Lead UI/UX Designer",       padCls: "pl-[20px] pr-[40px] max-md:px-4" },
+        { label: "COMPANY", value: "Nami Foundation",           padCls: "pl-[40px] pr-[20px]" },
+        { label: "TIME",    value: "2022 - 2026",               padCls: "px-[20px]" },
+        { label: "DOMAIN",  value: "Crypto · Platform trading", padCls: "px-[20px]" },
+        { label: "ROLE",    value: "Lead UI/UX Designer",       padCls: "pl-[20px] pr-[40px]" },
       ]
     : [
-        { label: "Công ty",   value: "Nami Foundation",           padCls: "pl-[40px] pr-[20px] max-md:px-4" },
-        { label: "Thời gian", value: "2022 - 2026",               padCls: "px-[20px] max-md:px-4" },
-        { label: "Lĩnh vực",  value: "Crypto · Platform trading", padCls: "px-[20px] max-md:px-4" },
-        { label: "Vai trò",   value: "Lead UI/UX Designer",       padCls: "pl-[20px] pr-[40px] max-md:px-4" },
+        { label: "Công ty",   value: "Nami Foundation",           padCls: "pl-[40px] pr-[20px]" },
+        { label: "Thời gian", value: "2022 - 2026",               padCls: "px-[20px]" },
+        { label: "Lĩnh vực",  value: "Crypto · Platform trading", padCls: "px-[20px]" },
+        { label: "Vai trò",   value: "Lead UI/UX Designer",       padCls: "pl-[20px] pr-[40px]" },
       ];
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-white flex flex-col justify-end pb-[60px] px-[40px] gap-11 max-md:px-6 max-md:pb-[40px] max-md:gap-6"
+      className="relative w-full overflow-hidden bg-white flex flex-col justify-end pb-[60px] px-[40px] gap-11 max-md:px-6 max-md:pb-[60px] max-md:gap-6 max-md:!h-svh"
       style={{ height: "clamp(680px, 62.5vw, 900px)" }}
     >
+      {/* Desktop background */}
       <img
         src={ASSETS.heroBg}
         alt=""
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none hidden md:block"
       />
+      {/* Mobile background */}
+      <img
+        src={ASSETS.heroBgMobile}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none md:hidden"
+      />
+
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="relative flex flex-col items-start w-full"
       >
-        <div className="shrink-0 w-full mb-[-24px] max-md:mb-[-8px]">
+        {/* Desktop title */}
+        <div className="hidden md:block w-full mb-[-24px]">
           <p
-            className="font-inter font-bold text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-5px] max-md:tracking-[-2px]"
+            className="font-inter font-bold text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-5px]"
             style={{ fontSize: "clamp(36px, 7vw, 100px)" }}
           >
             Nami Exchange
           </p>
         </div>
-        <div className="shrink-0 w-full">
+        <div className="hidden md:block w-full">
           <p
-            className="font-playfair font-semibold italic text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-5px] max-md:tracking-[-2px]"
+            className="font-playfair font-semibold italic text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-5px]"
             style={{ fontSize: "clamp(36px, 7vw, 100px)" }}
           >
+            Trading crypto
+          </p>
+        </div>
+
+        {/* Mobile title */}
+        <div className="md:hidden w-full">
+          <p className="font-inter font-semibold text-[40px] text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-1px]">
+            Nami Exchange
+          </p>
+        </div>
+        <div className="md:hidden w-full">
+          <p className="font-playfair font-medium italic text-[40px] text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-1px]">
             Trading crypto
           </p>
         </div>
@@ -137,19 +163,17 @@ function Hero() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-        className="relative backdrop-blur-[8px] bg-[rgba(255,255,255,0.4)] border border-[rgba(255,255,255,0.7)] rounded-[200px] p-px flex overflow-hidden w-fit max-w-[800px] max-md:rounded-[20px] max-md:grid max-md:grid-cols-2 max-md:w-full max-md:max-w-full"
+        className="relative backdrop-blur-[8px] bg-[rgba(255,255,255,0.4)] border border-[rgba(255,255,255,0.7)] rounded-[200px] p-px flex overflow-hidden w-fit max-w-[800px] max-md:rounded-[11px] max-md:grid max-md:grid-cols-2 max-md:w-full max-md:max-w-full"
       >
-        {stats.map((item, i, arr) => (
+        {stats.map((item) => (
           <div
             key={item.label}
-            className={`flex flex-col gap-[5px] py-4 max-md:py-3 ${item.padCls} ${
-              i < arr.length - 1 ? "max-md:border-b max-md:border-[rgba(0,0,0,0.08)]" : ""
-            }`}
+            className={`flex flex-col gap-[5px] py-4 max-md:p-[16px] ${item.padCls}`}
           >
             <span className="font-inter font-normal text-[9px] text-[#1f1f1f] tracking-[1.26px] uppercase leading-normal">
               {item.label}
             </span>
-            <span className="font-inter font-bold text-[13px] text-[#1f1f1f] tracking-[-0.13px] leading-normal whitespace-nowrap">
+            <span className="font-inter font-bold text-[13px] max-md:text-[12px] text-[#1f1f1f] tracking-[-0.13px] leading-normal whitespace-nowrap">
               {item.value}
             </span>
           </div>
@@ -506,17 +530,70 @@ const AFTER_SCREENS = [
   { src: ASSETS.newScreen5, label: "Ví (Mới)" },
 ];
 
-function ScreenRow({ screens }: { screens: typeof BEFORE_SCREENS }) {
+function ScreenRow({
+  screens,
+  scrollRef,
+  onScroll,
+}: {
+  screens: typeof BEFORE_SCREENS;
+  scrollRef?: React.RefObject<HTMLDivElement | null>;
+  onScroll?: () => void;
+}) {
   return (
-    <div className="grid grid-cols-5 gap-4 max-md:grid-cols-3 max-md:gap-3">
-      {screens.map((s, i) => (
-        <div key={i} className="flex flex-col gap-2 max-md:last:hidden max-md:[&:nth-child(4)]:hidden">
-          <div className="rounded-[12px] overflow-hidden" style={{ aspectRatio: "227/461" }}>
-            <img src={s.src} alt={s.label} className="w-full h-full object-cover" />
+    <>
+      {/* Desktop */}
+      <div className="hidden md:grid grid-cols-5 gap-4">
+        {screens.map((s, i) => (
+          <div key={i} className="flex flex-col gap-2">
+            <div className="rounded-[12px] overflow-hidden" style={{ aspectRatio: "227/461" }}>
+              <img src={s.src} alt={s.label} className="w-full h-full object-cover" />
+            </div>
+            <p className="font-inter font-normal text-[11px] text-[#666] text-center leading-[15.4px]">{s.label}</p>
           </div>
-          <p className="font-inter font-normal text-[11px] text-[#666] text-center leading-[15.4px]">{s.label}</p>
+        ))}
+      </div>
+
+      {/* Mobile: swipe carousel */}
+      <div
+        ref={scrollRef}
+        onScroll={onScroll}
+        className="md:hidden flex overflow-x-auto gap-2 -mx-6 px-6 snap-x snap-mandatory scroll-pl-6 [&::-webkit-scrollbar]:hidden"
+      >
+        {screens.map((s, i) => (
+          <div key={i} className="flex flex-col gap-2 shrink-0 w-[calc(100vw-48px)] snap-start">
+            <div className="rounded-[12px] overflow-hidden" style={{ aspectRatio: "227/461" }}>
+              <img src={s.src} alt={s.label} className="w-full h-full object-cover" />
+            </div>
+            <p className="font-inter font-normal text-[11px] text-[#666] text-center leading-[15.4px]">{s.label}</p>
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function NewRefreshScreens() {
+  const beforeRef = useRef<HTMLDivElement>(null);
+  const afterRef = useRef<HTMLDivElement>(null);
+  const syncing = useRef(false);
+
+  const syncFrom = (source: React.RefObject<HTMLDivElement | null>, target: React.RefObject<HTMLDivElement | null>) => () => {
+    if (syncing.current || !source.current || !target.current) return;
+    syncing.current = true;
+    target.current.scrollLeft = source.current.scrollLeft;
+    requestAnimationFrame(() => { syncing.current = false; });
+  };
+
+  return (
+    <div className="flex flex-col gap-8">
+      <ScreenRow screens={BEFORE_SCREENS} scrollRef={beforeRef} onScroll={syncFrom(beforeRef, afterRef)} />
+      <div className="flex items-center justify-center gap-[10px] pb-3">
+        <div className="rotate-90 w-9 h-9 shrink-0">
+          <img src={ASSETS.refreshArrow} alt="" className="w-full h-full object-contain" />
         </div>
-      ))}
+        <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.33px] uppercase leading-normal">Refresh</span>
+      </div>
+      <ScreenRow screens={AFTER_SCREENS} scrollRef={afterRef} onScroll={syncFrom(afterRef, beforeRef)} />
     </div>
   );
 }
@@ -620,7 +697,7 @@ function DesignProcess() {
         <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.33px] uppercase leading-normal">
           {vi ? "Cập nhật Design System" : "New Design System"}
         </span>
-        <div className="bg-[#f2f2f2] border border-[rgba(0,0,0,0.1)] rounded-[32px] overflow-hidden">
+        <div className="bg-[#f2f2f2] border border-[rgba(0,0,0,0.1)] rounded-[32px] max-md:rounded-[11px] overflow-hidden">
           <img src={ASSETS.designSystem} alt="Design system colour updates" className="w-full object-contain" style={{ maxHeight: 676 }} />
         </div>
         <div className="flex flex-col gap-[6px] max-w-[640px]">
@@ -662,19 +739,12 @@ function DesignProcess() {
       </div>
 
       {/* New Refresh */}
-      <motion.div {...fadeUp(0.1)} className="flex flex-col gap-6 pt-[52px]">
+      <motion.div {...fadeUp(0.1)} className="flex flex-col gap-4 pt-[52px]">
         <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.33px] uppercase leading-normal">
           {vi ? "Sự đổi mới" : "New Refresh"}
         </span>
         <div className="flex flex-col gap-8">
-          <ScreenRow screens={BEFORE_SCREENS} />
-          <div className="flex items-center justify-center gap-[10px] pb-3">
-            <div className="rotate-90 w-9 h-9 shrink-0">
-              <img src={ASSETS.refreshArrow} alt="" className="w-full h-full object-contain" />
-            </div>
-            <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.33px] uppercase leading-normal">Refresh</span>
-          </div>
-          <ScreenRow screens={AFTER_SCREENS} />
+          <NewRefreshScreens />
         </div>
       </motion.div>
 
@@ -701,7 +771,7 @@ function DesignProcess() {
       </motion.div>
 
       {/* AI — Nami Sea */}
-      <motion.div {...fadeUp()} className="flex flex-col gap-6 pt-12">
+      <motion.div {...fadeUp()} className="flex flex-col gap-4 pt-12">
         <SectionLabel>AI — Nami Sea</SectionLabel>
         <div className="flex flex-col gap-5 max-w-[640px]">
           <Body>
@@ -728,7 +798,7 @@ function DesignProcess() {
       </motion.div>
 
       {/* KYC */}
-      <motion.div {...fadeUp()} className="flex flex-col gap-6 pt-12">
+      <motion.div {...fadeUp()} className="flex flex-col gap-4 pt-12">
         <SectionLabel>KYC</SectionLabel>
         <div className="max-w-[640px]">
           <Body>
@@ -750,7 +820,7 @@ function DesignProcess() {
       </motion.div>
 
       {/* Key Design Learned */}
-      <motion.div {...fadeUp()} className="flex flex-col gap-6 pt-12">
+      <motion.div {...fadeUp()} className="flex flex-col gap-4 pt-12">
         <SectionLabel>{vi ? "Bài học thiết kế" : "Key Design Learned"}</SectionLabel>
         <div className="flex flex-col w-full">
           {KEY_LEARNINGS.map((item) => <NumberedRow key={item.num} {...item} />)}
@@ -758,12 +828,12 @@ function DesignProcess() {
       </motion.div>
 
       {/* What's Next */}
-      <motion.div {...fadeUp()} className="flex flex-col gap-10 pt-12">
+      <motion.div {...fadeUp()} className="flex flex-col gap-4 pt-12">
         <SectionLabel>{vi ? "Tiếp theo là gì" : "What's next"}</SectionLabel>
         <div className="flex flex-col w-full">
           {WHATS_NEXT_ITEMS.map((item) => <NumberedRow key={item.num} {...item} />)}
         </div>
-        <p className="font-inter font-normal italic text-[14px] text-[#1f1f1f] leading-[22.4px] tracking-[-0.14px]">
+        <p className="font-inter font-normal italic text-[14px] text-[#1f1f1f] leading-[22.4px] tracking-[-0.14px] mt-6">
           Team member: Võ Xuân Truyền, Trần Nguyên Phát, Phạm Thị Tường Vy, Trần Ngọc Kim Ngân, Võ Hoàng Vy, Hồng Thị Thanh Ngân.
         </p>
       </motion.div>
@@ -780,26 +850,36 @@ function NamiInsuranceBanner() {
       href="https://www.figma.com/proto/Nk2vbjDBBiGPRWU1PjqVoO/Untitled?node-id=5%3A1906&scaling=scale-down"
       target="_blank"
       rel="noopener noreferrer"
-      className="relative w-full overflow-hidden flex items-center border-t border-[rgba(0,0,0,0.1)] cursor-pointer"
+      className="relative w-full overflow-hidden flex border-t border-[rgba(0,0,0,0.1)] cursor-pointer items-center max-md:items-start max-md:!min-h-0"
       style={{ minHeight: "clamp(200px, 18vw, 300px)" }}
     >
-      <img
-        src={ASSETS.namiInsuranceBg}
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-      />
-      <div className="relative w-full px-[120px] max-md:px-6 flex items-center justify-between gap-6">
+      {/* Desktop background */}
+      <img src={ASSETS.namiInsuranceBg} alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none hidden md:block" />
+      {/* Mobile background */}
+      <img src={ASSETS.namiInsuranceBgMobile} alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none md:hidden" />
+
+      {/* Desktop layout */}
+      <div className="hidden md:flex relative w-full px-[120px] items-center justify-between gap-6">
         <h3
-          className="font-inter font-semibold text-white leading-normal tracking-[0px] max-md:tracking-[-0.5px]"
+          className="font-inter font-semibold text-white leading-normal"
           style={{ fontSize: "clamp(22px, 3.3vw, 40px)" }}
         >
           {vi ? "Giải pháp tài chính phi tập trung, linh hoạt" : "Decentralize, adaptability, Financial"}
         </h3>
         <div className="flex items-center gap-4 bg-[rgba(0,0,0,0.1)] rounded-full px-6 py-2 shrink-0 hover:bg-[rgba(0,0,0,0.2)] transition-colors">
-          <span className="font-inter font-semibold text-[24px] text-white max-md:text-[18px]">
-            {vi ? "Xem dự án" : "View project"}
-          </span>
+          <span className="font-inter font-semibold text-[24px] text-white">{vi ? "Xem dự án" : "View project"}</span>
           <img src={vi ? ASSETS.namiInsuranceArrowVI : ASSETS.namiInsuranceArrow} alt="" className="w-5 h-5 object-contain" />
+        </div>
+      </div>
+
+      {/* Mobile layout — pt=36px (32+4), pb=48px (32+16), px=24px, gap=24px */}
+      <div className="md:hidden relative w-full px-6 pt-9 pb-12 flex flex-col gap-6">
+        <h3 className="font-inter font-semibold text-[26px] text-white leading-normal">
+          {vi ? "Giải pháp tài chính phi tập trung, linh hoạt" : "Decentralize, adaptability, Financial"}
+        </h3>
+        <div className="flex items-center gap-4 bg-[rgba(0,0,0,0.1)] rounded-full px-6 py-2 w-fit hover:bg-[rgba(0,0,0,0.2)] transition-colors">
+          <span className="font-inter font-semibold text-[20px] text-white">{vi ? "Xem dự án" : "View project"}</span>
+          <img src={ASSETS.namiInsuranceArrowMobile} alt="" className="w-5 h-5 object-contain" />
         </div>
       </div>
     </a>
