@@ -10,14 +10,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Figma node 2022:24517 assets
 const ASSETS = {
-  f02: "https://www.figma.com/api/mcp/asset/73981299-3723-456e-993e-d465b5e7e343",
-  f04: "https://www.figma.com/api/mcp/asset/98930378-049c-4099-bc8c-a7105d293be2",
-  f07: "https://www.figma.com/api/mcp/asset/4002fa5d-11bc-4a87-81a3-bf884836d960",
-  f09: "https://www.figma.com/api/mcp/asset/100da036-6851-465e-b153-1910b3d51a26",
-  f10: "https://www.figma.com/api/mcp/asset/7df3ab87-67db-4080-a861-2116b0dfb5ae",
-  f11: "https://www.figma.com/api/mcp/asset/f20d6712-f4d6-4454-94bd-b7a86740ba0f",
-  f12: "https://www.figma.com/api/mcp/asset/6e9c2536-d8ac-4a55-b9a3-473c4bd41862",
-  f06: "https://www.figma.com/api/mcp/asset/8774e628-b070-4701-8c94-f19887df7a3b",
+  f02: "https://www.figma.com/api/mcp/asset/93895430-5b57-43bc-bfb3-e41d285f0c93",
+  f04: "https://www.figma.com/api/mcp/asset/dddd06aa-4715-4ef0-b038-034ca071bce0",
+  f07: "https://www.figma.com/api/mcp/asset/70032c70-a984-4e36-b634-98d105201625",
+  f09: "https://www.figma.com/api/mcp/asset/abb89005-9326-45ec-a6ff-bb22aa205535",
+  f10: "https://www.figma.com/api/mcp/asset/86723249-9219-492a-b885-51904c1d5556",
+  f11: "https://www.figma.com/api/mcp/asset/7c1b78fa-8af9-496a-997c-10cbc7b38ee7",
+  f12: "https://www.figma.com/api/mcp/asset/cf89c484-8ab1-48d7-b59d-df160e1caa0a",
+  f06: "https://www.figma.com/api/mcp/asset/afdfd3f6-c452-461c-829d-9db6b824c0a6",
 };
 
 // Per-frame parallax depth — indices 0-11 desktop, 12-23 mobile
@@ -223,6 +223,7 @@ export default function HeroSection() {
 
   return (
     <section
+      id="hero"
       ref={sectionRef}
       className="relative bg-white w-full overflow-x-clip max-md:!min-h-screen"
       style={{ minHeight: "max(100vh, 1110px)" }}

@@ -237,16 +237,15 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
                       key={label}
                       href={href}
                       onClick={(e) => {
-                        if (!isHome) {
-                          setMenuOpen(false);
-                          return;
-                        }
-                        e.preventDefault();
                         setMenuOpen(false);
-                        setTimeout(() => {
-                          const el = document.getElementById(href.replace("#", ""));
-                          if (el) el.scrollIntoView({ behavior: "smooth" });
-                        }, 300);
+                        if (isHome) {
+                          e.preventDefault();
+                          setTimeout(() => {
+                            const el = document.getElementById(href.replace("#", ""));
+                            if (el) el.scrollIntoView({ behavior: "smooth" });
+                          }, 300);
+                        }
+                        // When not on home, let the default <a> navigate to /#section
                       }}
                       className="font-inter font-light text-[15px] text-[#1f1f1f] py-[2px] hover:opacity-60 transition-opacity"
                     >

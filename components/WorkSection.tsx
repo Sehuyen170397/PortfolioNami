@@ -338,18 +338,37 @@ export default function WorkSection() {
           },
         });
 
-        [card0WrapRef, card1WrapRef].forEach((cardRef) => {
-          gsap.timeline({
-            scrollTrigger: {
-              trigger: cardRef.current,
-              start: "top 124px",
-              end: "+=600",
-              pin: true,
-              scrub: 1.5,
-              anticipatePin: 1,
-            },
-          }).to(cardRef.current, { scale: 0.94, opacity: 0, ease: "none" }, 0);
-        });
+        // Card 0: pin for full 2-card scroll (724 * 2 = 1448px) so it stays fixed under card 1
+        // while card 2 covers card 1. Timeline extended to 4 units; animation in first 2 units.
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: card0WrapRef.current,
+            start: "top 124px",
+            end: "+=1448",
+            pin: true,
+            scrub: 0.5,
+            anticipatePin: 1,
+            fastScrollEnd: true,
+          },
+        })
+          .to(card0WrapRef.current, { scale: 0.94, ease: "none", duration: 2, force3D: true }, 0)
+          .to(card0WrapRef.current, { opacity: 0.5, ease: "none", duration: 1 }, 1)
+          .set({}, {}, 4);
+
+        // Card 1: pin for card 2's full scroll (unchanged 724px)
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: card1WrapRef.current,
+            start: "top 124px",
+            end: "+=724",
+            pin: true,
+            scrub: 0.5,
+            anticipatePin: 1,
+            fastScrollEnd: true,
+          },
+        })
+          .to(card1WrapRef.current, { scale: 0.94, ease: "none", duration: 2, force3D: true }, 0)
+          .to(card1WrapRef.current, { opacity: 0.5, ease: "none", duration: 1 }, 1);
       });
 
       // ── Mobile (<768px) ──
@@ -366,18 +385,36 @@ export default function WorkSection() {
           },
         });
 
-        [mobileCard0WrapRef, mobileCard1WrapRef].forEach((cardRef) => {
-          gsap.timeline({
-            scrollTrigger: {
-              trigger: cardRef.current,
-              start: "top 96px",
-              end: "+=600",
-              pin: true,
-              scrub: 1.5,
-              anticipatePin: 1,
-            },
-          }).to(cardRef.current, { scale: 0.94, opacity: 0, ease: "none" }, 0);
-        });
+        // Card 0: pin for full 2-card scroll (600 * 2 = 1200px)
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: mobileCard0WrapRef.current,
+            start: "top 96px",
+            end: "+=1200",
+            pin: true,
+            scrub: 0.5,
+            anticipatePin: 1,
+            fastScrollEnd: true,
+          },
+        })
+          .to(mobileCard0WrapRef.current, { scale: 0.94, ease: "none", duration: 2, force3D: true }, 0)
+          .to(mobileCard0WrapRef.current, { opacity: 0.5, ease: "none", duration: 1 }, 1)
+          .set({}, {}, 4);
+
+        // Card 1: pin for card 2's full scroll (unchanged 600px)
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: mobileCard1WrapRef.current,
+            start: "top 96px",
+            end: "+=600",
+            pin: true,
+            scrub: 0.5,
+            anticipatePin: 1,
+            fastScrollEnd: true,
+          },
+        })
+          .to(mobileCard1WrapRef.current, { scale: 0.94, ease: "none", duration: 2, force3D: true }, 0)
+          .to(mobileCard1WrapRef.current, { opacity: 0.5, ease: "none", duration: 1 }, 1);
       });
     }, sectionRef);
 
@@ -388,7 +425,7 @@ export default function WorkSection() {
     <section
       id="work"
       ref={sectionRef}
-      className="flex flex-col gap-6 items-start pb-[120px] pt-[120px] px-[40px] w-full bg-white max-md:pt-[80px] max-md:pb-[60px] max-md:px-6 max-md:gap-6"
+      className="relative z-[50] flex flex-col gap-6 items-start pb-[120px] pt-[120px] px-[40px] w-full bg-white max-md:pt-[80px] max-md:pb-[60px] max-md:px-6 max-md:gap-6"
     >
       {/* Header */}
       <div ref={headerWrapRef} className="w-full flex flex-col items-center justify-center pb-6 max-md:pb-0 overflow-hidden">
@@ -403,10 +440,10 @@ export default function WorkSection() {
 
       {/* Desktop: vertical list */}
       <div className="hidden md:flex flex-col gap-6 w-full">
-        <div ref={card0WrapRef} className="w-full relative" style={{ zIndex: 10 }}>
+        <div ref={card0WrapRef} className="w-full relative" style={{ zIndex: 10, willChange: "transform, opacity" }}>
           <WorkCardDesktop project={projects[0]} />
         </div>
-        <div ref={card1WrapRef} className="w-full relative" style={{ zIndex: 20 }}>
+        <div ref={card1WrapRef} className="w-full relative" style={{ zIndex: 20, willChange: "transform, opacity" }}>
           <WorkCardDesktop project={projects[1]} />
         </div>
         <div className="w-full relative" style={{ zIndex: 30 }}>
@@ -416,10 +453,10 @@ export default function WorkSection() {
 
       {/* Mobile: vertical list */}
       <div className="md:hidden w-full flex flex-col gap-4">
-        <div ref={mobileCard0WrapRef} className="w-full relative" style={{ zIndex: 10 }}>
+        <div ref={mobileCard0WrapRef} className="w-full relative" style={{ zIndex: 10, willChange: "transform, opacity" }}>
           <WorkCardMobile project={projects[0]} />
         </div>
-        <div ref={mobileCard1WrapRef} className="w-full relative" style={{ zIndex: 20 }}>
+        <div ref={mobileCard1WrapRef} className="w-full relative" style={{ zIndex: 20, willChange: "transform, opacity" }}>
           <WorkCardMobile project={projects[1]} />
         </div>
         <div className="w-full relative" style={{ zIndex: 30 }}>
