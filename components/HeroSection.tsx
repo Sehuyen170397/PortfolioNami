@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { useLang } from "@/contexts/LanguageContext";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,9 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 // Figma node 2022:24517 assets
-// Frame images — left-constrained frames use `left:`, right-constrained use `right:`
 const ASSETS = {
-  // Round avatars / photos
   f02: "https://www.figma.com/api/mcp/asset/73981299-3723-456e-993e-d465b5e7e343",
   f04: "https://www.figma.com/api/mcp/asset/98930378-049c-4099-bc8c-a7105d293be2",
   f07: "https://www.figma.com/api/mcp/asset/4002fa5d-11bc-4a87-81a3-bf884836d960",
@@ -19,28 +17,156 @@ const ASSETS = {
   f10: "https://www.figma.com/api/mcp/asset/7df3ab87-67db-4080-a861-2116b0dfb5ae",
   f11: "https://www.figma.com/api/mcp/asset/f20d6712-f4d6-4454-94bd-b7a86740ba0f",
   f12: "https://www.figma.com/api/mcp/asset/6e9c2536-d8ac-4a55-b9a3-473c4bd41862",
-  // App screenshot
   f06: "https://www.figma.com/api/mcp/asset/8774e628-b070-4701-8c94-f19887df7a3b",
 };
 
 // Per-frame parallax depth — indices 0-11 desktop, 12-23 mobile
 const PARALLAX_Y = [
-  60, 30, 45, 25, 50, 35, 40, 55, 30, 20, 45, 35, // desktop
-  30, 15, 22, 12, 25, 17, 20, 27, 15, 10, 22, 17,  // mobile
+  60, 30, 45, 25, 50, 35, 40, 55, 30, 20, 45, 35,
+  30, 15, 22, 12, 25, 17, 20, 27, 15, 10, 22, 17,
 ];
+
+// Cumulative ms at which each step transition fires (6 transitions → 7 steps)
+const STEP_SCHEDULE = [2000, 4000, 6000, 8000, 10000, 12000];
+
+function StepContent({ step, lang }: { step: number; lang: string }) {
+  const vi = lang === "vi";
+
+  // Step 0 — "Truyen Vo"
+  if (step === 0) {
+    return (
+      <p
+        className="font-inter font-semibold text-[#1f1f1f] whitespace-nowrap text-center"
+        style={{ fontSize: "clamp(40px, 7vw, 100px)", letterSpacing: "clamp(-3px, -0.21vw, -1px)" }}
+      >
+        Truyen Vo
+      </p>
+    );
+  }
+
+  // Step 1 — "UI/UX Designer"
+  if (step === 1) {
+    return (
+      <p
+        className="font-inter font-semibold text-[#1f1f1f] whitespace-nowrap text-center"
+        style={{ fontSize: "clamp(40px, 7vw, 100px)", letterSpacing: "-3px" }}
+      >
+        {"UI/UX "}
+        <span className="font-playfair italic font-medium">Designer</span>
+      </p>
+    );
+  }
+
+  // Step 2 — "Skills / Design system"
+  if (step === 2) {
+    return (
+      <div className="flex flex-col items-center gap-0.5">
+        <p
+          className="font-playfair italic font-medium text-[#1f1f1f] text-center tracking-[-1px]"
+          style={{ fontSize: "clamp(28px, 3.9vw, 56px)" }}
+        >
+          Skills
+        </p>
+        <p
+          className="font-inter font-semibold text-[#1f1f1f] whitespace-nowrap"
+          style={{ fontSize: "clamp(30px, 5.6vw, 80px)", letterSpacing: "-2.4px" }}
+        >
+          Design system
+        </p>
+      </div>
+    );
+  }
+
+  // Step 3 — "Skills / Prototyping"
+  if (step === 3) {
+    return (
+      <div className="flex flex-col items-center gap-0.5">
+        <p
+          className="font-playfair italic font-medium text-[#1f1f1f] text-center tracking-[-1px]"
+          style={{ fontSize: "clamp(28px, 3.9vw, 56px)" }}
+        >
+          Skills
+        </p>
+        <p
+          className="font-inter font-semibold text-[#1f1f1f] whitespace-nowrap"
+          style={{ fontSize: "clamp(30px, 5.6vw, 80px)", letterSpacing: "-2.4px" }}
+        >
+          Prototyping
+        </p>
+      </div>
+    );
+  }
+
+  // Step 4 — "Skills / Visual design"
+  if (step === 4) {
+    return (
+      <div className="flex flex-col items-center gap-0.5">
+        <p
+          className="font-playfair italic font-medium text-[#1f1f1f] text-center tracking-[-1px]"
+          style={{ fontSize: "clamp(28px, 3.9vw, 56px)" }}
+        >
+          Skills
+        </p>
+        <p
+          className="font-inter font-semibold text-[#1f1f1f] whitespace-nowrap"
+          style={{ fontSize: "clamp(30px, 5.6vw, 80px)", letterSpacing: "-2.4px" }}
+        >
+          Visual design
+        </p>
+      </div>
+    );
+  }
+
+  // Step 5 — "...and much more"
+  if (step === 5) {
+    return (
+      <p
+        className="font-inter font-semibold text-[#1f1f1f] text-center"
+        style={{ fontSize: "clamp(40px, 5.6vw, 80px)", letterSpacing: "-1px" }}
+      >
+        {"...and much "}
+        <span className="font-playfair italic font-medium">more</span>
+      </p>
+    );
+  }
+
+  // Step 6 — final "Welcome!" + bio (resting state)
+  return (
+    <div className="flex flex-col items-center gap-[10px] w-[460px] max-md:w-full max-md:px-6">
+      <h1
+        className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
+        style={{ fontSize: "clamp(48px, 6.5vw, 100px)" }}
+      >
+        {vi ? "Xin chào!" : "Welcome!"}
+      </h1>
+      <p className="font-inter font-light text-[15px] text-[#666] text-center leading-[24px]">
+        {vi
+          ? `Lớn lên ở Vũng Tàu, hiện đang "đóng đô" tại TP.HCM. Mình có hơn 3 năm làm việc trong crypto, fintech và bảo hiểm, cùng 4+ năm "lăn lộn" trong ngành thiết kế, từ graphic design đến UX/UI.`
+          : "Vung Tau raised, Ho Chi Minh based. More than three years of experience across crypto, fintech and insurance. More than four years in design industry include graphic design."}
+      </p>
+    </div>
+  );
+}
 
 export default function HeroSection() {
   const { lang } = useLang();
+  const [step, setStep] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  // floatRefs → inner wrapper, oscillation target
   const floatRefs = useRef<(HTMLDivElement | null)[]>([]);
-  // parallaxRefs → outer wrapper, scroll-parallax target
   const parallaxRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Advance through the 7 hero states on page load
+  useEffect(() => {
+    const timeouts = STEP_SCHEDULE.map((delay, i) =>
+      setTimeout(() => setStep(i + 1), delay)
+    );
+    return () => timeouts.forEach(clearTimeout);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ── Oscillating float (unchanged) ──
+      // ── Oscillating float ──
       floatRefs.current.forEach((el, i) => {
         if (!el) return;
         gsap.to(el, {
@@ -144,11 +270,7 @@ export default function HeroSection() {
         style={{ right: 448, top: 29, width: 80, height: 80 }}
       >
         <div ref={setFloatRef(1)}>
-          <img
-            src={ASSETS.f02}
-            alt=""
-            className="w-full h-full rounded-full object-cover"
-          />
+          <img src={ASSETS.f02} alt="" className="w-full h-full rounded-full object-cover" />
         </div>
       </div>
 
@@ -184,11 +306,7 @@ export default function HeroSection() {
         style={{ left: 287, top: 55, width: 80, height: 80 }}
       >
         <div ref={setFloatRef(3)}>
-          <img
-            src={ASSETS.f04}
-            alt=""
-            className="w-full h-full rounded-full object-cover"
-          />
+          <img src={ASSETS.f04} alt="" className="w-full h-full rounded-full object-cover" />
         </div>
       </div>
 
@@ -243,11 +361,7 @@ export default function HeroSection() {
       >
         <div ref={setFloatRef(6)}>
           <div className="-rotate-[15deg]">
-            <img
-              src={ASSETS.f07}
-              alt=""
-              className="w-[80px] h-[80px] rounded-full object-cover"
-            />
+            <img src={ASSETS.f07} alt="" className="w-[80px] h-[80px] rounded-full object-cover" />
           </div>
         </div>
       </div>
@@ -285,11 +399,7 @@ export default function HeroSection() {
       >
         <div ref={setFloatRef(8)}>
           <div className="rotate-[15deg]">
-            <img
-              src={ASSETS.f09}
-              alt=""
-              className="w-[120px] h-[120px] object-cover"
-            />
+            <img src={ASSETS.f09} alt="" className="w-[120px] h-[120px] object-cover" />
           </div>
         </div>
       </div>
@@ -304,11 +414,7 @@ export default function HeroSection() {
           ref={setFloatRef(9)}
           className="w-full h-full backdrop-blur-[9px] overflow-hidden rounded-full glass-shadow"
         >
-          <img
-            src={ASSETS.f10}
-            alt=""
-            className="w-full h-full object-cover rounded-full"
-          />
+          <img src={ASSETS.f10} alt="" className="w-full h-full object-cover rounded-full" />
         </div>
       </div>
 
@@ -320,11 +426,7 @@ export default function HeroSection() {
       >
         <div ref={setFloatRef(10)}>
           <div className="-rotate-[15deg]">
-            <img
-              src={ASSETS.f11}
-              alt=""
-              className="w-[140px] h-[140px] rounded-full object-cover"
-            />
+            <img src={ASSETS.f11} alt="" className="w-[140px] h-[140px] rounded-full object-cover" />
           </div>
         </div>
       </div>
@@ -337,11 +439,7 @@ export default function HeroSection() {
       >
         <div ref={setFloatRef(11)}>
           <div className="-rotate-[15deg]">
-            <img
-              src={ASSETS.f12}
-              alt=""
-              className="w-[80px] h-[80px] rounded-full object-cover"
-            />
+            <img src={ASSETS.f12} alt="" className="w-[80px] h-[80px] rounded-full object-cover" />
           </div>
         </div>
       </div>
@@ -462,31 +560,55 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ── Center text ── */}
+      {/* ── Center text — animated step sequence ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        {/*
-         * Plain div for absolute centering (prevents Framer Motion transform:none
-         * at rest from overwriting the CSS translate), also the GSAP scroll target.
-         */}
-        <div ref={contentRef} className="md:-mt-[120px] max-md:-mt-[40px]">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
-            className="flex flex-col items-center gap-[10px] w-[460px] max-md:w-full max-md:px-6"
-          >
-            <h1
-              className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
-              style={{ fontSize: "clamp(48px, 6.5vw, 100px)" }}
-            >
-              {lang === "en" ? "Welcome!" : "Xin chào!"}
-            </h1>
-            <p className="font-inter font-light text-[15px] text-[#666] text-center leading-[24px]">
-              {lang === "en"
-                ? "Vung Tau raised, Ho Chi Minh based. More than three years of experience across crypto, fintech and insurance. More than four years in design industry include graphic design."
-                : `Lớn lên ở Vũng Tàu, hiện đang "đóng đô" tại TP.HCM. Mình có hơn 3 năm làm việc trong crypto, fintech và bảo hiểm, cùng 4+ năm "lăn lộn" trong ngành thiết kế, từ graphic design đến UX/UI.`}
-            </p>
-          </motion.div>
+        <div ref={contentRef} className="md:-mt-[120px] max-md:-mt-[40px] flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            {step >= 2 && step <= 4 ? (
+              // Steps 2-4 share key="skills" so the outer div stays mounted.
+              // "Skills" label is a plain element — never re-animates between steps 2→3→4.
+              // Only the skill name below it is inside its own AnimatePresence.
+              <motion.div
+                key="skills"
+                initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, filter: "blur(6px)", transition: { duration: 0.18, ease: "easeIn" } }}
+                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col items-center gap-0.5"
+              >
+                <p
+                  className="font-playfair italic font-medium text-[#1f1f1f] text-center tracking-[-1px]"
+                  style={{ fontSize: "clamp(32px, 3.9vw, 56px)" }}
+                >
+                  Skills
+                </p>
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={step}
+                    initial={{ opacity: 0, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, filter: "blur(6px)", transition: { duration: 0.15, ease: "easeIn" } }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="font-inter font-semibold text-[#1f1f1f] whitespace-nowrap"
+                    style={{ fontSize: "clamp(40px, 5.6vw, 80px)", letterSpacing: "clamp(-2.4px, -0.167vw, -1px)" }}
+                  >
+                    {step === 2 ? "Design system" : step === 3 ? "Prototyping" : "Visual design"}
+                  </motion.p>
+                </AnimatePresence>
+              </motion.div>
+            ) : (
+              <motion.div
+                key={step}
+                initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, filter: "blur(6px)", transition: { duration: 0.18, ease: "easeIn" } }}
+                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: step === 0 ? 0.4 : 0 }}
+                className="flex items-center justify-center"
+              >
+                <StepContent step={step} lang={lang} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>
