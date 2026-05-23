@@ -4,24 +4,24 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useLang } from "@/contexts/LanguageContext";
 
-function MenuIcon() {
+function MenuIcon({ color = "#1f1f1f" }: { color?: string }) {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <line x1="2" y1="8.5" x2="22" y2="8.5" stroke="#1f1f1f" strokeWidth="1.5" strokeLinecap="round" />
-      <line x1="2" y1="15.5" x2="22" y2="15.5" stroke="#1f1f1f" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="2" y1="8.5" x2="22" y2="8.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="2" y1="15.5" x2="22" y2="15.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
 
-function CloseIcon() {
+function CloseIcon({ color = "#1f1f1f" }: { color?: string }) {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path d="M6 6L18 18M18 6L6 18" stroke="#1f1f1f" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M6 6L18 18M18 6L6 18" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
 
-export default function Navbar() {
+export default function Navbar({ variant }: { variant?: "dark" }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [navWidth, setNavWidth] = useState(0);
@@ -45,8 +45,12 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-
   const { lang, toggleLang } = useLang();
+
+  // Dark hero: white text when unscrolled on pages with dark backgrounds
+  const isDark = variant === "dark" && !scrolled;
+  // For mobile: revert to dark when menu is open (bg becomes glassy white)
+  const isMobileDark = isDark && !menuOpen;
 
   const desktopLinks = lang === "en"
     ? [
@@ -116,7 +120,7 @@ export default function Navbar() {
         >
           <a
             href="/"
-            className="font-playfair italic font-semibold text-[20px] text-[#1f1f1f] tracking-[-0.3px] leading-normal"
+            className={`font-playfair italic font-semibold text-[20px] tracking-[-0.3px] leading-normal transition-colors ${isDark ? "text-[#fafafa]" : "text-[#1f1f1f]"}`}
           >
             Truyen
           </a>
@@ -127,7 +131,7 @@ export default function Navbar() {
                 <a
                   key={label}
                   href={href}
-                  className="font-inter font-normal text-[12px] text-[#1f1f1f] uppercase tracking-wide leading-normal hover:opacity-50 transition-opacity"
+                  className={`font-inter font-normal text-[12px] uppercase tracking-wide leading-normal hover:opacity-50 transition-opacity ${isDark ? "text-[#fafafa]" : "text-[#1f1f1f]"}`}
                 >
                   {label}
                 </a>
@@ -135,10 +139,14 @@ export default function Navbar() {
             </div>
             <button
               onClick={toggleLang}
-              className="border border-[rgba(0,0,0,0.1)] rounded-full h-8 flex items-center gap-[7px] px-4 py-2 backdrop-blur-[8px] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,0,0,0.08)] transition-colors cursor-pointer"
+              className={`rounded-full h-8 flex items-center gap-[7px] px-4 py-2 backdrop-blur-[8px] transition-colors cursor-pointer border ${
+                isDark
+                  ? "border-[rgba(255,255,255,0.2)] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.2)]"
+                  : "border-[rgba(0,0,0,0.1)] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,0,0,0.08)]"
+              }`}
             >
-              <span className={`font-inter text-[11px] ${lang === "en" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>EN</span>
-              <span className={`font-inter text-[11px] ${lang === "vi" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>.VI</span>
+              <span className={`font-inter text-[11px] ${lang === "en" ? "font-semibold" : "font-normal"} ${isDark ? (lang === "en" ? "text-[#fafafa]" : "text-[#adadad]") : (lang === "en" ? "text-[#1f1f1f]" : "text-[#666]")}`}>EN</span>
+              <span className={`font-inter text-[11px] ${lang === "vi" ? "font-semibold" : "font-normal"} ${isDark ? (lang === "vi" ? "text-[#fafafa]" : "text-[#adadad]") : (lang === "vi" ? "text-[#1f1f1f]" : "text-[#666]")}`}>.VI</span>
             </button>
           </div>
         </motion.nav>
@@ -191,7 +199,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between w-full">
             <a
               href="/"
-              className="font-playfair italic font-semibold text-[15px] text-[#1f1f1f] tracking-[-0.3px]"
+              className={`font-playfair italic font-semibold text-[15px] tracking-[-0.3px] transition-colors ${isMobileDark ? "text-[#fafafa]" : "text-[#1f1f1f]"}`}
             >
               Truyen
             </a>
@@ -200,7 +208,9 @@ export default function Navbar() {
               className="w-6 h-6 flex items-center justify-center"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
             >
-              {menuOpen ? <CloseIcon /> : <MenuIcon />}
+              {menuOpen
+                ? <CloseIcon color="#1f1f1f" />
+                : <MenuIcon color={isMobileDark ? "#fafafa" : "#1f1f1f"} />}
             </button>
           </div>
 

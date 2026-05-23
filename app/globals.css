@@ -55,3 +55,23 @@ body {
 .work-cards-container {
   will-change: transform;
 }
+
+/* Gradient border via ::before pseudo-element.
+   Set --gb to the desired gradient on the element. */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gb);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}

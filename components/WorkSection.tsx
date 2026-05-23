@@ -51,8 +51,8 @@ const projectsEN = [
     image: ASSETS.containerInsurance,
     mobileImage: ASSETS.mobileInsurance,
     dark: true,
-    desktopLink: "",
-    mobileLink: "",
+    desktopLink: "/work/nami-insurance",
+    mobileLink: "/work/nami-insurance",
   },
   {
     id: "highway",
@@ -66,8 +66,8 @@ const projectsEN = [
     image: ASSETS.containerHighway,
     mobileImage: ASSETS.mobileHighway,
     dark: true,
-    desktopLink: "",
-    mobileLink: "",
+    desktopLink: "/work/highway",
+    mobileLink: "/work/highway",
   },
 ];
 
@@ -99,8 +99,8 @@ const projectsVI = [
     image: ASSETS.containerInsurance,
     mobileImage: ASSETS.mobileInsurance,
     dark: true,
-    desktopLink: "",
-    mobileLink: "",
+    desktopLink: "/work/nami-insurance",
+    mobileLink: "/work/nami-insurance",
   },
   {
     id: "highway",
@@ -114,8 +114,8 @@ const projectsVI = [
     image: ASSETS.containerHighway,
     mobileImage: ASSETS.mobileHighway,
     dark: true,
-    desktopLink: "",
-    mobileLink: "",
+    desktopLink: "/work/highway",
+    mobileLink: "/work/highway",
   },
 ];
 

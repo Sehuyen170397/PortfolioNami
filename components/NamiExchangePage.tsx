@@ -122,42 +122,53 @@ function Hero() {
         className="absolute inset-0 w-full h-full object-cover pointer-events-none md:hidden"
       />
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-        className="relative flex flex-col items-start w-full"
-      >
+      <div className="relative flex flex-col items-start w-full">
         {/* Desktop title */}
-        <div className="hidden md:block w-full mb-[-24px]">
-          <p
+        <div className="hidden md:block w-full mb-[-24px] overflow-hidden">
+          <motion.p
             className="font-inter font-bold text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-5px]"
             style={{ fontSize: "clamp(36px, 7vw, 100px)" }}
+            initial={{ y: "110%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
           >
             Nami Exchange
-          </p>
+          </motion.p>
         </div>
-        <div className="hidden md:block w-full">
-          <p
+        <div className="hidden md:block w-full overflow-hidden">
+          <motion.p
             className="font-playfair font-semibold italic text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-5px]"
             style={{ fontSize: "clamp(36px, 7vw, 100px)" }}
+            initial={{ y: "110%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
           >
             Trading crypto
-          </p>
+          </motion.p>
         </div>
 
         {/* Mobile title */}
-        <div className="md:hidden w-full">
-          <p className="font-inter font-semibold text-[40px] text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-1px]">
+        <div className="md:hidden w-full overflow-hidden">
+          <motion.p
+            className="font-inter font-semibold text-[40px] text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-1px]"
+            initial={{ y: "110%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+          >
             Nami Exchange
-          </p>
+          </motion.p>
         </div>
-        <div className="md:hidden w-full">
-          <p className="font-playfair font-medium italic text-[40px] text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-1px]">
+        <div className="md:hidden w-full overflow-hidden">
+          <motion.p
+            className="font-playfair font-medium italic text-[40px] text-[#1f1f1f] leading-normal whitespace-nowrap tracking-[-1px]"
+            initial={{ y: "110%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
+          >
             Trading crypto
-          </p>
+          </motion.p>
         </div>
-      </motion.div>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 16 }}
@@ -847,9 +858,7 @@ function NamiInsuranceBanner() {
   const vi = lang === "vi";
   return (
     <a
-      href="https://www.figma.com/proto/Nk2vbjDBBiGPRWU1PjqVoO/Untitled?node-id=5%3A1906&scaling=scale-down"
-      target="_blank"
-      rel="noopener noreferrer"
+      href="/work/nami-insurance"
       className="relative w-full overflow-hidden flex border-t border-[rgba(0,0,0,0.1)] cursor-pointer items-center max-md:items-start max-md:!min-h-0"
       style={{ minHeight: "clamp(200px, 18vw, 300px)" }}
     >
