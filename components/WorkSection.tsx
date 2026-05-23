@@ -36,6 +36,7 @@ const projectsEN = [
     image: ASSETS.containerNamiExchange,
     mobileImage: ASSETS.mobileNamiExchange,
     dark: false,
+    glassButton: true,
     desktopLink: "/work/nami-exchange",
     mobileLink: "/work/nami-exchange",
   },
@@ -51,6 +52,7 @@ const projectsEN = [
     image: ASSETS.containerInsurance,
     mobileImage: ASSETS.mobileInsurance,
     dark: true,
+    glassButton: true,
     desktopLink: "/work/nami-insurance",
     mobileLink: "/work/nami-insurance",
   },
@@ -66,6 +68,7 @@ const projectsEN = [
     image: ASSETS.containerHighway,
     mobileImage: ASSETS.mobileHighway,
     dark: true,
+    glassButton: true,
     desktopLink: "/work/highway",
     mobileLink: "/work/highway",
   },
@@ -84,6 +87,7 @@ const projectsVI = [
     image: ASSETS.containerNamiExchange,
     mobileImage: ASSETS.mobileNamiExchange,
     dark: false,
+    glassButton: true,
     desktopLink: "/work/nami-exchange",
     mobileLink: "/work/nami-exchange",
   },
@@ -99,6 +103,7 @@ const projectsVI = [
     image: ASSETS.containerInsurance,
     mobileImage: ASSETS.mobileInsurance,
     dark: true,
+    glassButton: true,
     desktopLink: "/work/nami-insurance",
     mobileLink: "/work/nami-insurance",
   },
@@ -114,6 +119,7 @@ const projectsVI = [
     image: ASSETS.containerHighway,
     mobileImage: ASSETS.mobileHighway,
     dark: true,
+    glassButton: true,
     desktopLink: "/work/highway",
     mobileLink: "/work/highway",
   },
@@ -175,12 +181,23 @@ function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
               {project.title}
             </h3>
           </div>
-          <div className="flex items-center gap-4 bg-[rgba(0,0,0,0.1)] backdrop-blur-[8px] border border-[rgba(0,0,0,0.2)] rounded-full px-6 py-2 w-fit hover:bg-[rgba(0,0,0,0.18)] transition-colors">
-            <span className={`font-inter font-semibold text-[24px] ${tc}`}>
-              {project.cta}
-            </span>
-            <ArrowUpRight color={arrowColor} />
-          </div>
+          {project.glassButton ? (
+            <div
+              className="flex items-center gap-4 rounded-full px-6 py-2 w-fit backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
+              style={{
+                background: "linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04))",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2)",
+              }}
+            >
+              <span className={`font-inter font-semibold text-[24px] ${project.dark ? "text-white" : "text-[#1f1f1f]"}`}>{project.cta}</span>
+              <ArrowUpRight color={project.dark ? "white" : "#1f1f1f"} />
+            </div>
+          ) : (
+            <div className="flex items-center gap-4 bg-[rgba(0,0,0,0.1)] backdrop-blur-[8px] border border-[rgba(0,0,0,0.2)] rounded-full px-6 py-2 w-fit hover:bg-[rgba(0,0,0,0.18)] transition-colors">
+              <span className={`font-inter font-semibold text-[24px] ${tc}`}>{project.cta}</span>
+              <ArrowUpRight color={arrowColor} />
+            </div>
+          )}
         </div>
 
         <div className="flex gap-8 pt-5">
@@ -283,10 +300,16 @@ export default function WorkSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const headerWrapRef = useRef<HTMLDivElement>(null);
   const headerTextRef = useRef<HTMLHeadingElement>(null);
+  // Desktop card refs
+  const card0WrapRef = useRef<HTMLDivElement>(null);
+  const card1WrapRef = useRef<HTMLDivElement>(null);
+  // Mobile card refs
+  const mobileCard0WrapRef = useRef<HTMLDivElement>(null);
+  const mobileCard1WrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Clip reveal: h2 rises up through overflow-hidden wrapper on enter
+      // Clip reveal: fires on both breakpoints
       gsap.from(headerTextRef.current, {
         y: 80,
         opacity: 0,
@@ -299,17 +322,62 @@ export default function WorkSection() {
         },
       });
 
-      // Exit parallax: header fades and rises as section scrolls past viewport top
-      gsap.to(headerWrapRef.current, {
-        y: -50,
-        opacity: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "25% top",
-          scrub: 1,
-        },
+      const mm = gsap.matchMedia();
+
+      // ── Desktop (≥768px) ──
+      // Navbar bottom ≈ 100px (y:24 + pt:22 + h-8:32 + pb:22). Card gap 24px → pin at 124px.
+      mm.add("(min-width: 768px)", () => {
+        gsap.to(headerWrapRef.current, {
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: headerWrapRef.current,
+            start: "bottom 200px",
+            end: "bottom 100px",
+            scrub: true,
+          },
+        });
+
+        [card0WrapRef, card1WrapRef].forEach((cardRef) => {
+          gsap.timeline({
+            scrollTrigger: {
+              trigger: cardRef.current,
+              start: "top 124px",
+              end: "+=600",
+              pin: true,
+              scrub: 1.5,
+              anticipatePin: 1,
+            },
+          }).to(cardRef.current, { scale: 0.94, opacity: 0, ease: "none" }, 0);
+        });
+      });
+
+      // ── Mobile (<768px) ──
+      // Navbar bottom ≈ 72px (y:16 + pt:16 + h-6:24 + pb:16). Card gap 24px → pin at 96px.
+      mm.add("(max-width: 767px)", () => {
+        gsap.to(headerWrapRef.current, {
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: headerWrapRef.current,
+            start: "bottom 160px",
+            end: "bottom 72px",
+            scrub: true,
+          },
+        });
+
+        [mobileCard0WrapRef, mobileCard1WrapRef].forEach((cardRef) => {
+          gsap.timeline({
+            scrollTrigger: {
+              trigger: cardRef.current,
+              start: "top 96px",
+              end: "+=600",
+              pin: true,
+              scrub: 1.5,
+              anticipatePin: 1,
+            },
+          }).to(cardRef.current, { scale: 0.94, opacity: 0, ease: "none" }, 0);
+        });
       });
     }, sectionRef);
 
@@ -335,16 +403,28 @@ export default function WorkSection() {
 
       {/* Desktop: vertical list */}
       <div className="hidden md:flex flex-col gap-6 w-full">
-        {projects.map((project) => (
-          <WorkCardDesktop key={project.id} project={project} />
-        ))}
+        <div ref={card0WrapRef} className="w-full relative" style={{ zIndex: 10 }}>
+          <WorkCardDesktop project={projects[0]} />
+        </div>
+        <div ref={card1WrapRef} className="w-full relative" style={{ zIndex: 20 }}>
+          <WorkCardDesktop project={projects[1]} />
+        </div>
+        <div className="w-full relative" style={{ zIndex: 30 }}>
+          <WorkCardDesktop project={projects[2]} />
+        </div>
       </div>
 
       {/* Mobile: vertical list */}
       <div className="md:hidden w-full flex flex-col gap-4">
-        {projects.map((project) => (
-          <WorkCardMobile key={project.id} project={project} />
-        ))}
+        <div ref={mobileCard0WrapRef} className="w-full relative" style={{ zIndex: 10 }}>
+          <WorkCardMobile project={projects[0]} />
+        </div>
+        <div ref={mobileCard1WrapRef} className="w-full relative" style={{ zIndex: 20 }}>
+          <WorkCardMobile project={projects[1]} />
+        </div>
+        <div className="w-full relative" style={{ zIndex: 30 }}>
+          <WorkCardMobile project={projects[2]} />
+        </div>
       </div>
 
       {/* "Looking for more?" footer */}
@@ -365,14 +445,19 @@ export default function WorkSection() {
               : "Xem thêm các thiết kế khác của mình — có cả những dự án chưa kịp ra mắt nữa 👀"}
           </p>
         </div>
-        <button className="h-8 flex items-center">
+        <a
+          href="https://www.figma.com/design/ed3URelEgkENB6iPJMEU46/Truyen-Projects?node-id=0-1&t=6BAKX9cndN1Rs49c-1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="h-8 flex items-center"
+        >
           <div className="flex items-center gap-[7px] border border-[rgba(0,0,0,0.2)] bg-[rgba(255,255,255,0.1)] rounded-full h-8 px-[13px] py-2 hover:bg-[rgba(0,0,0,0.05)] transition-colors">
             <span className="font-inter font-normal text-[11px] text-[#1f1f1f] uppercase">
               {lang === "en" ? "View More" : "Xem thêm"}
             </span>
             <ViewMoreIcon />
           </div>
-        </button>
+        </a>
       </motion.div>
     </section>
   );

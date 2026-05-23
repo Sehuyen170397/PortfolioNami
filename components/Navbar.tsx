@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useLang } from "@/contexts/LanguageContext";
 
@@ -46,6 +47,11 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
   }, []);
 
   const { lang, toggleLang } = useLang();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
+  // On non-home pages prefix hash with "/" so the browser navigates home then scrolls
+  const sh = (hash: string) => isHome ? hash : `/${hash}`;
 
   // Dark hero: white text when unscrolled on pages with dark backgrounds
   const isDark = variant === "dark" && !scrolled;
@@ -54,26 +60,26 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
 
   const desktopLinks = lang === "en"
     ? [
-        { label: "WORK", href: "#work" },
-        { label: "About", href: "#about" },
-        { label: "Contact", href: "#contact" },
+        { label: "WORK", href: sh("#work") },
+        { label: "About", href: sh("#about") },
+        { label: "Contact", href: sh("#contact") },
       ]
     : [
-        { label: "DỰ ÁN", href: "#work" },
-        { label: "GIỚI THIỆU", href: "#about" },
-        { label: "LIÊN HỆ", href: "#contact" },
+        { label: "DỰ ÁN", href: sh("#work") },
+        { label: "GIỚI THIỆU", href: sh("#about") },
+        { label: "LIÊN HỆ", href: sh("#contact") },
       ];
 
   const mobileLinks = lang === "en"
     ? [
-        { label: "Work", href: "#work" },
-        { label: "About", href: "#about" },
-        { label: "Contact", href: "#contact" },
+        { label: "Work", href: sh("#work") },
+        { label: "About", href: sh("#about") },
+        { label: "Contact", href: sh("#contact") },
       ]
     : [
-        { label: "Dự án", href: "#work" },
-        { label: "Giới thiệu", href: "#about" },
-        { label: "Liên hệ", href: "#contact" },
+        { label: "Dự án", href: sh("#work") },
+        { label: "Giới thiệu", href: sh("#about") },
+        { label: "Liên hệ", href: sh("#contact") },
       ];
 
   const pillWidth = viewportWidth > 0 ? viewportWidth - 32 : 358;
@@ -231,6 +237,10 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
                       key={label}
                       href={href}
                       onClick={(e) => {
+                        if (!isHome) {
+                          setMenuOpen(false);
+                          return;
+                        }
                         e.preventDefault();
                         setMenuOpen(false);
                         setTimeout(() => {
