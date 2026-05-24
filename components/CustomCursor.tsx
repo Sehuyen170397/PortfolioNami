@@ -5,13 +5,14 @@ import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
 const SECTION_LABELS: Record<string, string> = {
-  hero: "Hi",
-  work: "Take a look",
-  about: "Thank u",
-  contact: "Don't wait",
+  hero: "hi",
+  work: "take a look",
+  about: "thank u",
+  contact: "don't wait",
 };
 
-const WORK_PAGE_LABEL = "Truyen";
+const WORK_PAGE_LABEL = "truyen";
+const NAV_HOVER_LABEL = "back to home";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -19,10 +20,11 @@ export default function CustomCursor() {
   const [label, setLabel] = useState("Hi");
   const pathname = usePathname();
 
-  // Derive label from pathname on work pages
   const isWorkPage = pathname.startsWith("/work/");
+  const isWorkPageRef = useRef(isWorkPage);
+  useEffect(() => { isWorkPageRef.current = isWorkPage; }, [isWorkPage]);
 
-  // Animate text swap
+  // Animate text swap — stable via ref
   const animateLabel = (next: string) => {
     const el = labelRef.current;
     if (!el || el.textContent === next) return;
@@ -37,24 +39,22 @@ export default function CustomCursor() {
       },
     });
   };
+  const animateLabelRef = useRef(animateLabel);
+  useEffect(() => { animateLabelRef.current = animateLabel; });
 
-  // Section observer — only on homepage
+  // Section observer — homepage only
   useEffect(() => {
     if (isWorkPage) {
       animateLabel(WORK_PAGE_LABEL);
       return;
     }
 
-    const sections = Object.keys(SECTION_LABELS);
     const observers: IntersectionObserver[] = [];
-
-    sections.forEach((id) => {
+    Object.keys(SECTION_LABELS).forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) animateLabel(SECTION_LABELS[id]);
-        },
+        ([entry]) => { if (entry.isIntersecting) animateLabelRef.current(SECTION_LABELS[id]); },
         { rootMargin: "-40% 0px -40% 0px", threshold: 0 }
       );
       obs.observe(el);
@@ -72,7 +72,6 @@ export default function CustomCursor() {
     if (!el) return;
 
     gsap.set(el, { opacity: 0 });
-
     let visible = false;
 
     const onMove = (e: MouseEvent) => {
@@ -93,13 +92,20 @@ export default function CustomCursor() {
     const onDocEnter = () => { if (visible) gsap.to(el, { opacity: 1, duration: 0.3 }); };
 
     const onOver = (e: MouseEvent) => {
-      if ((e.target as Element).closest("a, button, [role='button'], input, textarea, select")) {
-        gsap.to(el, { scale: 1.15, duration: 0.3, ease: "power3.out" });
+      const target = e.target as Element;
+      if (!target.closest("a, button, [role='button'], input, textarea, select")) return;
+      gsap.to(el, { scale: 1.15, duration: 0.3, ease: "power3.out" });
+      if (isWorkPageRef.current && target.closest("nav")) {
+        animateLabelRef.current(NAV_HOVER_LABEL);
       }
     };
+
     const onOut = (e: MouseEvent) => {
-      if ((e.target as Element).closest("a, button, [role='button'], input, textarea, select")) {
-        gsap.to(el, { scale: 1, duration: 0.3, ease: "power3.out" });
+      const target = e.target as Element;
+      if (!target.closest("a, button, [role='button'], input, textarea, select")) return;
+      gsap.to(el, { scale: 1, duration: 0.3, ease: "power3.out" });
+      if (isWorkPageRef.current && target.closest("nav")) {
+        animateLabelRef.current(WORK_PAGE_LABEL);
       }
     };
 
@@ -133,19 +139,21 @@ export default function CustomCursor() {
         backdropFilter: "blur(24px)",
         WebkitBackdropFilter: "blur(24px)",
         border: "1px solid rgba(255,255,255,0.12)",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2)",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
+        mixBlendMode: isWorkPage ? "exclusion" : "normal",
       }}
     >
       <span
         ref={labelRef}
         style={{
           fontFamily: "var(--font-inter), sans-serif",
-          fontWeight: 600,
-          fontSize: 11,
+          fontWeight: 500,
+          fontSize: "11px",
+          lineHeight: "normal",
           color: "white",
-          textTransform: "uppercase",
-          letterSpacing: "0.04em",
           whiteSpace: "nowrap",
+          WebkitFontSmoothing: "antialiased",
+          MozOsxFontSmoothing: "grayscale",
         }}
       >
         {label}
