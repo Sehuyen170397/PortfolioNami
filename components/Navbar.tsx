@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useLang } from "@/contexts/LanguageContext";
@@ -25,26 +25,12 @@ function CloseIcon({ color = "#1f1f1f" }: { color?: string }) {
 export default function Navbar({ variant }: { variant?: "dark" }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [navWidth, setNavWidth] = useState(0);
-  const [viewportWidth, setViewportWidth] = useState(0);
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 60);
     if (menuOpen) setMenuOpen(false);
   });
-
-  useEffect(() => {
-    const updateWidth = () => {
-      if (wrapperRef.current) setNavWidth(wrapperRef.current.offsetWidth);
-      setViewportWidth(window.innerWidth);
-    };
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
 
   const { lang, toggleLang } = useLang();
   const pathname = usePathname();
@@ -82,13 +68,10 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
         { label: "Liên hệ", href: sh("#contact") },
       ];
 
-  const pillWidth = viewportWidth > 0 ? viewportWidth - 32 : 358;
-
   return (
     <>
       {/* ── Desktop ── */}
       <div
-        ref={wrapperRef}
         className="fixed inset-x-0 top-0 z-[100] hidden md:flex justify-center pointer-events-none"
       >
         <motion.nav
@@ -108,7 +91,7 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
                   y: 24,
                 }
               : {
-                  width: navWidth || "100%",
+                  width: "100%",
                   borderRadius: 0,
                   backgroundColor: "rgba(255,255,255,0)",
                   backdropFilter: "blur(0px)",
@@ -167,13 +150,20 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
       )}
 
       {/* ── Mobile ── */}
-      <div className="fixed inset-x-0 top-0 z-[100] flex md:hidden justify-center pointer-events-none">
+      <div
+        className="fixed inset-x-0 top-0 z-[100] flex md:hidden pointer-events-none"
+        style={{
+          paddingLeft: scrolled ? 16 : 0,
+          paddingRight: scrolled ? 16 : 0,
+          paddingTop: scrolled ? 16 : 0,
+          transition: "padding 0.45s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+      >
         <motion.nav
           initial={false}
           animate={
             scrolled
               ? {
-                  width: pillWidth,
                   borderRadius: menuOpen ? 32 : 200,
                   backgroundColor: "rgba(255,255,255,0.6)",
                   backdropFilter: "blur(10px)",
@@ -182,10 +172,8 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
                   paddingRight: 20,
                   paddingTop: 16,
                   paddingBottom: 16,
-                  y: 16,
                 }
               : {
-                  width: viewportWidth || 390,
                   borderRadius: 0,
                   backgroundColor: menuOpen ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0)",
                   backdropFilter: menuOpen ? "blur(10px)" : "blur(0px)",
@@ -194,11 +182,10 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
                   paddingRight: 20,
                   paddingTop: 20,
                   paddingBottom: 20,
-                  y: 0,
                 }
           }
           transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col pointer-events-auto border"
+          className="w-full flex flex-col pointer-events-auto border"
           style={{ borderWidth: 0.5, borderStyle: "solid" }}
         >
           {/* Header row */}
@@ -260,8 +247,8 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
                       onClick={toggleLang}
                       className="border border-[rgba(0,0,0,0.1)] rounded-full h-8 flex items-center gap-[7px] px-4 py-2 backdrop-blur-[8px] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,0,0,0.08)] transition-colors cursor-pointer"
                     >
-                      <span className={`font-inter text-[11px] ${lang === "en" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>EN.</span>
-                      <span className={`font-inter text-[11px] ${lang === "vi" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>VI</span>
+                      <span className={`font-inter text-[11px] ${lang === "en" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>EN</span>
+                      <span className={`font-inter text-[11px] ${lang === "vi" ? "font-semibold text-[#1f1f1f]" : "font-normal text-[#666]"}`}>.VI</span>
                     </button>
                   </div>
                 </div>

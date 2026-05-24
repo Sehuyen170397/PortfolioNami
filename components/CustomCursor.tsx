@@ -133,12 +133,8 @@ export default function CustomCursor() {
         borderRadius: 100,
         padding: "4px 8px",
         gap: 7,
-        background: "rgba(0,0,0,0.4)",
-        backdropFilter: "blur(24px)",
-        WebkitBackdropFilter: "blur(24px)",
-        border: "1px solid rgba(255,255,255,0.12)",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-        mixBlendMode: isWorkPage ? "exclusion" : "normal",
+        background: "white",
+        mixBlendMode: "exclusion",
       }}
     >
       <span
@@ -148,7 +144,7 @@ export default function CustomCursor() {
           fontWeight: 500,
           fontSize: "11px",
           lineHeight: "normal",
-          color: "white",
+          color: "black",
           whiteSpace: "nowrap",
           WebkitFontSmoothing: "antialiased",
           MozOsxFontSmoothing: "grayscale",
