@@ -225,7 +225,7 @@ export default function HeroSection() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative bg-white w-full overflow-x-clip max-md:!min-h-screen"
+      className="relative bg-white w-full md:overflow-x-clip max-md:!min-h-screen"
       style={{ minHeight: "max(100vh, 1110px)" }}
     >
       {/* ── Page-load curtain: slides upward to reveal the page ── */}
@@ -497,7 +497,7 @@ export default function HeroSection() {
       </div>
 
       {/* Mobile Frame 06 — left:74, bottom:40, -rotate-10, app screenshot */}
-      <div ref={setParallaxRef(17)} className="absolute pointer-events-none md:hidden" style={{ left: 74, bottom: 40, width: 108, height: 183 }}>
+      <div ref={setParallaxRef(17)} className="absolute pointer-events-none md:hidden" style={{ left: 74, bottom: 0, width: 108, height: 183 }}>
         <div ref={setFloatRef(17)}>
           <div className="-rotate-[10deg]">
             <div className="overflow-hidden rounded-[9px]" style={{ width: 79.5, height: 172, border: "0.75px solid rgba(0,0,0,0.1)", boxShadow: "0 0 22px rgba(0,0,0,0.1)" }}>
@@ -507,8 +507,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Mobile Frame 07 — left:162, bottom:258, -rotate-15, round photo */}
-      <div ref={setParallaxRef(18)} className="absolute pointer-events-none md:hidden" style={{ left: 162, bottom: 258, width: 49, height: 49 }}>
+      {/* Mobile Frame 07 — left:162, bottom:40, -rotate-15, round photo */}
+      <div ref={setParallaxRef(18)} className="absolute pointer-events-none md:hidden" style={{ left: 162, bottom: 206, width: 49, height: 49 }}>
         <div ref={setFloatRef(18)}>
           <div className="-rotate-[15deg]">
             <img src={ASSETS.f07} alt="" className="w-[40px] h-[40px] rounded-full object-cover" />
@@ -516,8 +516,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Mobile Frame 08 — left:207, bottom:73, rotate-10, red border, video */}
-      <div ref={setParallaxRef(19)} className="absolute pointer-events-none md:hidden" style={{ left: 207, bottom: 73, width: 106, height: 180 }}>
+      {/* Mobile Frame 08 — left:207, bottom:40, rotate-10, red border, video */}
+      <div ref={setParallaxRef(19)} className="absolute pointer-events-none md:hidden" style={{ left: 207, bottom: 21, width: 106, height: 180 }}>
         <div ref={setFloatRef(19)}>
           <div className="rotate-[10deg]">
             <div className="rounded-[8.5px] overflow-hidden" style={{ width: 78, height: 169.5, border: "0.75px solid #cd0518", boxShadow: "0 0 21px rgba(0,0,0,0.1)" }}>
@@ -527,8 +527,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Mobile Frame 09 — left:-49, bottom:193, rotate-15 */}
-      <div ref={setParallaxRef(20)} className="absolute pointer-events-none md:hidden" style={{ left: -49, bottom: 193, width: 98, height: 98 }}>
+      {/* Mobile Frame 09 — left:-49, bottom:40, rotate-15 */}
+      <div ref={setParallaxRef(20)} className="absolute pointer-events-none md:hidden" style={{ left: -49, bottom: 141, width: 98, height: 98 }}>
         <div ref={setFloatRef(20)}>
           <div className="rotate-[15deg]">
             <img src={ASSETS.f09} alt="" className="w-[80px] h-[80px] object-cover" />
@@ -543,8 +543,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Mobile Frame 11 — left:322, bottom:85, -rotate-15, 100×100 round */}
-      <div ref={setParallaxRef(22)} className="absolute pointer-events-none md:hidden" style={{ left: 322, bottom: 85, width: 122, height: 122 }}>
+      {/* Mobile Frame 11 — left:322, bottom:40, -rotate-15, 100×100 round */}
+      <div ref={setParallaxRef(22)} className="absolute pointer-events-none md:hidden" style={{ left: 322, bottom: 33, width: 122, height: 122 }}>
         <div ref={setFloatRef(22)}>
           <div className="-rotate-[15deg]">
             <img src={ASSETS.f11} alt="" className="w-[100px] h-[100px] rounded-full object-cover" />
@@ -552,8 +552,8 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Mobile Frame 12 — left:341, bottom:297, -rotate-15, 40×40 round */}
-      <div ref={setParallaxRef(23)} className="absolute pointer-events-none md:hidden" style={{ left: 341, bottom: 297, width: 49, height: 49 }}>
+      {/* Mobile Frame 12 — left:341, bottom:40, -rotate-15, 40×40 round */}
+      <div ref={setParallaxRef(23)} className="absolute pointer-events-none md:hidden" style={{ left: 341, bottom: 245, width: 49, height: 49 }}>
         <div ref={setFloatRef(23)}>
           <div className="-rotate-[15deg]">
             <img src={ASSETS.f12} alt="" className="w-[40px] h-[40px] rounded-full object-cover" />
@@ -563,7 +563,7 @@ export default function HeroSection() {
 
       {/* ── Center text — animated step sequence ── */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div ref={contentRef} className="md:-mt-[120px] max-md:-mt-[40px] flex items-center justify-center">
+        <div ref={contentRef} className="md:-mt-[120px] max-md:-mt-[24px] flex items-center justify-center">
           <AnimatePresence mode="wait">
             {step >= 2 && step <= 4 ? (
               // Steps 2-4 share key="skills" so the outer div stays mounted.
