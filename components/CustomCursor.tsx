@@ -66,12 +66,13 @@ export default function CustomCursor() {
 
   // Mouse follow + hover
   useEffect(() => {
-    if (!window.matchMedia("(pointer: fine)").matches) return;
-
     const el = cursorRef.current;
     if (!el) return;
 
     gsap.set(el, { opacity: 0 });
+
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
     let visible = false;
 
     const onMove = (e: MouseEvent) => {
