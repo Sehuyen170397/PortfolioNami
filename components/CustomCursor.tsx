@@ -127,14 +127,11 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 pointer-events-none z-[9999]"
+      className="max-md:hidden fixed top-0 left-0 pointer-events-none z-[9999] flex items-center justify-center"
       style={{
         borderRadius: 100,
         padding: "4px 8px",
         gap: 7,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
         background: "rgba(0,0,0,0.4)",
         backdropFilter: "blur(24px)",
         WebkitBackdropFilter: "blur(24px)",

@@ -338,8 +338,7 @@ export default function WorkSection() {
           },
         });
 
-        // Card 0: pin for full 2-card scroll (724 * 2 = 1448px) so it stays fixed under card 1
-        // while card 2 covers card 1. Timeline extended to 4 units; animation in first 2 units.
+        // Card 0: phase 1 (0–724px) → scale + full opacity fade (1→0.5→0); phase 2 holds at 0
         gsap.timeline({
           scrollTrigger: {
             trigger: card0WrapRef.current,
@@ -352,10 +351,11 @@ export default function WorkSection() {
           },
         })
           .to(card0WrapRef.current, { scale: 0.94, ease: "none", duration: 2, force3D: true }, 0)
-          .to(card0WrapRef.current, { opacity: 0.5, ease: "none", duration: 1 }, 1)
+          .to(card0WrapRef.current, { opacity: 0.5, ease: "none", duration: 0.5 }, 1)
+          .to(card0WrapRef.current, { opacity: 0, ease: "none", duration: 0.5 }, 1.5)
           .set({}, {}, 4);
 
-        // Card 1: pin for card 2's full scroll (unchanged 724px)
+        // Card 1: dims to 50% mid-pin then fades fully out before pin ends
         gsap.timeline({
           scrollTrigger: {
             trigger: card1WrapRef.current,
@@ -368,11 +368,13 @@ export default function WorkSection() {
           },
         })
           .to(card1WrapRef.current, { scale: 0.94, ease: "none", duration: 2, force3D: true }, 0)
-          .to(card1WrapRef.current, { opacity: 0.5, ease: "none", duration: 1 }, 1);
+          .to(card1WrapRef.current, { opacity: 0.5, ease: "none", duration: 0.5 }, 1)
+          .to(card1WrapRef.current, { opacity: 0, ease: "none", duration: 0.5 }, 1.5)
+          .set({}, {}, 2);
       });
 
       // ── Mobile (<768px) ──
-      // Navbar bottom ≈ 72px (y:16 + pt:16 + h-6:24 + pb:16). Card gap 24px → pin at 96px.
+      // Navbar bottom ≈ 72px (y:16 + pt:16 + h-6:24 + pb:16). Card gap-4=16px → pin at 96px.
       mm.add("(max-width: 767px)", () => {
         gsap.to(headerWrapRef.current, {
           opacity: 0,
@@ -385,36 +387,49 @@ export default function WorkSection() {
           },
         });
 
-        // Card 0: pin for full 2-card scroll (600 * 2 = 1200px)
+        // Measure each card separately — heights differ due to varying title lengths
+        const C0H = mobileCard0WrapRef.current?.offsetHeight ?? 580;
+        const C1H = mobileCard1WrapRef.current?.offsetHeight ?? 580;
+        const GAP = 16; // gap-4
+
+        // Phase distances (pixels of scroll each phase requires)
+        const c0p1 = C0H + GAP; // card 1 travels to cover card 0
+        const c0p2 = C1H + GAP; // card 2 travels to cover card 1
+        const c0total = c0p1 + c0p2;
+
+        // Card 0: phase 1 → scale + full opacity fade (1→0.5→0); phase 2 holds at 0
         gsap.timeline({
           scrollTrigger: {
             trigger: mobileCard0WrapRef.current,
             start: "top 96px",
-            end: "+=1200",
+            end: `+=${c0total}`,
             pin: true,
             scrub: 0.5,
             anticipatePin: 1,
             fastScrollEnd: true,
           },
         })
-          .to(mobileCard0WrapRef.current, { scale: 0.94, ease: "none", duration: 2, force3D: true }, 0)
-          .to(mobileCard0WrapRef.current, { opacity: 0.5, ease: "none", duration: 1 }, 1)
-          .set({}, {}, 4);
+          .to(mobileCard0WrapRef.current, { scale: 0.94, ease: "none", duration: c0p1, force3D: true }, 0)
+          .to(mobileCard0WrapRef.current, { opacity: 0.5, ease: "none", duration: c0p1 / 4 }, c0p1 / 2)
+          .to(mobileCard0WrapRef.current, { opacity: 0, ease: "none", duration: c0p1 / 4 }, c0p1 * 3 / 4)
+          .set({}, {}, c0total);
 
-        // Card 1: pin for card 2's full scroll (unchanged 600px)
+        // Card 1: dims to 50% then fades fully out before pin ends
         gsap.timeline({
           scrollTrigger: {
             trigger: mobileCard1WrapRef.current,
             start: "top 96px",
-            end: "+=600",
+            end: `+=${c0p2}`,
             pin: true,
             scrub: 0.5,
             anticipatePin: 1,
             fastScrollEnd: true,
           },
         })
-          .to(mobileCard1WrapRef.current, { scale: 0.94, ease: "none", duration: 2, force3D: true }, 0)
-          .to(mobileCard1WrapRef.current, { opacity: 0.5, ease: "none", duration: 1 }, 1);
+          .to(mobileCard1WrapRef.current, { scale: 0.94, ease: "none", duration: c0p2, force3D: true }, 0)
+          .to(mobileCard1WrapRef.current, { opacity: 0.5, ease: "none", duration: c0p2 / 4 }, c0p2 / 2)
+          .to(mobileCard1WrapRef.current, { opacity: 0, ease: "none", duration: c0p2 / 4 }, c0p2 * 3 / 4)
+          .set({}, {}, c0p2);
       });
     }, sectionRef);
 
