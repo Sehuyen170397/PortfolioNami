@@ -28,7 +28,7 @@ const ASSETS = {
   avatarNewVI: "https://www.figma.com/api/mcp/asset/8a7c1845-688f-4846-81ea-1ae50847c525",
   avatarExpVI: "https://www.figma.com/api/mcp/asset/c7e5b7ab-892a-4c68-b4db-4caf56e38d11",
   // Mobile — 733-34332
-  heroBgMobile: "https://www.figma.com/api/mcp/asset/15eb5489-6cc5-4ff5-9e3e-07ba47733919",
+  heroBgMobile: "/highway-hero-mobile.jpg",
   avatarNewMobile: "https://www.figma.com/api/mcp/asset/09df8837-a20a-4180-878e-d87181896012",
   avatarExpMobile: "https://www.figma.com/api/mcp/asset/440cb1e0-e824-458e-b464-7310f09cc2fc",
   mobileFlowMobile: "https://www.figma.com/api/mcp/asset/ba1edb3b-ec56-4553-9545-d3390422bb15",
@@ -100,8 +100,8 @@ function Hero() {
 
   return (
     <section
-      className="relative w-full overflow-hidden flex flex-col justify-end pb-[60px] px-[40px] gap-11 max-md:px-6 max-md:pb-[60px] max-md:gap-6 max-md:!h-svh"
-      style={{ height: "clamp(680px, 62.5vw, 900px)" }}
+      className="relative w-full overflow-hidden flex flex-col justify-end pb-[60px] px-[40px] gap-11 max-md:px-6 max-md:pb-[60px] max-md:gap-6"
+      style={{ height: "100svh" }}
     >
       <img src={ASSETS.heroBg} alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none hidden md:block" />
       <img src={ASSETS.heroBgMobile} alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none md:hidden" />
@@ -188,8 +188,8 @@ function Context() {
 
 // ─── STATS CARD ───────────────────────────────────────────────────────────────
 type StatCard =
-  | { kind: "single"; label: string; value: string; sub: string; gradient?: string; bg: string; gradientBorder?: string; grow?: boolean; mobileWide?: boolean }
-  | { kind: "dual"; label: string; row1: { label: string; value: string }; row2: { label: string; value: string }; bg: string; grow?: boolean; mobileWide?: boolean };
+  | { kind: "single"; label: string; value: string; sub: string; gradient?: string; bg: string; gradientBorder?: string; grow?: boolean; mobileWide?: boolean; desktopMinW?: string }
+  | { kind: "dual"; label: string; row1: { label: string; value: string }; row2: { label: string; value: string }; bg: string; grow?: boolean; mobileWide?: boolean; desktopMinW?: string };
 
 function StatCardEl({ card }: { card: StatCard }) {
   const gradientBorder = card.kind === "single" ? card.gradientBorder : undefined;
@@ -198,7 +198,7 @@ function StatCardEl({ card }: { card: StatCard }) {
 
   return (
     <div
-      className={`flex flex-col h-[160px] items-start justify-between min-w-[180px] ${card.mobileWide ? "" : "max-md:min-w-[167px]"} p-5 rounded-[28px] max-md:rounded-[24px] ${growCls} ${gradientBorder ? "gradient-border" : ""}`}
+      className={`flex flex-col h-[160px] items-start justify-between ${card.desktopMinW ?? "min-w-[180px]"} ${card.mobileWide ? "" : "max-md:min-w-[167px]"} p-5 rounded-[28px] max-md:rounded-[24px] ${growCls} ${gradientBorder ? "gradient-border" : ""}`}
       style={{ backgroundColor: card.bg, "--gb": gradientBorder } as React.CSSProperties}
     >
       <span className="font-inter font-bold text-[11px] text-[#1f1f1f] tracking-[0.33px] uppercase leading-normal">
@@ -295,24 +295,24 @@ function Section01() {
 
   const statCards: StatCard[] = vi
     ? [
-        { kind: "single", label: "Phương thức giao dịch", value: "74.4%", sub: "trên CEX", gradient: "linear-gradient(108deg, rgb(0,156,110), rgb(0,54,38))", bg: "rgba(66,182,148,0.3)", gradientBorder: "linear-gradient(135deg, rgba(0,156,110,0.85), rgba(0,54,38,0.3))" },
+        { kind: "single", label: "Phương thức giao dịch", value: "74.4%", sub: "trên CEX", gradient: "linear-gradient(108deg, rgb(0,156,110), rgb(0,54,38))", bg: "rgba(66,182,148,0.3)", gradientBorder: "linear-gradient(135deg, rgba(0,156,110,0.85), rgba(0,54,38,0.3))", desktopMinW: "min-w-[210px]" },
         { kind: "single", label: "Độ tuổi trung bình", value: "75%", sub: "18-34 tuổi", bg: "#f2f2f2" },
         { kind: "single", label: "Thu nhập trung bình", value: "68%", sub: "từ dưới 10-25M/tháng", gradient: "linear-gradient(115deg, rgb(255,59,101), rgb(153,35,61))", bg: "rgba(191,37,70,0.13)", gradientBorder: "linear-gradient(135deg, rgba(255,59,101,0.8), rgba(153,35,61,0.3))", grow: true, mobileWide: true },
-        { kind: "dual", label: "Tỷ lệ lãi lỗ 2024", row1: { label: "lãi", value: "56.3%" }, row2: { label: "lỗ", value: "43.7%" }, bg: "#f2f2f2" },
+        { kind: "dual", label: "Tỷ lệ lãi lỗ 2024", row1: { label: "lãi", value: "56.3%" }, row2: { label: "lỗ", value: "43.7%" }, bg: "#f2f2f2", desktopMinW: "min-w-[210px]" },
         { kind: "single", label: "Nơi sinh sống", value: "80%", sub: "Hồ Chí Minh, Hà Nội", gradient: "linear-gradient(113deg, rgb(110,150,110), rgb(185,252,185))", bg: "rgba(185,252,185,0.3)", gradientBorder: "linear-gradient(135deg, rgba(185,252,185,0.9), rgba(110,150,110,0.35))", grow: true },
-        { kind: "single", label: "Thị hiếu chung", value: "75%", sub: "lạc quan về thị trường", gradient: "linear-gradient(106deg, rgb(145,131,76), rgb(247,223,130))", bg: "rgba(247,223,130,0.3)", gradientBorder: "linear-gradient(135deg, rgba(247,223,130,0.9), rgba(145,131,76,0.35))", grow: true },
+        { kind: "single", label: "Thị hiếu chung", value: "75%", sub: "lạc quan về thị trường", gradient: "linear-gradient(106deg, rgb(145,131,76), rgb(247,223,130))", bg: "rgba(247,223,130,0.3)", gradientBorder: "linear-gradient(135deg, rgba(247,223,130,0.9), rgba(145,131,76,0.35))", grow: true, desktopMinW: "min-w-[340px]" },
         { kind: "dual", label: "Giới tính", row1: { label: "nam", value: "75%" }, row2: { label: "nữ", value: "25%" }, bg: "#f2f2f2" },
         { kind: "single", label: "Danh mục đầu tư", value: "80%", sub: "đầu tư 1 nửa danh mục vào crypto", bg: "#f2f2f2", grow: true },
         { kind: "single", label: "Nguồn Tin tức", value: "59.7%", sub: "từ nhóm cộng đồng và KOL", gradient: "linear-gradient(122deg, rgb(255,59,101), rgb(153,35,61))", bg: "rgba(191,37,70,0.13)", gradientBorder: "linear-gradient(135deg, rgba(255,59,101,0.8), rgba(153,35,61,0.3))", grow: true },
         { kind: "single", label: "Quyết định đầu tư bởi", value: "80%", sub: "lời khuyên từ bạn bè và cộng đồng chia sẻ tín hiệu", gradient: "linear-gradient(111deg, rgb(69,114,129), rgb(123,204,231))", bg: "rgba(123,204,231,0.3)", gradientBorder: "linear-gradient(135deg, rgba(123,204,231,0.9), rgba(69,114,129,0.35))", grow: true, mobileWide: true },
       ]
     : [
-        { kind: "single", label: "Trading methods", value: "74.4%", sub: "on CEX", gradient: "linear-gradient(108deg, rgb(0,156,110), rgb(0,54,38))", bg: "rgba(66,182,148,0.3)", gradientBorder: "linear-gradient(135deg, rgba(0,156,110,0.85), rgba(0,54,38,0.3))" },
+        { kind: "single", label: "Trading methods", value: "74.4%", sub: "on CEX", gradient: "linear-gradient(108deg, rgb(0,156,110), rgb(0,54,38))", bg: "rgba(66,182,148,0.3)", gradientBorder: "linear-gradient(135deg, rgba(0,156,110,0.85), rgba(0,54,38,0.3))", desktopMinW: "min-w-[210px]" },
         { kind: "single", label: "Average age", value: "75%", sub: "18-34 age", bg: "#f2f2f2" },
         { kind: "single", label: "Average income", value: "68%", sub: "10-25M/month", gradient: "linear-gradient(115deg, rgb(255,59,101), rgb(153,35,61))", bg: "rgba(191,37,70,0.13)", gradientBorder: "linear-gradient(135deg, rgba(255,59,101,0.8), rgba(153,35,61,0.3))", grow: true, mobileWide: true },
-        { kind: "dual", label: "2024 profit & loss ratio", row1: { label: "profit", value: "56.3%" }, row2: { label: "loss", value: "43.7%" }, bg: "#f2f2f2" },
+        { kind: "dual", label: "2024 profit & loss ratio", row1: { label: "profit", value: "56.3%" }, row2: { label: "loss", value: "43.7%" }, bg: "#f2f2f2", desktopMinW: "min-w-[210px]" },
         { kind: "single", label: "Living location", value: "80%", sub: "Ho Chi Minh, Ha Noi", gradient: "linear-gradient(113deg, rgb(110,150,110), rgb(185,252,185))", bg: "rgba(185,252,185,0.3)", gradientBorder: "linear-gradient(135deg, rgba(185,252,185,0.9), rgba(110,150,110,0.35))", grow: true },
-        { kind: "single", label: "General", value: "75%", sub: "market optimism", gradient: "linear-gradient(106deg, rgb(145,131,76), rgb(247,223,130))", bg: "rgba(247,223,130,0.3)", gradientBorder: "linear-gradient(135deg, rgba(247,223,130,0.9), rgba(145,131,76,0.35))", grow: true },
+        { kind: "single", label: "General", value: "75%", sub: "market optimism", gradient: "linear-gradient(106deg, rgb(145,131,76), rgb(247,223,130))", bg: "rgba(247,223,130,0.3)", gradientBorder: "linear-gradient(135deg, rgba(247,223,130,0.9), rgba(145,131,76,0.35))", grow: true, desktopMinW: "min-w-[340px]" },
         { kind: "dual", label: "Gender", row1: { label: "male", value: "75%" }, row2: { label: "female", value: "25%" }, bg: "#f2f2f2" },
         { kind: "single", label: "Investment Portfolio", value: "80%", sub: "allocating over 50% of portfolio into crypto", bg: "#f2f2f2", grow: true },
         { kind: "single", label: "News sources", value: "59.7%", sub: "Community & KOL Influence", gradient: "linear-gradient(122deg, rgb(255,59,101), rgb(153,35,61))", bg: "rgba(191,37,70,0.13)", gradientBorder: "linear-gradient(135deg, rgba(255,59,101,0.8), rgba(153,35,61,0.3))", grow: true },
@@ -566,10 +566,9 @@ function Section03() {
         </Body>
         {/* Desktop onboarding container — aspect-[8/5] = 1200:750 at design width */}
         <div className="hidden md:block relative bg-black rounded-[56px] overflow-hidden aspect-[8/5]">
-          {/* Inner row: phones are 25% of content width each, gap scales proportionally */}
           <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center"
-            style={{ gap: "clamp(40px, calc(6.67vw - 16px), 80px)" }}
+            className="absolute inset-0 flex items-center justify-center"
+            style={{ gap: "5.5%" }}
           >
             {[
               "https://res.cloudinary.com/diuvrdjar/video/upload/v1779510617/Screen_Recording_2026-05-16_at_10.32.51_keqvpw.mov",
@@ -583,14 +582,14 @@ function Section03() {
                 muted
                 playsInline
                 className="shrink-0 rounded-[36px] object-cover aspect-[300/609]"
-                style={{ width: "clamp(160px, calc(25vw - 60px), 300px)" }}
+                style={{ height: "82%", width: "auto" }}
               />
             ))}
             <img
               src={ASSETS.onboardingHome3}
               alt=""
               className="shrink-0 object-contain aspect-[300/609]"
-              style={{ width: "clamp(160px, calc(25vw - 60px), 300px)" }}
+              style={{ height: "82%", width: "auto" }}
             />
           </div>
         </div>
