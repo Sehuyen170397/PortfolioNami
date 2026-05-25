@@ -101,18 +101,24 @@ export default function CustomCursor() {
 
     const onOver = (e: MouseEvent) => {
       const target = e.target as Element;
-      if (!target.closest("a, button, [role='button'], input, textarea, select")) return;
+      const interactive = target.closest("a, button, [role='button'], input, textarea, select");
+      if (!interactive) return;
       gsap.to(el, { scale: 1.15, duration: 0.3, ease: "power3.out" });
-      if (isWorkPageRef.current && target.closest("nav")) {
+      const dataCursor = interactive.closest("[data-cursor]")?.getAttribute("data-cursor");
+      if (dataCursor) {
+        animateLabelRef.current(dataCursor);
+      } else if (isWorkPageRef.current && target.closest("nav")) {
         animateLabelRef.current(NAV_HOVER_LABEL);
       }
     };
 
     const onOut = (e: MouseEvent) => {
       const target = e.target as Element;
-      if (!target.closest("a, button, [role='button'], input, textarea, select")) return;
+      const interactive = target.closest("a, button, [role='button'], input, textarea, select");
+      if (!interactive) return;
       gsap.to(el, { scale: 1, duration: 0.3, ease: "power3.out" });
-      if (isWorkPageRef.current && target.closest("nav")) {
+      const dataCursor = interactive.closest("[data-cursor]")?.getAttribute("data-cursor");
+      if (dataCursor || (isWorkPageRef.current && target.closest("nav"))) {
         animateLabelRef.current(workPageLabelRef.current);
       }
     };

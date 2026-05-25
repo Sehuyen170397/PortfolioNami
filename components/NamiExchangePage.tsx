@@ -7,7 +7,7 @@ import { useLang } from "@/contexts/LanguageContext";
 // Desktop asset URLs (Figma MCP — expire 7 days)
 const ASSETS = {
   heroBg: "https://www.figma.com/api/mcp/asset/4dc00ef2-41b6-45e0-b75d-8b57c7753fa1",
-  heroBgMobile: "https://www.figma.com/api/mcp/asset/57402029-0024-4982-a5f1-4ca2872ee1dd",
+  heroBgMobile: "/nami-exchange-hero-mobile.jpg",
   competitorResearch1: "https://www.figma.com/api/mcp/asset/da11db04-f405-4274-bfe4-5245d4dc8796",
   competitorResearch2: "https://www.figma.com/api/mcp/asset/087970bd-c6dc-42b7-a88d-6ce8bcc87ae4",
   competitorResearch3: "https://www.figma.com/api/mcp/asset/1834085c-cee3-4474-8983-17c864cf9dd3",
@@ -106,8 +106,8 @@ function Hero() {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-white flex flex-col justify-end pb-[60px] px-[40px] gap-11 max-md:px-6 max-md:pb-[60px] max-md:gap-6 max-md:!h-svh"
-      style={{ height: "clamp(680px, 62.5vw, 900px)" }}
+      className="relative w-full overflow-hidden bg-white flex flex-col justify-end pb-[60px] px-[40px] gap-11 max-md:px-6 max-md:pb-[60px] max-md:gap-6"
+      style={{ height: "100svh" }}
     >
       {/* Desktop background */}
       <img
@@ -174,7 +174,7 @@ function Hero() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-        className="relative backdrop-blur-[8px] bg-[rgba(255,255,255,0.4)] border border-[rgba(255,255,255,0.7)] rounded-[200px] p-px flex overflow-hidden w-fit max-w-[800px] max-md:rounded-[11px] max-md:grid max-md:grid-cols-2 max-md:w-full max-md:max-w-full"
+        className="relative backdrop-blur-[8px] bg-[rgba(255,255,255,0.4)] border border-[rgba(255,255,255,0.7)] rounded-[200px] p-px flex overflow-hidden w-fit max-w-[800px] max-md:rounded-[20px] max-md:grid max-md:grid-cols-2 max-md:w-full max-md:max-w-full"
       >
         {stats.map((item) => (
           <div
@@ -859,6 +859,7 @@ function NamiInsuranceBanner() {
   return (
     <a
       href="/work/nami-insurance"
+      data-cursor="take a look"
       className="relative w-full overflow-hidden flex border-t border-[rgba(0,0,0,0.1)] cursor-pointer items-center max-md:items-start max-md:!min-h-0"
       style={{ minHeight: "clamp(200px, 18vw, 300px)" }}
     >
