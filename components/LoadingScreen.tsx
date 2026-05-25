@@ -27,27 +27,38 @@ export default function LoadingScreen() {
     if (progressRef.current) progressRef.current.textContent = `${p}%`;
   };
 
-  const showAlmost = () => {
-    const el = progressRef.current;
-    if (!el) return;
-    // Fade out "99%", swap content, fade back in
-    el.style.transition = "opacity 0.25s ease";
-    el.style.opacity = "0";
-    setTimeout(() => {
-      if (!progressRef.current) return;
-      progressRef.current.innerHTML =
-        `99% ... <span style="font-weight:300">Almost done</span>`;
-      progressRef.current.style.opacity = "1";
-    }, 250);
-  };
-
   useEffect(() => {
     const startTime = performance.now();
     let progressRaf: number;
     let done = false;
     let currentP = 0;
     let almostTimer: ReturnType<typeof setTimeout> | null = null;
+    let typeTimer: ReturnType<typeof setTimeout> | null = null;
     let frozenAt99 = false;
+
+    const MEDIUM = " ... ";
+    const LIGHT = "Almost done";
+    const FULL = MEDIUM + LIGHT;
+
+    const showAlmost = () => {
+      let charIdx = 0;
+      const typeNext = () => {
+        charIdx++;
+        const med = FULL.slice(0, Math.min(charIdx, MEDIUM.length));
+        const light = charIdx > MEDIUM.length
+          ? FULL.slice(MEDIUM.length, charIdx)
+          : "";
+        if (progressRef.current) {
+          progressRef.current.innerHTML =
+            `99%<span style="font-weight:500">${med}</span>` +
+            (light ? `<span style="font-weight:300">${light}</span>` : "");
+        }
+        if (charIdx < FULL.length) {
+          typeTimer = setTimeout(typeNext, 55);
+        }
+      };
+      typeNext();
+    };
 
     const iconInterval = setInterval(() => {
       if (done) return;
@@ -56,11 +67,6 @@ export default function LoadingScreen() {
 
     const rampToHundred = () => {
       frozenAt99 = false;
-      // Reset any opacity/transition set by showAlmost
-      if (progressRef.current) {
-        progressRef.current.style.transition = "";
-        progressRef.current.style.opacity = "1";
-      }
       const rampStart = performance.now();
       const baseP = currentP;
       const ramp = (now: number) => {
@@ -84,6 +90,7 @@ export default function LoadingScreen() {
       if (done) return;
       done = true;
       if (almostTimer) clearTimeout(almostTimer);
+      if (typeTimer) clearTimeout(typeTimer);
       clearInterval(iconInterval);
       cancelAnimationFrame(progressRaf);
       setTimeout(rampToHundred, 200);
@@ -118,6 +125,7 @@ export default function LoadingScreen() {
     return () => {
       done = true;
       if (almostTimer) clearTimeout(almostTimer);
+      if (typeTimer) clearTimeout(typeTimer);
       clearInterval(iconInterval);
       cancelAnimationFrame(progressRaf);
       window.removeEventListener("load", onLoad);
