@@ -691,6 +691,7 @@ function NamiExchangeBanner() {
   return (
     <a
       href="/work/nami-exchange"
+      data-cursor="take a look"
       className="relative w-full overflow-hidden flex cursor-pointer items-center max-md:items-start"
       style={{ minHeight: "clamp(180px, 16.7vw, 240px)" }}
     >

@@ -6,7 +6,7 @@ import { useLang } from "@/contexts/LanguageContext";
 const ASSETS = {
   // Desktop EN — Figma 648-23426
   heroBg: "https://www.figma.com/api/mcp/asset/c662f03b-f45a-468b-bc70-99913783ddfd",
-  graphic: "https://www.figma.com/api/mcp/asset/3d286a59-b6cc-4e87-8c52-cc45af7c0c93",
+  graphic: "/nami-insurance-lm-graphic.png",
   imgOnchain: "https://www.figma.com/api/mcp/asset/c7953b07-8564-449e-978c-c6ab1dbe21b8",
   imgMuaBaoHiem: "https://www.figma.com/api/mcp/asset/9688810b-4500-4804-b90f-8b2c49a3ac6e",
   imgHoaHong: "https://www.figma.com/api/mcp/asset/ce413b23-48c0-4da2-966d-2c2fa6906d62",
@@ -31,7 +31,7 @@ const ASSETS = {
   arrowVI: "https://www.figma.com/api/mcp/asset/67f90523-cdb0-442c-80e6-f7a165724316",
   // Mobile
   heroBgMobile: "https://www.figma.com/api/mcp/asset/3a896b0a-8d64-444b-98da-d406e94e24ae",
-  graphicMobile: "https://www.figma.com/api/mcp/asset/45cfee42-a426-4cc8-91cf-11d4bd6dc0c5",
+  graphicMobile: "/nami-insurance-lm-graphic.png",
   imgOnchainMobile: "https://www.figma.com/api/mcp/asset/19c46450-abcc-41c1-9ec1-d7164c596468",
   imgMuaBaoHiemMobile: "https://www.figma.com/api/mcp/asset/42f41692-01ec-461c-8e1f-7a832f78aefa",
   imgHoaHongMobile: "https://www.figma.com/api/mcp/asset/2b3e1b0d-ad55-433d-8ca0-74f56292073b",
@@ -92,8 +92,8 @@ function Hero() {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-white flex flex-col justify-end pb-[60px] px-[40px] gap-11 max-md:px-6 max-md:pb-[60px] max-md:gap-6 max-md:!h-svh"
-      style={{ height: "clamp(680px, 62.5vw, 900px)" }}
+      className="relative w-full overflow-hidden bg-white flex flex-col justify-end pb-[60px] px-[40px] gap-11 max-md:px-6 max-md:pb-[60px] max-md:gap-6"
+      style={{ height: "100svh" }}
     >
       <img src={ASSETS.heroBg} alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none hidden md:block" />
       <img src={ASSETS.heroBgMobile} alt="" className="absolute inset-0 w-full h-full object-cover pointer-events-none md:hidden" />
@@ -345,8 +345,8 @@ function Section04() {
           </div>
         </motion.div>
         <motion.div {...fadeUp(0.1)} className="w-full overflow-hidden">
-          <img src={vi ? ASSETS.imgEmailVI : ASSETS.imgEmail} alt="Email template" className="hidden md:block w-full object-cover" />
-          <img src={ASSETS.imgEmailMobile} alt="Email template" className="md:hidden w-full object-cover" />
+          <img src={vi ? ASSETS.imgEmailVI : ASSETS.imgEmail} alt="Email template" className="hidden md:block w-full object-cover rounded-[20px]" />
+          <img src={ASSETS.imgEmailMobile} alt="Email template" className="md:hidden w-full object-cover rounded-[20px]" />
         </motion.div>
       </div>
     </section>
@@ -383,7 +383,7 @@ function Section05() {
       {/* Desktop: 3-col grid */}
       <div className="hidden md:grid grid-cols-3 gap-3">
         {desktopImages.map((src, i) => (
-          <motion.div key={i} {...fadeUp(i * 0.05)} className="overflow-hidden rounded-[32px]" style={{ aspectRatio: "392/600" }}>
+          <motion.div key={i} {...fadeUp(i * 0.05)} className="overflow-hidden rounded-[32px] border border-[rgba(0,0,0,0.1)]" style={{ aspectRatio: "392/600" }}>
             <img src={src} alt={`Design system ${i + 1}`} className="w-full h-full object-cover" />
           </motion.div>
         ))}
@@ -392,7 +392,7 @@ function Section05() {
       {/* Mobile: stacked */}
       <div className="md:hidden flex flex-col gap-4">
         {[ASSETS.designSystem1Mobile, ASSETS.designSystem2Mobile, ASSETS.designSystem3Mobile].map((src, i) => (
-          <motion.div key={i} {...fadeUp(i * 0.05)} className="overflow-hidden rounded-[16px]">
+          <motion.div key={i} {...fadeUp(i * 0.05)} className="overflow-hidden rounded-[20px] border border-[rgba(0,0,0,0.1)]">
             <img src={src} alt={`Design system ${i + 1}`} className="w-full object-cover" />
           </motion.div>
         ))}
@@ -434,6 +434,7 @@ function HighwayBanner() {
   return (
     <a
       href="/work/highway"
+      data-cursor="take a look"
       className="relative w-full overflow-hidden flex cursor-pointer items-center max-md:items-start max-md:!min-h-0"
       style={{ minHeight: "clamp(200px, 18vw, 300px)" }}
     >
