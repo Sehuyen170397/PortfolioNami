@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence, useTransform, useMotionValue } from "framer-motion";
 import { useLang } from "@/contexts/LanguageContext";
 
 function MenuIcon({ color = "#1f1f1f" }: { color?: string }) {
@@ -27,10 +27,41 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrollY } = useScroll();
 
+  // scrolled state: used only for isDark text colors and mobile nav animate
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 60);
     if (menuOpen) setMenuOpen(false);
   });
+
+  // Smooth 0→1 progress as user scrolls 0→60px — drives all visual transitions
+  const sp = useTransform(scrollY, [0, 60], [0, 1], { clamp: true });
+
+  // Viewport width as a MotionValue so desktop nav width interpolates correctly
+  const vpWidthMV = useMotionValue(1440);
+  useEffect(() => {
+    vpWidthMV.set(window.innerWidth);
+    const onResize = () => vpWidthMV.set(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [vpWidthMV]);
+
+  // Desktop wrapper: top slides 0 → 24px
+  const desktopTop = useTransform(sp, [0, 1], [0, 24]);
+
+  // Desktop nav motion values
+  const navWidth = useTransform(
+    [sp, vpWidthMV] as const,
+    ([s, vp]: number[]) => vp * (1 - s) + 800 * s
+  );
+  const navBorderRadius = useTransform(sp, [0, 1], [0, 200]);
+  const navBg = useTransform(sp, [0, 1], ["rgba(255,255,255,0)", "rgba(255,255,255,0.6)"]);
+  const navBorderColor = useTransform(sp, [0, 1], ["rgba(0,0,0,0)", "rgba(0,0,0,0.1)"]);
+  const navBlur = useTransform(sp, (v) => `blur(${v * 40}px)`);
+  const navPaddingRight = useTransform(sp, [0, 1], [40, 24]);
+
+  // Mobile wrapper: padding slides 0 → 16px
+  const mobilePaddingLR = useTransform(sp, [0, 1], [0, 16]);
+  const mobilePaddingTop = useTransform(sp, [0, 1], [0, 16]);
 
   const { lang, toggleLang } = useLang();
   const pathname = usePathname();
@@ -71,41 +102,25 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
   return (
     <>
       {/* ── Desktop ── */}
-      <div
-        className="fixed inset-x-0 top-0 z-[100] hidden md:flex justify-center pointer-events-none"
+      <motion.div
+        className="fixed inset-x-0 z-[100] hidden md:flex justify-center pointer-events-none"
+        style={{ top: desktopTop }}
       >
         <motion.nav
-          initial={false}
-          animate={
-            scrolled
-              ? {
-                  width: 800,
-                  borderRadius: 200,
-                  backgroundColor: "rgba(255,255,255,0.6)",
-                  backdropFilter: "blur(40px)",
-                  borderColor: "rgba(0,0,0,0.1)",
-                  paddingLeft: 40,
-                  paddingRight: 24,
-                  paddingTop: 22,
-                  paddingBottom: 22,
-                  y: 24,
-                }
-              : {
-                  width: "100%",
-                  borderRadius: 0,
-                  backgroundColor: "rgba(255,255,255,0)",
-                  backdropFilter: "blur(0px)",
-                  borderColor: "rgba(0,0,0,0)",
-                  paddingLeft: 40,
-                  paddingRight: 40,
-                  paddingTop: 22,
-                  paddingBottom: 22,
-                  y: 0,
-                }
-          }
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           className="flex items-center justify-between border pointer-events-auto"
-          style={{ borderWidth: 0.5, borderStyle: "solid" }}
+          style={{
+            width: navWidth,
+            borderRadius: navBorderRadius,
+            backgroundColor: navBg,
+            backdropFilter: navBlur,
+            borderColor: navBorderColor,
+            borderWidth: 0.5,
+            borderStyle: "solid",
+            paddingLeft: 40,
+            paddingRight: navPaddingRight,
+            paddingTop: 22,
+            paddingBottom: 22,
+          }}
         >
           <a
             href="/"
@@ -139,7 +154,7 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
             </button>
           </div>
         </motion.nav>
-      </div>
+      </motion.div>
 
       {/* ── Mobile backdrop — closes menu on outside tap ── */}
       {menuOpen && (
@@ -150,13 +165,12 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
       )}
 
       {/* ── Mobile ── */}
-      <div
+      <motion.div
         className="fixed inset-x-0 top-0 z-[100] flex md:hidden pointer-events-none"
         style={{
-          paddingLeft: scrolled ? 16 : 0,
-          paddingRight: scrolled ? 16 : 0,
-          paddingTop: scrolled ? 16 : 0,
-          transition: "padding 0.45s cubic-bezier(0.16, 1, 0.3, 1)",
+          paddingLeft: mobilePaddingLR,
+          paddingRight: mobilePaddingLR,
+          paddingTop: mobilePaddingTop,
         }}
       >
         <motion.nav
@@ -256,7 +270,7 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
             )}
           </AnimatePresence>
         </motion.nav>
-      </div>
+      </motion.div>
     </>
   );
 }
