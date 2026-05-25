@@ -22,9 +22,18 @@ export default function LoadingScreen() {
   const [visible, setVisible] = useState(true);
   const [exiting, setExiting] = useState(false);
   const progressRef = useRef<HTMLSpanElement>(null);
+  const almostRef = useRef<HTMLSpanElement>(null);
 
   const setProgressText = (p: number) => {
     if (progressRef.current) progressRef.current.textContent = `${p}%`;
+  };
+
+  const showAlmost = () => {
+    if (almostRef.current) almostRef.current.style.opacity = "1";
+  };
+
+  const hideAlmost = () => {
+    if (almostRef.current) almostRef.current.style.opacity = "0";
   };
 
   useEffect(() => {
@@ -32,6 +41,7 @@ export default function LoadingScreen() {
     let progressRaf: number;
     let done = false;
     let currentP = 0;
+    let almostTimer: ReturnType<typeof setTimeout> | null = null;
 
     const iconInterval = setInterval(() => {
       if (done) return;
@@ -39,6 +49,7 @@ export default function LoadingScreen() {
     }, 700);
 
     const rampToHundred = () => {
+      hideAlmost();
       const rampStart = performance.now();
       const baseP = currentP;
       const ramp = (now: number) => {
@@ -61,6 +72,7 @@ export default function LoadingScreen() {
     const onLoad = () => {
       if (done) return;
       done = true;
+      if (almostTimer) clearTimeout(almostTimer);
       clearInterval(iconInterval);
       cancelAnimationFrame(progressRaf);
       setTimeout(rampToHundred, 200);
@@ -76,12 +88,15 @@ export default function LoadingScreen() {
       if (done) return;
       const elapsed = now - startTime;
       const fast = Math.sqrt(elapsed) * 1.8;
-      // Fast approach to 88, then slow crawl toward 99 so counter never stalls
       const p = fast <= 88
         ? Math.round(fast)
         : Math.min(99, Math.round(88 + Math.sqrt(elapsed - 2394) * 0.22));
       currentP = p;
       setProgressText(p);
+      // Start 2s timer when first hitting 99%
+      if (p === 99 && !almostTimer) {
+        almostTimer = setTimeout(showAlmost, 2000);
+      }
       progressRaf = requestAnimationFrame(tick);
     };
     progressRaf = requestAnimationFrame(tick);
@@ -130,9 +145,18 @@ export default function LoadingScreen() {
         <div className="flex flex-col items-center" style={{ gap: 48 }}>
           {/* Percentage + circle */}
           <div className="flex flex-col items-center" style={{ gap: 24 }}>
-            <span ref={progressRef} className="font-inter font-medium text-[#1f1f1f] leading-normal text-2xl md:text-[22px]">
-              0%
-            </span>
+            <div className="flex flex-col items-center" style={{ gap: 4 }}>
+              <span ref={progressRef} className="font-inter font-medium text-[#1f1f1f] leading-normal text-2xl md:text-[22px]">
+                0%
+              </span>
+              <span
+                ref={almostRef}
+                className="font-inter font-light text-[#1f1f1f] text-sm"
+                style={{ opacity: 0, transition: "opacity 0.4s ease" }}
+              >
+                ...almost done
+              </span>
+            </div>
 
             <div
               className="relative bg-white rounded-full flex items-center justify-center w-40 h-40 md:w-[140px] md:h-[140px]"
