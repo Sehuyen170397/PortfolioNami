@@ -95,7 +95,7 @@ export default function LoadingScreen() {
       setProgressText(p);
       // Start 2s timer when first hitting 99%
       if (p === 99 && !almostTimer) {
-        almostTimer = setTimeout(showAlmost, 2000);
+        almostTimer = setTimeout(showAlmost, 3500);
       }
       progressRaf = requestAnimationFrame(tick);
     };
@@ -145,16 +145,17 @@ export default function LoadingScreen() {
         <div className="flex flex-col items-center" style={{ gap: 48 }}>
           {/* Percentage + circle */}
           <div className="flex flex-col items-center" style={{ gap: 24 }}>
-            <div className="flex flex-col items-center" style={{ gap: 4 }}>
+            <div className="flex items-baseline justify-center flex-wrap">
               <span ref={progressRef} className="font-inter font-medium text-[#1f1f1f] leading-normal text-2xl md:text-[22px]">
                 0%
               </span>
               <span
                 ref={almostRef}
-                className="font-inter font-light text-[#1f1f1f] text-sm"
+                className="font-inter text-[#1f1f1f] leading-normal text-2xl md:text-[22px]"
                 style={{ opacity: 0, transition: "opacity 0.4s ease" }}
               >
-                ...almost done
+                <span className="font-medium"> ... ... ... </span>
+                <span className="font-light">Almost done</span>
               </span>
             </div>
 
