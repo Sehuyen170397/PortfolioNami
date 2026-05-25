@@ -16,14 +16,15 @@
 
 html {
   scroll-behavior: smooth;
-  /* overflow-x: hidden is intentionally NOT set here — lets hero frames
-     peek from viewport edges. The body rule below propagates to viewport. */
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 body {
   background: white;
   color: #1f1f1f;
   overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 /* Glass inner shadow utility */

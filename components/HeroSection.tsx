@@ -142,7 +142,7 @@ function StepContent({ step, lang }: { step: number; lang: string }) {
       <p className="font-inter font-light text-[15px] text-[#666] text-center leading-[24px]">
         {vi
           ? `Lớn lên ở Vũng Tàu, hiện đang "đóng đô" tại TP.HCM. Mình có hơn 3 năm làm việc trong crypto, fintech và bảo hiểm, cùng 4+ năm "lăn lộn" trong ngành thiết kế, từ graphic design đến UX/UI.`
-          : "Vung Tau raised, Ho Chi Minh based. I have over 3 years of experience in crypto, fintech, and insurance. More than four years in design industry include graphic design."}
+          : "Vung Tau raised, Ho Chi Minh based. I have over three years of experience in crypto, fintech, and insurance. More than four years in design industry include graphic design."}
       </p>
     </div>
   );

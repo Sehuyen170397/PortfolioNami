@@ -158,7 +158,7 @@ function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       className={`relative overflow-hidden rounded-[40px] border border-[rgba(0,0,0,0.1)] flex w-full ${project.desktopLink ? "cursor-pointer" : ""}`}
-      style={{ height: 700 }}
+      style={{ height: "clamp(450px, calc(51.5vw - 41.2px), 700px)" }}
       onClick={handleClick}
     >
       {/* Image — full bleed background */}
@@ -171,13 +171,16 @@ function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
       </div>
 
       {/* Content overlay — left panel */}
-      <div className="absolute left-0 top-0 w-[680px] h-full p-[60px] flex flex-col gap-5">
+      <div
+        className="absolute left-0 top-0 w-1/2 h-full flex flex-col gap-5"
+        style={{ padding: "clamp(28px, 4.2vw, 60px)" }}
+      >
         <div className="flex flex-1 flex-col justify-between pb-4 pt-1">
           <div className="flex flex-col gap-6">
-            <p className={`font-inter font-normal text-[16px] leading-normal ${tc}`}>
+            <p className={`font-inter font-normal leading-normal ${tc}`} style={{ fontSize: "clamp(13px, 1.1vw, 16px)" }}>
               {project.category}
             </p>
-            <h3 className={`font-inter font-semibold text-[40px] leading-tight ${tc}`}>
+            <h3 className={`font-inter font-semibold leading-tight ${tc}`} style={{ fontSize: "clamp(22px, 2.8vw, 40px)" }}>
               {project.title}
             </h3>
           </div>
@@ -189,12 +192,12 @@ function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
                 boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2)",
               }}
             >
-              <span className={`font-inter font-semibold text-[24px] ${project.dark ? "text-white" : "text-[#1f1f1f]"}`}>{project.cta}</span>
+              <span className={`font-inter font-semibold ${project.dark ? "text-white" : "text-[#1f1f1f]"}`} style={{ fontSize: "clamp(16px, 1.7vw, 24px)" }}>{project.cta}</span>
               <ArrowUpRight color={project.dark ? "white" : "#1f1f1f"} />
             </div>
           ) : (
             <div className="flex items-center gap-4 bg-[rgba(0,0,0,0.1)] backdrop-blur-[8px] border border-[rgba(0,0,0,0.2)] rounded-full px-6 py-2 w-fit hover:bg-[rgba(0,0,0,0.18)] transition-colors">
-              <span className={`font-inter font-semibold text-[24px] ${tc}`}>{project.cta}</span>
+              <span className={`font-inter font-semibold ${tc}`} style={{ fontSize: "clamp(16px, 1.7vw, 24px)" }}>{project.cta}</span>
               <ArrowUpRight color={arrowColor} />
             </div>
           )}
@@ -202,18 +205,18 @@ function WorkCardDesktop({ project }: { project: (typeof projectsEN)[0] }) {
 
         <div className="flex gap-8 pt-5">
           <div className="flex flex-col gap-3">
-            <span className={`font-inter font-bold text-[24px] leading-normal ${tc}`}>
+            <span className={`font-inter font-bold leading-normal ${tc}`} style={{ fontSize: "clamp(14px, 1.7vw, 24px)" }}>
               {project.domain}
             </span>
-            <span className={`font-inter font-normal text-[16px] leading-normal ${tc} opacity-70`}>
+            <span className={`font-inter font-normal leading-normal ${tc} opacity-70`} style={{ fontSize: "clamp(12px, 1.1vw, 16px)" }}>
               {project.domainLabel}
             </span>
           </div>
           <div className="flex flex-col gap-3">
-            <span className={`font-inter font-bold text-[24px] leading-normal ${tc}`}>
+            <span className={`font-inter font-bold leading-normal ${tc}`} style={{ fontSize: "clamp(14px, 1.7vw, 24px)" }}>
               {project.years}
             </span>
-            <span className={`font-inter font-normal text-[16px] leading-normal ${tc} opacity-70`}>
+            <span className={`font-inter font-normal leading-normal ${tc} opacity-70`} style={{ fontSize: "clamp(12px, 1.1vw, 16px)" }}>
               {project.label}
             </span>
           </div>
@@ -243,7 +246,7 @@ function WorkCardMobile({ project }: { project: (typeof projectsEN)[0] }) {
       style={{ border: "0.5px solid rgba(0,0,0,0.1)" }}
       onClick={handleClick}
     >
-      <div className="h-[342px] overflow-hidden relative rounded-t-[12px] shrink-0">
+      <div className="overflow-hidden relative rounded-t-[12px] shrink-0" style={{ height: "clamp(220px, calc(89.5vw - 43px), 342px)" }}>
         <img
           src={project.mobileImage}
           alt={project.title}
@@ -338,12 +341,16 @@ export default function WorkSection() {
           },
         });
 
-        // Card 0: phase 1 (0–724px) → scale + full opacity fade (1→0.5→0); phase 2 holds at 0
+        const cardH = card0WrapRef.current?.offsetHeight ?? 700;
+        const GAP = 24; // gap-6
+        const phase = cardH + GAP; // scroll distance for one card to cover the next
+
+        // Card 0: pinned while cards 1 and 2 stack on top
         gsap.timeline({
           scrollTrigger: {
             trigger: card0WrapRef.current,
             start: "top 124px",
-            end: "+=1448",
+            end: `+=${phase * 2}`,
             pin: true,
             scrub: 0.5,
             anticipatePin: 1,
@@ -360,7 +367,7 @@ export default function WorkSection() {
           scrollTrigger: {
             trigger: card1WrapRef.current,
             start: "top 124px",
-            end: "+=724",
+            end: `+=${phase}`,
             pin: true,
             scrub: 0.5,
             anticipatePin: 1,
