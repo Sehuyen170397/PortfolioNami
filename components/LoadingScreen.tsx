@@ -42,7 +42,7 @@ export default function LoadingScreen() {
       const rampStart = performance.now();
       const baseP = currentP;
       const ramp = (now: number) => {
-        const t = Math.min((now - rampStart) / 400, 1);
+        const t = Math.min((now - rampStart) / 250, 1);
         const eased = 1 - Math.pow(1 - t, 3);
         setProgressText(Math.round(baseP + (100 - baseP) * eased));
         if (t < 1) {
@@ -52,7 +52,7 @@ export default function LoadingScreen() {
           setTimeout(() => {
             setExiting(true);
             setTimeout(() => setVisible(false), 1100);
-          }, 400);
+          }, 200);
         }
       };
       requestAnimationFrame(ramp);
@@ -74,7 +74,12 @@ export default function LoadingScreen() {
 
     const tick = (now: number) => {
       if (done) return;
-      const p = Math.min(88, Math.round(Math.sqrt(now - startTime) * 1.8));
+      const elapsed = now - startTime;
+      const fast = Math.sqrt(elapsed) * 1.8;
+      // Fast approach to 88, then slow crawl toward 99 so counter never stalls
+      const p = fast <= 88
+        ? Math.round(fast)
+        : Math.min(99, Math.round(88 + Math.sqrt(elapsed - 2394) * 0.22));
       currentP = p;
       setProgressText(p);
       progressRaf = requestAnimationFrame(tick);
