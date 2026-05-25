@@ -31,7 +31,7 @@ export default function LoadingScreen() {
 
     const iconInterval = setInterval(() => {
       if (done) return;
-      setIconIdx((prev) => Math.min(prev + 1, ICONS.length - 1));
+      setIconIdx((prev) => (prev + 1) % ICONS.length);
     }, 700);
 
     const rampToHundred = () => {
