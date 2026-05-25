@@ -28,11 +28,17 @@ export default function LoadingScreen() {
   };
 
   const showAlmost = () => {
-    if (!progressRef.current) return;
-    // Replace plain "99%" with inline styled "99% ... ... ... Almost done"
-    progressRef.current.innerHTML =
-      `99%<span style="font-weight:500"> ... ... ... </span>` +
-      `<span style="font-weight:300">Almost done</span>`;
+    const el = progressRef.current;
+    if (!el) return;
+    // Fade out "99%", swap content, fade back in
+    el.style.transition = "opacity 0.25s ease";
+    el.style.opacity = "0";
+    setTimeout(() => {
+      if (!progressRef.current) return;
+      progressRef.current.innerHTML =
+        `99% ... <span style="font-weight:300">Almost done</span>`;
+      progressRef.current.style.opacity = "1";
+    }, 250);
   };
 
   useEffect(() => {
@@ -41,6 +47,7 @@ export default function LoadingScreen() {
     let done = false;
     let currentP = 0;
     let almostTimer: ReturnType<typeof setTimeout> | null = null;
+    let frozenAt99 = false;
 
     const iconInterval = setInterval(() => {
       if (done) return;
@@ -48,7 +55,12 @@ export default function LoadingScreen() {
     }, 700);
 
     const rampToHundred = () => {
-      // setProgressText uses textContent which clears the innerHTML "almost done" state
+      frozenAt99 = false;
+      // Reset any opacity/transition set by showAlmost
+      if (progressRef.current) {
+        progressRef.current.style.transition = "";
+        progressRef.current.style.opacity = "1";
+      }
       const rampStart = performance.now();
       const baseP = currentP;
       const ramp = (now: number) => {
@@ -91,8 +103,12 @@ export default function LoadingScreen() {
         ? Math.round(fast)
         : Math.min(99, Math.round(88 + Math.sqrt(elapsed - 2394) * 0.22));
       currentP = p;
-      setProgressText(p);
+      // Stop overwriting once frozen at 99 — prevents clobbering showAlmost's innerHTML
+      if (!frozenAt99) {
+        setProgressText(p);
+      }
       if (p === 99 && !almostTimer) {
+        frozenAt99 = true;
         almostTimer = setTimeout(showAlmost, 3500);
       }
       progressRaf = requestAnimationFrame(tick);
