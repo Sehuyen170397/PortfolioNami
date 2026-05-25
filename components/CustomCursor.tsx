@@ -11,7 +11,11 @@ const SECTION_LABELS: Record<string, string> = {
   contact: "don't wait",
 };
 
-const WORK_PAGE_LABEL = "truyen";
+const WORK_PAGE_LABELS: Record<string, string> = {
+  "/work/nami-exchange": "nami exchange",
+  "/work/nami-insurance": "nami insurance",
+  "/work/highway": "highway",
+};
 const NAV_HOVER_LABEL = "back to home";
 
 export default function CustomCursor() {
@@ -21,8 +25,11 @@ export default function CustomCursor() {
   const pathname = usePathname();
 
   const isWorkPage = pathname.startsWith("/work/");
+  const workPageLabel = WORK_PAGE_LABELS[pathname] ?? "truyen";
   const isWorkPageRef = useRef(isWorkPage);
+  const workPageLabelRef = useRef(workPageLabel);
   useEffect(() => { isWorkPageRef.current = isWorkPage; }, [isWorkPage]);
+  useEffect(() => { workPageLabelRef.current = workPageLabel; }, [workPageLabel]);
 
   // Animate text swap — stable via ref
   const animateLabel = (next: string) => {
@@ -45,7 +52,7 @@ export default function CustomCursor() {
   // Section observer — homepage only
   useEffect(() => {
     if (isWorkPage) {
-      animateLabel(WORK_PAGE_LABEL);
+      animateLabel(workPageLabel);
       return;
     }
 
@@ -62,7 +69,7 @@ export default function CustomCursor() {
     });
 
     return () => observers.forEach((o) => o.disconnect());
-  }, [isWorkPage, pathname]);
+  }, [isWorkPage, pathname, workPageLabel]);
 
   // Mouse follow + hover
   useEffect(() => {
@@ -106,7 +113,7 @@ export default function CustomCursor() {
       if (!target.closest("a, button, [role='button'], input, textarea, select")) return;
       gsap.to(el, { scale: 1, duration: 0.3, ease: "power3.out" });
       if (isWorkPageRef.current && target.closest("nav")) {
-        animateLabelRef.current(WORK_PAGE_LABEL);
+        animateLabelRef.current(workPageLabelRef.current);
       }
     };
 
