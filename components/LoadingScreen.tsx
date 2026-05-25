@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ICONS = [
@@ -18,10 +18,14 @@ const COLS = 9;
 const ROWS = 6;
 
 export default function LoadingScreen() {
-  const [progress, setProgress] = useState(0);
   const [iconIdx, setIconIdx] = useState(0);
   const [visible, setVisible] = useState(true);
   const [exiting, setExiting] = useState(false);
+  const progressRef = useRef<HTMLSpanElement>(null);
+
+  const setProgressText = (p: number) => {
+    if (progressRef.current) progressRef.current.textContent = `${p}%`;
+  };
 
   useEffect(() => {
     const startTime = performance.now();
@@ -40,11 +44,11 @@ export default function LoadingScreen() {
       const ramp = (now: number) => {
         const t = Math.min((now - rampStart) / 400, 1);
         const eased = 1 - Math.pow(1 - t, 3);
-        setProgress(Math.round(baseP + (100 - baseP) * eased));
+        setProgressText(Math.round(baseP + (100 - baseP) * eased));
         if (t < 1) {
           requestAnimationFrame(ramp);
         } else {
-          setProgress(100);
+          setProgressText(100);
           setTimeout(() => {
             setExiting(true);
             setTimeout(() => setVisible(false), 1100);
@@ -72,7 +76,7 @@ export default function LoadingScreen() {
       if (done) return;
       const p = Math.min(88, Math.round(Math.sqrt(now - startTime) * 1.8));
       currentP = p;
-      setProgress(p);
+      setProgressText(p);
       progressRaf = requestAnimationFrame(tick);
     };
     progressRaf = requestAnimationFrame(tick);
@@ -83,6 +87,7 @@ export default function LoadingScreen() {
       cancelAnimationFrame(progressRaf);
       window.removeEventListener("load", onLoad);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!visible) return null;
@@ -120,8 +125,8 @@ export default function LoadingScreen() {
         <div className="flex flex-col items-center" style={{ gap: 48 }}>
           {/* Percentage + circle */}
           <div className="flex flex-col items-center" style={{ gap: 24 }}>
-            <span className="font-inter font-medium text-[#1f1f1f] leading-normal text-2xl md:text-[22px]">
-              {progress}%
+            <span ref={progressRef} className="font-inter font-medium text-[#1f1f1f] leading-normal text-2xl md:text-[22px]">
+              0%
             </span>
 
             <div
