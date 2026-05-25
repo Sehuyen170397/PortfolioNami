@@ -22,18 +22,17 @@ export default function LoadingScreen() {
   const [visible, setVisible] = useState(true);
   const [exiting, setExiting] = useState(false);
   const progressRef = useRef<HTMLSpanElement>(null);
-  const almostRef = useRef<HTMLSpanElement>(null);
 
   const setProgressText = (p: number) => {
     if (progressRef.current) progressRef.current.textContent = `${p}%`;
   };
 
   const showAlmost = () => {
-    if (almostRef.current) almostRef.current.style.opacity = "1";
-  };
-
-  const hideAlmost = () => {
-    if (almostRef.current) almostRef.current.style.opacity = "0";
+    if (!progressRef.current) return;
+    // Replace plain "99%" with inline styled "99% ... ... ... Almost done"
+    progressRef.current.innerHTML =
+      `99%<span style="font-weight:500"> ... ... ... </span>` +
+      `<span style="font-weight:300">Almost done</span>`;
   };
 
   useEffect(() => {
@@ -49,7 +48,7 @@ export default function LoadingScreen() {
     }, 700);
 
     const rampToHundred = () => {
-      hideAlmost();
+      // setProgressText uses textContent which clears the innerHTML "almost done" state
       const rampStart = performance.now();
       const baseP = currentP;
       const ramp = (now: number) => {
@@ -93,7 +92,6 @@ export default function LoadingScreen() {
         : Math.min(99, Math.round(88 + Math.sqrt(elapsed - 2394) * 0.22));
       currentP = p;
       setProgressText(p);
-      // Start 2s timer when first hitting 99%
       if (p === 99 && !almostTimer) {
         almostTimer = setTimeout(showAlmost, 3500);
       }
@@ -103,6 +101,7 @@ export default function LoadingScreen() {
 
     return () => {
       done = true;
+      if (almostTimer) clearTimeout(almostTimer);
       clearInterval(iconInterval);
       cancelAnimationFrame(progressRaf);
       window.removeEventListener("load", onLoad);
@@ -136,7 +135,7 @@ export default function LoadingScreen() {
         ))
       )}
 
-      {/* Content — fades out as bars start sliding */}
+      {/* Content */}
       <motion.div
         className="absolute inset-0 flex items-center justify-center"
         animate={exiting ? { opacity: 0 } : { opacity: 1 }}
@@ -145,19 +144,12 @@ export default function LoadingScreen() {
         <div className="flex flex-col items-center" style={{ gap: 48 }}>
           {/* Percentage + circle */}
           <div className="flex flex-col items-center" style={{ gap: 24 }}>
-            <div className="flex items-baseline justify-center flex-wrap">
-              <span ref={progressRef} className="font-inter font-medium text-[#1f1f1f] leading-normal text-2xl md:text-[22px]">
-                0%
-              </span>
-              <span
-                ref={almostRef}
-                className="font-inter text-[#1f1f1f] leading-normal text-2xl md:text-[22px]"
-                style={{ opacity: 0, transition: "opacity 0.4s ease" }}
-              >
-                <span className="font-medium"> ... ... ... </span>
-                <span className="font-light">Almost done</span>
-              </span>
-            </div>
+            <span
+              ref={progressRef}
+              className="font-inter font-medium text-[#1f1f1f] leading-normal text-2xl md:text-[22px] text-center"
+            >
+              0%
+            </span>
 
             <div
               className="relative bg-white rounded-full flex items-center justify-center w-40 h-40 md:w-[140px] md:h-[140px]"
