@@ -37,7 +37,7 @@ export default function LoadingScreen() {
     let frozenAt99 = false;
 
     const MEDIUM = " ... ";
-    const LIGHT = "Almost done";
+    const LIGHT = "Almost done 🕺";
     const FULL = MEDIUM + LIGHT;
 
     const showAlmost = () => {
