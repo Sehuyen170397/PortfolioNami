@@ -261,7 +261,7 @@ export default function HeroSection() {
               style={{ border: "1.5px solid #c3ffdd", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
             >
               <video
-                src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733637/creative_suggest_welcome-video-780x1688-compressed_2_quwwwb.mp4"
+                src="https://res.cloudinary.com/dojjlywjq/video/upload/v1779799026/creative_suggest_welcome-video-780x1688-compressed_2-2_adysjq.mp4"
                 autoPlay
                 muted
                 loop
@@ -297,7 +297,7 @@ export default function HeroSection() {
               style={{ border: "1.5px solid #4f00bd", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
             >
               <video
-                src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733576/SCI_Lab_lqdaou.mov"
+                src="https://res.cloudinary.com/dojjlywjq/video/upload/v1779799159/SCI_Lab_yyka7n.mp4"
                 autoPlay
                 muted
                 loop
@@ -333,7 +333,7 @@ export default function HeroSection() {
               style={{ border: "1.5px solid #05261a", boxShadow: "0 0 45px rgba(0,0,0,0.1)" }}
             >
               <video
-                src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733701/Screen_Recording_2026-04-25_at_11.31.09_mkvixd.mov"
+                src="https://res.cloudinary.com/dojjlywjq/video/upload/v1779799222/Screen_Recording_2026-04-25_at_11.31.09_cax3er.mp4"
                 autoPlay
                 muted
                 loop
@@ -389,7 +389,7 @@ export default function HeroSection() {
               style={{ width: 156, height: 339, border: "1.5px solid #cd0518", boxShadow: "0 0 42px rgba(0,0,0,0.1)" }}
             >
               <video
-                src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733412/Insurance_takxqq.mov"
+                src="https://res.cloudinary.com/dojjlywjq/video/upload/v1779799270/Insurance_fazyvp.mp4"
                 autoPlay
                 muted
                 loop
@@ -461,7 +461,7 @@ export default function HeroSection() {
         <div ref={setFloatRef(12)}>
           <div className="-rotate-[10deg]" style={{ width: 90.5, height: 196.5, marginLeft: "auto", marginRight: "auto" }}>
             <div className="w-full h-full rounded-[9px] overflow-hidden" style={{ border: "0.75px solid #c3ffdd", boxShadow: "0 0 22px rgba(0,0,0,0.1)" }}>
-              <video src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733637/creative_suggest_welcome-video-780x1688-compressed_2_quwwwb.mp4" autoPlay muted loop playsInline className="w-full h-full object-cover" />
+              <video src="https://res.cloudinary.com/dojjlywjq/video/upload/v1779799026/creative_suggest_welcome-video-780x1688-compressed_2-2_adysjq.mp4" autoPlay muted loop playsInline className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
@@ -479,7 +479,7 @@ export default function HeroSection() {
         <div ref={setFloatRef(14)}>
           <div className="-rotate-[10deg]" style={{ width: 225, height: 126.5 }}>
             <div className="w-full h-full rounded-[9px] overflow-hidden" style={{ border: "0.75px solid #4f00bd", boxShadow: "0 0 22px rgba(0,0,0,0.1)" }}>
-              <video src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733576/SCI_Lab_lqdaou.mov" autoPlay muted loop playsInline className="w-full h-full object-cover" />
+              <video src="https://res.cloudinary.com/dojjlywjq/video/upload/v1779799159/SCI_Lab_yyka7n.mp4" autoPlay muted loop playsInline className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
@@ -499,7 +499,7 @@ export default function HeroSection() {
         <div ref={setFloatRef(16)}>
           <div className="rotate-[10deg]" style={{ width: 228.5, height: 128 }}>
             <div className="w-full h-full rounded-[9px] overflow-hidden" style={{ border: "0.75px solid #05261a", boxShadow: "0 0 22px rgba(0,0,0,0.1)" }}>
-              <video src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733701/Screen_Recording_2026-04-25_at_11.31.09_mkvixd.mov" autoPlay muted loop playsInline className="w-full h-full object-cover" />
+              <video src="https://res.cloudinary.com/dojjlywjq/video/upload/v1779799222/Screen_Recording_2026-04-25_at_11.31.09_cax3er.mp4" autoPlay muted loop playsInline className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
@@ -530,7 +530,7 @@ export default function HeroSection() {
         <div ref={setFloatRef(19)}>
           <div className="rotate-[10deg]">
             <div className="rounded-[8.5px] overflow-hidden" style={{ width: 78, height: 169.5, border: "0.75px solid #cd0518", boxShadow: "0 0 21px rgba(0,0,0,0.1)" }}>
-              <video src="https://res.cloudinary.com/diuvrdjar/video/upload/v1777733412/Insurance_takxqq.mov" autoPlay muted loop playsInline className="w-full h-full object-cover" />
+              <video src="https://res.cloudinary.com/dojjlywjq/video/upload/v1779799270/Insurance_fazyvp.mp4" autoPlay muted loop playsInline className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
