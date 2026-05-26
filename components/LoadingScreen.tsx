@@ -165,49 +165,62 @@ export default function LoadingScreen() {
         animate={exiting ? { opacity: 0 } : { opacity: 1 }}
         transition={{ duration: 0.2 }}
       >
-        <div className="flex flex-col items-center" style={{ gap: 48 }}>
-          {/* Percentage + circle */}
-          <div className="flex flex-col items-center" style={{ gap: 24 }}>
-            <span
-              ref={progressRef}
-              className="font-inter font-medium text-[#1f1f1f] leading-normal text-2xl md:text-[22px] text-center"
-            >
-              0%
-            </span>
+        <div className="flex flex-col items-center gap-[60px] md:gap-[80px]">
+          {/* Percentage */}
+          <span
+            ref={progressRef}
+            className="font-inter font-light text-[#1f1f1f] leading-normal text-[15px] md:text-[24px] text-center"
+          >
+            0%
+          </span>
 
-            <div
-              className="relative bg-white rounded-full flex items-center justify-center w-40 h-40 md:w-[140px] md:h-[140px]"
-              style={{
-                border: "1px solid rgba(0,0,0,0.1)",
-                boxShadow: "4px 4px 10px rgba(0,0,0,0.1)",
-              }}
-            >
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={iconIdx}
-                  src={ICONS[iconIdx]}
-                  alt=""
-                  className="object-cover w-32 h-32 rounded-[53px] md:w-[112px] md:h-[112px] md:rounded-[37px]"
-                  initial={{ scale: 0.6, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.6, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                />
-              </AnimatePresence>
-            </div>
-          </div>
+          {/* Circle */}
+          <motion.div
+            className="relative bg-white rounded-full flex items-center justify-center w-[120px] h-[120px] md:w-[200px] md:h-[200px]"
+            animate={{
+              filter: [
+                "drop-shadow(-8px 32px 16px rgba(10,221,95,0.4))",
+                "drop-shadow(-16px 0px 20px rgba(14,157,254,0.4))",
+                "drop-shadow(0px -26px 20px rgba(172,127,250,0.4))",
+                "drop-shadow(8px 0px 10px rgba(255,199,72,0.4))",
+                "drop-shadow(8px 8px 10px rgba(217,31,46,0.4))",
+                "drop-shadow(-8px 32px 16px rgba(10,221,95,0.4))",
+              ],
+            }}
+            transition={{
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "linear",
+              times: [0, 0.2, 0.4, 0.6, 0.8, 1],
+            }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={iconIdx}
+                src={ICONS[iconIdx]}
+                alt=""
+                className="object-cover w-[96px] h-[96px] rounded-[40px] md:w-[160px] md:h-[160px] md:rounded-[67px]"
+                initial={{ scale: 0.6, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.6, opacity: 0 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </AnimatePresence>
+          </motion.div>
 
           {/* Tagline */}
           <div className="text-center px-4 md:px-0" style={{ lineHeight: 1.75 }}>
-            <p className="m-0 text-xl md:text-[17px]">
+            <p className="m-0 text-[15px] md:text-[24px]">
               <span className="font-inter font-light text-[#1f1f1f]">
-                This website was built with{" "}
+                This website was built with
               </span>
+              <span className="hidden md:inline font-inter font-light text-[#1f1f1f]">{" "}</span>
+              <br className="md:hidden" />
               <span className="font-playfair italic font-medium text-[#1f1f1f]">
                 Claude Code, Figma MCP
               </span>
             </p>
-            <p className="m-0 font-inter font-light text-[#1f1f1f] text-xl md:text-[17px]">
+            <p className="m-0 font-inter font-light text-[#1f1f1f] text-[15px] md:text-[24px]">
               and ... crafted entirely by myself.
             </p>
           </div>
