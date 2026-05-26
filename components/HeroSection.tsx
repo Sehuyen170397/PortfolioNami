@@ -151,18 +151,27 @@ function StepContent({ step, lang }: { step: number; lang: string }) {
 export default function HeroSection() {
   const { lang } = useLang();
   const [step, setStep] = useState(0);
+  const [loaderDone, setLoaderDone] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const floatRefs = useRef<(HTMLDivElement | null)[]>([]);
   const parallaxRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Advance through the 7 hero states on page load
+  // Start hero animation only after loader exits
   useEffect(() => {
+    const handler = () => setLoaderDone(true);
+    window.addEventListener("loader:done", handler);
+    return () => window.removeEventListener("loader:done", handler);
+  }, []);
+
+  // Step timers begin only after loader is done
+  useEffect(() => {
+    if (!loaderDone) return;
     const timeouts = STEP_SCHEDULE.map((delay, i) =>
       setTimeout(() => setStep(i + 1), delay)
     );
     return () => timeouts.forEach(clearTimeout);
-  }, []);
+  }, [loaderDone]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -601,9 +610,9 @@ export default function HeroSection() {
               <motion.div
                 key={step}
                 initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                animate={loaderDone ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 10, filter: "blur(8px)" }}
                 exit={{ opacity: 0, filter: "blur(6px)", transition: { duration: 0.18, ease: "easeIn" } }}
-                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: step === 0 ? 0.4 : 0 }}
+                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: step === 0 ? 0.3 : 0 }}
                 className="flex items-center justify-center"
               >
                 <StepContent step={step} lang={lang} />

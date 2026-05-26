@@ -79,7 +79,10 @@ export default function LoadingScreen() {
           setProgressText(100);
           setTimeout(() => {
             setExiting(true);
-            setTimeout(() => setVisible(false), 1100);
+            setTimeout(() => {
+              setVisible(false);
+              window.dispatchEvent(new Event("loader:done"));
+            }, 1100);
           }, 200);
         }
       };
