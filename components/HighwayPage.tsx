@@ -5,18 +5,18 @@ import { useLang } from "@/contexts/LanguageContext";
 
 const ASSETS = {
   // Desktop EN — 741-35760
-  heroBg: "https://www.figma.com/api/mcp/asset/6cb01a27-15ad-46b8-bcab-a246827b30ee",
-  avatarNew: "https://www.figma.com/api/mcp/asset/0bc913a1-96b8-4e9d-ab1b-13b72e4db77c",
-  avatarExp: "https://www.figma.com/api/mcp/asset/21077ac7-24f7-44a7-b4f1-028d44a01b53",
-  mobileFlow: "https://www.figma.com/api/mcp/asset/7fe393c6-b8e8-48c6-a013-783113fe4f59",
-  responsiveFlow: "https://www.figma.com/api/mcp/asset/ebd554a1-0081-4419-96b6-c9e46ea1ed03",
-  websiteFlow: "https://www.figma.com/api/mcp/asset/789c7368-3844-4b4f-a9d2-ca9a6167056d",
+  heroBg: "/highway-hero.jpg",
+  avatarNew: "/highway-avatar.jpg",
+  avatarExp: "/highway-avatar.jpg",
+  mobileFlow: "/highway-flow-mobile.jpg",
+  responsiveFlow: "/highway-flow-responsive.jpg",
+  websiteFlow: "/highway-flow-website.jpg",
   onboarding: "https://www.figma.com/api/mcp/asset/2cf9c5f1-e865-4306-8e5d-566c8c3e514b",
-  onboardingHome3: "https://www.figma.com/api/mcp/asset/7808b4f3-fad9-458f-989d-30bd2c2d089f",
-  otherFeatures: "https://www.figma.com/api/mcp/asset/bafad365-6219-4958-9ea4-43b44bea225b",
-  namiExchangeBanner: "https://www.figma.com/api/mcp/asset/1a721c8b-321c-4def-88bb-222bfd5ba55b",
+  onboardingHome3: "/highway-home.png",
+  otherFeatures: "/highway-features.jpg",
+  namiExchangeBanner: "/highway-nami-exchange.jpg",
   arrowSvg: "https://www.figma.com/api/mcp/asset/93665517-db9a-479c-b6b9-c4028f69aa35",
-  arrowBannerSvg: "https://www.figma.com/api/mcp/asset/2d69a7dd-8761-4fd0-ad8c-93c63f7f4f05",
+  arrowBannerSvg: "/nex-insurance-arrow.svg",
   // Desktop VI — 733-33753 (different flow diagrams + onboarding in VI)
   mobileFlowVI: "https://www.figma.com/api/mcp/asset/360b2fb2-1d77-4308-8289-6c0909fce53e",
   responsiveFlowVI: "https://www.figma.com/api/mcp/asset/c3ee1735-d620-40c7-b45d-d77c1ab71ec5",
@@ -31,13 +31,13 @@ const ASSETS = {
   heroBgMobile: "/highway-hero-mobile.jpg",
   avatarNewMobile: "https://www.figma.com/api/mcp/asset/09df8837-a20a-4180-878e-d87181896012",
   avatarExpMobile: "https://www.figma.com/api/mcp/asset/440cb1e0-e824-458e-b464-7310f09cc2fc",
-  mobileFlowMobile: "https://www.figma.com/api/mcp/asset/ba1edb3b-ec56-4553-9545-d3390422bb15",
-  responsiveFlowMobile: "https://www.figma.com/api/mcp/asset/96b8666d-94c3-4403-b32f-7cf1b2d705d8",
-  websiteFlowMobile: "https://www.figma.com/api/mcp/asset/3c8ac29a-2035-43b3-ab82-34a896857580",
+  mobileFlowMobile: "/highway-flow-mobile.jpg",
+  responsiveFlowMobile: "/highway-flow-responsive.jpg",
+  websiteFlowMobile: "/highway-flow-website.jpg",
   onboardingMobile: "https://www.figma.com/api/mcp/asset/8d94bf70-87b8-4f7d-a14c-705b7e249933",
-  otherFeaturesMobile: "https://www.figma.com/api/mcp/asset/a9fb6075-40df-4470-983a-14b871d12fa4",
-  namiExchangeBannerMobile: "https://www.figma.com/api/mcp/asset/ef18aca8-5c6f-4e54-ba0d-3aefcf52ff99",
-  arrowMobile: "https://www.figma.com/api/mcp/asset/63105b60-3616-4fe0-a500-29c562bc16d1",
+  otherFeaturesMobile: "/highway-features.jpg",
+  namiExchangeBannerMobile: "/highway-nami-exchange-mobile.jpg",
+  arrowMobile: "/nex-insurance-arrow.svg",
 };
 
 function SectionHeading({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -696,14 +696,11 @@ function NamiExchangeBanner() {
       style={{ minHeight: "clamp(180px, 16.7vw, 240px)" }}
     >
       {/* Desktop bg */}
-      <div className="hidden md:block absolute inset-0 overflow-hidden pointer-events-none">
-        <img
-          src={vi ? ASSETS.namiExchangeBannerVI : ASSETS.namiExchangeBanner}
-          alt=""
-          className="absolute w-full max-w-none top-[-182%] left-0"
-          style={{ height: "308%" }}
-        />
-      </div>
+      <img
+        src={vi ? ASSETS.namiExchangeBannerVI : ASSETS.namiExchangeBanner}
+        alt=""
+        className="hidden md:block absolute inset-0 w-full h-full object-cover pointer-events-none"
+      />
       {/* Mobile bg */}
       <img
         src={ASSETS.namiExchangeBannerMobile}
