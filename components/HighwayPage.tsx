@@ -16,7 +16,7 @@ const ASSETS = {
   otherFeatures: "/highway-features.jpg",
   namiExchangeBanner: "/highway-nami-exchange.jpg",
   arrowSvg: "/nex-insurance-arrow.svg",
-  arrowBannerSvg: "/nex-insurance-arrow.svg",
+  arrowBannerSvg: "/highway-arrow-dark.svg",
   // Desktop VI — same images as EN
   mobileFlowVI: "/highway-flow-mobile.jpg",
   responsiveFlowVI: "/highway-flow-responsive.jpg",
@@ -37,7 +37,7 @@ const ASSETS = {
   onboardingMobile: "https://www.figma.com/api/mcp/asset/8d94bf70-87b8-4f7d-a14c-705b7e249933",
   otherFeaturesMobile: "/highway-features.jpg",
   namiExchangeBannerMobile: "/highway-nami-exchange-mobile.jpg",
-  arrowMobile: "/nex-insurance-arrow.svg",
+  arrowMobile: "/highway-arrow-dark.svg",
 };
 
 function SectionHeading({ children, className = "" }: { children: React.ReactNode; className?: string }) {
