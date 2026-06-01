@@ -12,9 +12,9 @@ const ASSETS = {
   containerNamiExchange: "/work/nami-exchange.jpg",
   containerInsurance: "/work/nami-insurance.jpg",
   containerHighway: "/work/highway.jpg",
-  mobileNamiExchange: "/work/nami-exchange.jpg",
-  mobileInsurance: "/work/nami-insurance.jpg",
-  mobileHighway: "/work/highway.jpg",
+  mobileNamiExchange: "/work/nami-exchange-mobile.jpg",
+  mobileInsurance: "/work/nami-insurance-mobile.jpg",
+  mobileHighway: "/work/highway-mobile.jpg",
 };
 
 const projectsEN = [
