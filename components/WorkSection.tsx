@@ -9,18 +9,12 @@ import { useLang } from "@/contexts/LanguageContext";
 gsap.registerPlugin(ScrollTrigger);
 
 const ASSETS = {
-  containerNamiExchange:
-    "https://www.figma.com/api/mcp/asset/cdfd7fe6-2023-44b3-abb7-6514e8a9d70f",
-  containerInsurance:
-    "https://www.figma.com/api/mcp/asset/ae7b3cdf-c097-4ffe-8790-4f94315d49f6",
-  containerHighway:
-    "https://www.figma.com/api/mcp/asset/f5e69061-701f-4d9a-8eeb-3a4ea54483b1",
-  mobileNamiExchange:
-    "https://www.figma.com/api/mcp/asset/b64f17ce-2f3f-42b2-afd3-c90ab4ab1f17",
-  mobileInsurance:
-    "https://www.figma.com/api/mcp/asset/e45f26c6-1a62-4067-875b-d179e94bfe6e",
-  mobileHighway:
-    "https://www.figma.com/api/mcp/asset/e1fbe6f7-0d9e-4a62-b4ed-8f5572f65f4e",
+  containerNamiExchange: "/work/nami-exchange.jpg",
+  containerInsurance: "/work/nami-insurance.jpg",
+  containerHighway: "/work/highway.jpg",
+  mobileNamiExchange: "/work/nami-exchange.jpg",
+  mobileInsurance: "/work/nami-insurance.jpg",
+  mobileHighway: "/work/highway.jpg",
 };
 
 const projectsEN = [

@@ -8,16 +8,15 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Figma node 2022:24517 assets
 const ASSETS = {
-  f02: "https://www.figma.com/api/mcp/asset/93895430-5b57-43bc-bfb3-e41d285f0c93",
-  f04: "https://www.figma.com/api/mcp/asset/dddd06aa-4715-4ef0-b038-034ca071bce0",
-  f07: "https://www.figma.com/api/mcp/asset/70032c70-a984-4e36-b634-98d105201625",
-  f09: "https://www.figma.com/api/mcp/asset/abb89005-9326-45ec-a6ff-bb22aa205535",
-  f10: "https://www.figma.com/api/mcp/asset/86723249-9219-492a-b885-51904c1d5556",
-  f11: "https://www.figma.com/api/mcp/asset/7c1b78fa-8af9-496a-997c-10cbc7b38ee7",
-  f12: "https://www.figma.com/api/mcp/asset/cf89c484-8ab1-48d7-b59d-df160e1caa0a",
-  f06: "https://www.figma.com/api/mcp/asset/afdfd3f6-c452-461c-829d-9db6b824c0a6",
+  f02: "/hero/f02.png",
+  f04: "/hero/f04.png",
+  f06: "/hero/f06.png",
+  f07: "/hero/f07.png",
+  f09: "/hero/f09.png",
+  f10: "/hero/f10.png",
+  f11: "/hero/f11.png",
+  f12: "/hero/f12.png",
 };
 
 // Per-frame parallax depth — indices 0-11 desktop, 12-23 mobile
