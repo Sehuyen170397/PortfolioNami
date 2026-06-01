@@ -6,51 +6,51 @@ import { useLang } from "@/contexts/LanguageContext";
 
 // Desktop asset URLs (Figma MCP — expire 7 days)
 const ASSETS = {
-  heroBg: "https://www.figma.com/api/mcp/asset/4dc00ef2-41b6-45e0-b75d-8b57c7753fa1",
+  heroBg: "/nami-exchange-hero.jpg",
   heroBgMobile: "/nami-exchange-hero-mobile.jpg",
-  competitorResearch1: "https://www.figma.com/api/mcp/asset/da11db04-f405-4274-bfe4-5245d4dc8796",
-  competitorResearch2: "https://www.figma.com/api/mcp/asset/087970bd-c6dc-42b7-a88d-6ce8bcc87ae4",
-  competitorResearch3: "https://www.figma.com/api/mcp/asset/1834085c-cee3-4474-8983-17c864cf9dd3",
-  exploration1: "https://www.figma.com/api/mcp/asset/3775f8bd-355f-46db-92ec-ab3170aa67a0",
-  exploration2: "https://www.figma.com/api/mcp/asset/acdef389-aa21-4e83-b7f9-b6325d066ac2",
-  exploration3: "https://www.figma.com/api/mcp/asset/223de9c0-c90c-4e98-baa6-85a5720875bb",
-  exploration4: "https://www.figma.com/api/mcp/asset/3cbb82bc-2aa2-4794-b331-03a88f32cbcc",
-  exploration5: "https://www.figma.com/api/mcp/asset/3169e0c1-c327-4099-a96e-4414401140b3",
-  exploration6: "https://www.figma.com/api/mcp/asset/d91cc229-d93d-49bb-8fac-892403e0e64d",
-  designSystem: "https://www.figma.com/api/mcp/asset/1a5f269a-a8d1-493f-a8cf-650a4b3fba0c",
+  competitorResearch1: "/nex-onboarding.jpg",
+  competitorResearch2: "/nami-sea.jpg",
+  competitorResearch3: "/nex-research-direction.jpg",
+  exploration1: "/nex-exploration-1.jpg",
+  exploration2: "/nex-exploration-2.jpg",
+  exploration3: "/nex-exploration-3.jpg",
+  exploration4: "/nex-exploration-4.jpg",
+  exploration5: "/nex-exploration-5.jpg",
+  exploration6: "/nex-exploration-6.jpg",
+  designSystem: "/nex-design-system.jpg",
   // Before screens (old)
-  oldScreen1: "https://www.figma.com/api/mcp/asset/81a77e90-b672-43f2-971e-f5c18f626a26",
-  oldScreen2: "https://www.figma.com/api/mcp/asset/317d64fb-7a6c-49a3-a75c-c2ef5a8b2e6a",
-  oldScreen3: "https://www.figma.com/api/mcp/asset/0b1f2aee-5068-4d63-8743-cd7827458a2c",
-  oldScreen4: "https://www.figma.com/api/mcp/asset/befe006e-b574-4a9d-baab-22b54d25f49a",
-  oldScreen5: "https://www.figma.com/api/mcp/asset/fdbbbba2-9c5f-4375-a583-4037d8230c61",
+  oldScreen1: "/nex-old-1.png",
+  oldScreen2: "/nex-old-2.png",
+  oldScreen3: "/nex-old-3.png",
+  oldScreen4: "/nex-old-4.png",
+  oldScreen5: "/nex-old-5.png",
   // After screens (new)
-  newScreen1: "https://www.figma.com/api/mcp/asset/a1313654-6ef2-4acb-84a1-c4aec5914d9c",
-  newScreen2: "https://www.figma.com/api/mcp/asset/bcc80a3e-f124-47fc-ad05-a79b5b0fd041",
-  newScreen3: "https://www.figma.com/api/mcp/asset/731bb76a-0dec-4a37-9425-a05081c9403b",
-  newScreen4: "https://www.figma.com/api/mcp/asset/c04a03a1-8dd6-4f85-b1e9-40fc12f4f97f",
-  newScreen5: "https://www.figma.com/api/mcp/asset/56f7769e-8f44-4d39-be8a-fef59ff8164a",
+  newScreen1: "/nex-new-1.png",
+  newScreen2: "/nex-new-2.png",
+  newScreen3: "/nex-new-3.png",
+  newScreen4: "/nex-new-4.png",
+  newScreen5: "/nex-new-5.png",
   // Full feature flow
-  fullFeatureFlowImg: "https://www.figma.com/api/mcp/asset/0e7874e2-aa41-47ce-a20b-bc6897521a6f",
-  fullFeatureFlowFigmaIcon: "https://www.figma.com/api/mcp/asset/a77f37d6-85f2-4aac-9f67-2140723d3fa5",
-  fullFeatureFlowArrow: "https://www.figma.com/api/mcp/asset/51168c66-d635-4042-bd01-10714d3803d2",
+  fullFeatureFlowImg: "/nex-full-feature-flow.jpg",
+  fullFeatureFlowFigmaIcon: "/nex-figma-icon.svg",
+  fullFeatureFlowArrow: "/nex-arrow.svg",
   // AI - Nami Sea
-  namiSeaPhone1: "https://www.figma.com/api/mcp/asset/c87b751c-6348-4464-8831-0a53dd16ec87",
-  namiSeaPhone2: "https://www.figma.com/api/mcp/asset/453131e0-7918-49b9-bc86-fc038a937d81",
-  namiSeaPhone3: "https://www.figma.com/api/mcp/asset/08a07aa4-efa7-477a-9b93-f97700ade384",
-  namiSeaPhone4: "https://www.figma.com/api/mcp/asset/6ca24898-abdd-4ad3-aa7e-add00e6f7198",
-  namiSeaPhone5: "https://www.figma.com/api/mcp/asset/24fe1694-81e6-4e0c-b310-6b156e3ea654",
+  namiSeaPhone1: "/nami-sea-1.png",
+  namiSeaPhone2: "/nami-sea-2.png",
+  namiSeaPhone3: "/nami-sea-3.png",
+  namiSeaPhone4: "/nami-sea-4.png",
+  namiSeaPhone5: "/nami-sea-5.png",
   // New Refresh — separator arrow
-  refreshArrow: "https://www.figma.com/api/mcp/asset/9520979d-9642-4234-bc87-e8b8c76f4413",
+  refreshArrow: "/nex-svg.svg",
   // Nami Insurance banner — EN
-  namiInsuranceBg: "https://www.figma.com/api/mcp/asset/6a52d784-8410-4ff9-9c07-77d62acbb0b0",
-  namiInsuranceArrow: "https://www.figma.com/api/mcp/asset/81dbabd3-5b0e-4250-8cad-7b66ca3aeb72",
+  namiInsuranceBg: "/nex-insurance-bg.jpg",
+  namiInsuranceArrow: "/nex-insurance-arrow.svg",
   // Nami Insurance banner — VI
-  namiInsuranceBgVI: "https://www.figma.com/api/mcp/asset/4730dd0b-fe23-413c-8792-a8d38cda3eb0",
-  namiInsuranceArrowVI: "https://www.figma.com/api/mcp/asset/862f68ee-54ec-4001-a943-b020efc49d42",
+  namiInsuranceBgVI: "/nex-insurance-bg.jpg",
+  namiInsuranceArrowVI: "/nex-insurance-arrow.svg",
   // Nami Insurance banner — Mobile
-  namiInsuranceBgMobile: "https://www.figma.com/api/mcp/asset/2c293006-fa7a-4dee-9594-4a059a53a883",
-  namiInsuranceArrowMobile: "https://www.figma.com/api/mcp/asset/7ae3e4f5-f891-4a76-8376-e6351f50fd2b",
+  namiInsuranceBgMobile: "/nex-insurance-bg-mobile.jpg",
+  namiInsuranceArrowMobile: "/nex-insurance-arrow.svg",
 };
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -600,7 +600,7 @@ function NewRefreshScreens() {
       <ScreenRow screens={BEFORE_SCREENS} scrollRef={beforeRef} onScroll={syncFrom(beforeRef, afterRef)} />
       <div className="flex items-center justify-center gap-[10px] pb-3">
         <div className="rotate-90 w-9 h-9 shrink-0">
-          <img src={ASSETS.refreshArrow} alt="" className="w-full h-full object-contain" />
+          <img src={ASSETS.refreshArrow} alt="" className="w-full h-full object-contain -rotate-90" />
         </div>
         <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.33px] uppercase leading-normal">Refresh</span>
       </div>
