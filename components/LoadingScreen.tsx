@@ -23,6 +23,14 @@ export default function LoadingScreen() {
   const [exiting, setExiting] = useState(false);
   const progressRef = useRef<HTMLSpanElement>(null);
 
+  // Preload all icons immediately so transitions are smooth
+  useEffect(() => {
+    ICONS.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   const setProgressText = (p: number) => {
     if (progressRef.current) progressRef.current.textContent = `${p}%`;
   };
@@ -63,7 +71,7 @@ export default function LoadingScreen() {
     const iconInterval = setInterval(() => {
       if (done) return;
       setIconIdx((prev) => (prev + 1) % ICONS.length);
-    }, 700);
+    }, 1300);
 
     const rampToHundred = () => {
       frozenAt99 = false;
