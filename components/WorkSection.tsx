@@ -54,7 +54,7 @@ const projectsEN = [
     id: "highway",
     category: "Highway / Mobile app",
     title: "Simplifying Access to Digital Assets",
-    domain: "Crypto",
+    domain: "Blockchain",
     years: "1+",
     label: "Years partnership",
     domainLabel: "Domain",
