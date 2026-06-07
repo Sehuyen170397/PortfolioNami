@@ -80,13 +80,13 @@ function Hero() {
       ? [
           { label: "COMPANY",  value: "Nami Foundation", padCls: "pl-[40px] pr-[20px]" },
           { label: "TIME",     value: "2022 - 2024",     padCls: "px-[20px]" },
-          { label: "DOMAIN",   value: "Blockchain",      padCls: "px-[20px]" },
+          { label: "DOMAIN",   value: "Dafi Insurance",   padCls: "px-[20px]" },
           { label: "ROLE",     value: "UI/UX Designer",  padCls: "pl-[20px] pr-[40px]" },
         ]
       : [
           { label: "Công ty",    value: "Nami Foundation", padCls: "pl-[40px] pr-[20px]" },
           { label: "Thời gian",  value: "2022 - 2024",     padCls: "px-[20px]" },
-          { label: "Lĩnh vực",   value: "Blockchain",      padCls: "px-[20px]" },
+          { label: "Lĩnh vực",   value: "Dafi Insurance",  padCls: "px-[20px]" },
           { label: "Vai trò",    value: "UI/UX Designer",  padCls: "pl-[20px] pr-[40px]" },
         ];
 
