@@ -76,7 +76,7 @@ function StepContent({ step, lang }: { step: number; lang: string }) {
     );
   }
 
-  // Step 3 — "Skills / Prototyping"
+  // Step 3 — "Skills / Product thinking"
   if (step === 3) {
     return (
       <div className="flex flex-col items-center gap-0.5">
@@ -90,7 +90,7 @@ function StepContent({ step, lang }: { step: number; lang: string }) {
           className="font-inter font-semibold text-[#1f1f1f] whitespace-nowrap"
           style={{ fontSize: "clamp(30px, 5.6vw, 80px)", letterSpacing: "-2.4px" }}
         >
-          Prototyping
+          Product thinking
         </p>
       </div>
     );
@@ -601,7 +601,7 @@ export default function HeroSection() {
                     className="font-inter font-semibold text-[#1f1f1f] whitespace-nowrap"
                     style={{ fontSize: "clamp(40px, 5.6vw, 80px)", letterSpacing: "clamp(-2.4px, -0.167vw, -1px)" }}
                   >
-                    {step === 2 ? "Design system" : step === 3 ? "Prototyping" : "Visual design"}
+                    {step === 2 ? "Design system" : step === 3 ? "Product thinking" : "Visual design"}
                   </motion.p>
                 </AnimatePresence>
               </motion.div>
