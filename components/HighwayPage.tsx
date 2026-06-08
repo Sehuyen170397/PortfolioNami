@@ -6,7 +6,7 @@ import { useLang } from "@/contexts/LanguageContext";
 const ASSETS = {
   // Desktop EN — 741-35760
   heroBg: "/highway-hero.jpg",
-  avatarNew: "/highway-avatar.jpg",
+  avatarNew: "/highway-avatar-new.jpg",
   avatarExp: "/highway-avatar.jpg",
   mobileFlow: "/highway-flow-mobile.jpg",
   responsiveFlow: "/highway-flow-responsive.jpg",
@@ -25,11 +25,11 @@ const ASSETS = {
   otherFeaturesVI: "/highway-features.jpg",
   namiExchangeBannerVI: "/highway-nami-exchange.jpg",
   arrowSvgVI: "/nex-insurance-arrow.svg",
-  avatarNewVI: "/highway-avatar.jpg",
+  avatarNewVI: "/highway-avatar-new.jpg",
   avatarExpVI: "/highway-avatar.jpg",
   // Mobile — same images as EN
   heroBgMobile: "/highway-hero-mobile.jpg",
-  avatarNewMobile: "/highway-avatar.jpg",
+  avatarNewMobile: "/highway-avatar-new.jpg",
   avatarExpMobile: "/highway-avatar.jpg",
   mobileFlowMobile: "/highway-flow-mobile.jpg",
   responsiveFlowMobile: "/highway-flow-responsive.jpg",
