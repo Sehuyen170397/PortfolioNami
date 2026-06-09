@@ -618,10 +618,10 @@ const NAMI_SEA_PHONES = [
 ];
 
 const KYC_ITEMS = [
-  { caption: "Hướng dẫn chụp mặt trước CCCD", video: "https://res.cloudinary.com/diuvrdjar/video/upload/v1779431064/Screen_Recording_2026-05-08_at_11.30.36_srrr5e.mov" },
-  { caption: "Hướng dẫn chụp mặt sau CCCD",   video: "https://res.cloudinary.com/diuvrdjar/video/upload/v1779431253/Screen_Recording_2026-05-08_at_11.30.36_x1ewbn.mov" },
-  { caption: "Hướng dẫn quay gương mặt",       video: "https://res.cloudinary.com/diuvrdjar/video/upload/v1779431313/Screen_Recording_2026-05-08_at_11.30.36_dmfkgs.mov" },
-  { caption: "Thông báo chờ xét duyệt",         video: "https://res.cloudinary.com/diuvrdjar/video/upload/v1779431379/Screen_Recording_2026-05-08_at_11.30.36_rfsoke.mov" },
+  { caption: "Hướng dẫn chụp mặt trước CCCD", video: "https://gkjnlopteozotetguokw.supabase.co/storage/v1/object/sign/video%20portfolio/Screen%20Recording%202026-05-08%20at%2011.30.36-2.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mZDJhODIwNy0yYzM3LTQ2ZmEtYWMwNy1jM2E1NWFlNzMwYTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyBwb3J0Zm9saW8vU2NyZWVuIFJlY29yZGluZyAyMDI2LTA1LTA4IGF0IDExLjMwLjM2LTIubXA0IiwiaWF0IjoxNzgwOTkwMTc2LCJleHAiOjIwOTYzNTAxNzZ9.XGzFNeIQmgdoLoj-VVUJcYUQEERxrxyKLMcmU-escFo" },
+  { caption: "Hướng dẫn chụp mặt sau CCCD",   video: "https://gkjnlopteozotetguokw.supabase.co/storage/v1/object/sign/video%20portfolio/Screen%20Recording%202026-05-08%20at%2011.30.36-3.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mZDJhODIwNy0yYzM3LTQ2ZmEtYWMwNy1jM2E1NWFlNzMwYTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyBwb3J0Zm9saW8vU2NyZWVuIFJlY29yZGluZyAyMDI2LTA1LTA4IGF0IDExLjMwLjM2LTMubXA0IiwiaWF0IjoxNzgwOTkwMjI4LCJleHAiOjIwOTYzNTAyMjh9.b6xVzvRWWMoG-LzXIspR37jy0yAcUojbbo_ZXAtWoCM" },
+  { caption: "Hướng dẫn quay gương mặt",       video: "https://gkjnlopteozotetguokw.supabase.co/storage/v1/object/sign/video%20portfolio/Screen%20Recording%202026-05-08%20at%2011.30.36-4.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mZDJhODIwNy0yYzM3LTQ2ZmEtYWMwNy1jM2E1NWFlNzMwYTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyBwb3J0Zm9saW8vU2NyZWVuIFJlY29yZGluZyAyMDI2LTA1LTA4IGF0IDExLjMwLjM2LTQubXA0IiwiaWF0IjoxNzgwOTkwMjU0LCJleHAiOjIwOTYzNTAyNTR9.N73MGJu4g2jREg6BXFOtEEUU6v3E9yKJJXe83vHaTF0" },
+  { caption: "Thông báo chờ xét duyệt",         video: "https://gkjnlopteozotetguokw.supabase.co/storage/v1/object/sign/video%20portfolio/Screen%20Recording%202026-05-08%20at%2011.30.36.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mZDJhODIwNy0yYzM3LTQ2ZmEtYWMwNy1jM2E1NWFlNzMwYTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyBwb3J0Zm9saW8vU2NyZWVuIFJlY29yZGluZyAyMDI2LTA1LTA4IGF0IDExLjMwLjM2Lm1wNCIsImlhdCI6MTc4MDk5MDI4MiwiZXhwIjoyMDk2MzUwMjgyfQ.--zX_qdMPN4Cs_pUpdqduCCM_ZfxuW6I_GTdA8QoLbY" },
 ];
 
 const KEY_LEARNINGS_EN = [

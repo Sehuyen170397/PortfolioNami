@@ -571,8 +571,8 @@ function Section03() {
             style={{ gap: "5.5%" }}
           >
             {[
-              "https://res.cloudinary.com/diuvrdjar/video/upload/v1779510617/Screen_Recording_2026-05-16_at_10.32.51_keqvpw.mov",
-              "https://res.cloudinary.com/diuvrdjar/video/upload/v1779510711/Screen_Recording_2026-05-16_at_10.35.21_vcjc2b.mov",
+              "https://gkjnlopteozotetguokw.supabase.co/storage/v1/object/sign/video%20portfolio/Screen%20Recording%202026-05-16%20at%2010.32.51.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mZDJhODIwNy0yYzM3LTQ2ZmEtYWMwNy1jM2E1NWFlNzMwYTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyBwb3J0Zm9saW8vU2NyZWVuIFJlY29yZGluZyAyMDI2LTA1LTE2IGF0IDEwLjMyLjUxLm1wNCIsImlhdCI6MTc4MDk5MDM5NSwiZXhwIjoyMDk2MzUwMzk1fQ.meKVSPvspU4FVPYJ1WcBeIKVWx1Xzbz_z_iuvQE_Ubs",
+              "https://gkjnlopteozotetguokw.supabase.co/storage/v1/object/sign/video%20portfolio/Screen%20Recording%202026-05-16%20at%2010.35.21.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mZDJhODIwNy0yYzM3LTQ2ZmEtYWMwNy1jM2E1NWFlNzMwYTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyBwb3J0Zm9saW8vU2NyZWVuIFJlY29yZGluZyAyMDI2LTA1LTE2IGF0IDEwLjM1LjIxLm1wNCIsImlhdCI6MTc4MDk5MDQyMCwiZXhwIjoyMDk2MzUwNDIwfQ.FvsXQ2uEZFEX2PRRNPQS0gKPLiZkoBrUVBlcu9JQE0c",
             ].map((src) => (
               <video
                 key={src}
@@ -596,8 +596,8 @@ function Section03() {
         {/* Mobile onboarding container */}
         <div className="md:hidden bg-black rounded-[56px] overflow-hidden pt-5 pb-5 flex flex-col items-center gap-6">
           {[
-            "https://res.cloudinary.com/diuvrdjar/video/upload/v1779510617/Screen_Recording_2026-05-16_at_10.32.51_keqvpw.mov",
-            "https://res.cloudinary.com/diuvrdjar/video/upload/v1779510711/Screen_Recording_2026-05-16_at_10.35.21_vcjc2b.mov",
+            "https://gkjnlopteozotetguokw.supabase.co/storage/v1/object/sign/video%20portfolio/Screen%20Recording%202026-05-16%20at%2010.32.51.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mZDJhODIwNy0yYzM3LTQ2ZmEtYWMwNy1jM2E1NWFlNzMwYTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyBwb3J0Zm9saW8vU2NyZWVuIFJlY29yZGluZyAyMDI2LTA1LTE2IGF0IDEwLjMyLjUxLm1wNCIsImlhdCI6MTc4MDk5MDM5NSwiZXhwIjoyMDk2MzUwMzk1fQ.meKVSPvspU4FVPYJ1WcBeIKVWx1Xzbz_z_iuvQE_Ubs",
+            "https://gkjnlopteozotetguokw.supabase.co/storage/v1/object/sign/video%20portfolio/Screen%20Recording%202026-05-16%20at%2010.35.21.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mZDJhODIwNy0yYzM3LTQ2ZmEtYWMwNy1jM2E1NWFlNzMwYTciLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlbyBwb3J0Zm9saW8vU2NyZWVuIFJlY29yZGluZyAyMDI2LTA1LTE2IGF0IDEwLjM1LjIxLm1wNCIsImlhdCI6MTc4MDk5MDQyMCwiZXhwIjoyMDk2MzUwNDIwfQ.FvsXQ2uEZFEX2PRRNPQS0gKPLiZkoBrUVBlcu9JQE0c",
           ].map((src) => (
             <video
               key={src}
