@@ -259,6 +259,20 @@ export default function HeroSection() {
         transition={{ duration: 1.0, delay: 0.05, ease: [0.76, 0, 0.24, 1] }}
       />
 
+      {/* ── Hero gradient background ── */}
+      <img
+        src="/hero/bg-desktop.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none md:block hidden"
+      />
+      <img
+        src="/hero/bg-mobile.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none md:hidden block"
+      />
+
       {/* ── All floating frames — fades out on scroll ── */}
       <div ref={framesRef} className="absolute inset-0 pointer-events-none">
 
@@ -266,7 +280,7 @@ export default function HeroSection() {
       <div
         ref={setParallaxRef(0)}
         className="absolute pointer-events-none max-md:hidden group"
-        style={{ left: 424, top: -172, width: 246, height: 418 }}
+        style={{ left: 464, top: -172, width: 246, height: 418 }}
       >
         <div ref={setFloatRef(0)}>
           <div
