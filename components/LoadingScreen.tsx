@@ -221,18 +221,15 @@ export default function LoadingScreen() {
 
           {/* Tagline */}
           <div className="text-center px-4 md:px-0" style={{ lineHeight: 1.75 }}>
-            <p className="m-0 text-[15px] md:text-[24px]">
-              <span className="font-inter font-light text-[#1f1f1f]">
-                This website was built with
-              </span>
-              <span className="hidden md:inline font-inter font-light text-[#1f1f1f]">{" "}</span>
-              <br className="md:hidden" />
+            <p className="m-0 font-inter font-light text-[#1f1f1f] text-[15px] md:text-[24px]">
+              {"Powered by "}
               <span className="font-playfair italic font-medium text-[#1f1f1f]">
-                Claude Code, Figma MCP
+                Claude Code and Figma MCP
               </span>
+              {"."}
             </p>
             <p className="m-0 font-inter font-light text-[#1f1f1f] text-[15px] md:text-[24px]">
-              and ... crafted entirely by myself.
+              Designed, refined, and crafted entirely by myself.
             </p>
           </div>
         </div>
