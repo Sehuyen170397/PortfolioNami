@@ -121,7 +121,7 @@ const projectsVI = [
 
 function ArrowUpRight({ color = "currentColor" }: { color?: string }) {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
       <path
         d="M5 15L15 5M15 5H7M15 5v8"
         stroke={color}
