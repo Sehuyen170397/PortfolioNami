@@ -60,6 +60,21 @@ body {
 
 /* Gradient border via ::before pseudo-element.
    Set --gb to the desired gradient on the element. */
+/* Arrow bounce on button hover */
+.arrow-bounce {
+  display: inline-flex;
+}
+.group\/btn:hover .arrow-bounce {
+  animation: nudge-tr 0.45s ease-in-out 1 forwards;
+}
+@keyframes nudge-tr {
+  0%, 100% { transform: translate(0, 0); }
+  40%       { transform: translate(2.5px, -2.5px); }
+  70%       { transform: translate(1px, -1px); }
+}
+
+/* Gradient border via ::before pseudo-element.
+   Set --gb to the desired gradient on the element. */
 .gradient-border {
   position: relative;
 }

@@ -363,6 +363,32 @@ function Section01() {
         { bold: "Pain Points: ", normal: "Lack of official and compliant fiat on-ramp channels, forcing users to rely on expensive and less transparent alternatives" },
       ];
 
+  const focusOnItems: { title: string; body: string }[] = vi
+    ? [
+        { title: "Niềm tin & Bảo mật", body: `Số liệu phải hiển thị rõ ràng và minh bạch (volume, số lượng user, lợi nhuận) ngay những màn hình đầu tiên. Các thông tin phí liệt kê đầy đủ để tăng độ minh bạch. Phương thức "Chat with support" dễ kiếm và hiển thị ở các màn hình giao dịch. Lịch sử giao dịch đầy đủ chi tiết và rõ ràng để tăng độ tin cậy.` },
+        { title: "Ưu tiên mobile app, tốc độ xử lý nhanh", body: "Số bước giao dịch càng ít càng tốt, mỗi bước thêm là tỷ lệ drop tăng. Chart load nên chỉ dưới 1 giây để người dùng không chờ lâu. Dùng bottom navigation bar, không dùng hamburger menu ẩn để tối ưu trải nghiệm trên mobile." },
+        { title: "Yếu tố cộng đồng", body: "Referral flow đơn giản với reward hiển thị rõ ràng. Share PnL nhanh, nên chỉ 1 tap để chia sẻ giao dịch lên mạng xã hội. Sản phẩm mới nên cần ưu tiên dễ kiếm flow đăng ký trở thành đối tác." },
+      ]
+    : [
+        { title: "Trust & Security", body: "Key metrics such as trading volume, user count, and profitability should be visible from the very first screen. Fee information must be listed in full to increase transparency. The 'Chat with support' option should be easy to find and visible on transaction screens. Transaction history should be detailed and clear to build user trust." },
+        { title: "Mobile-First & Fast Execution", body: "The fewer steps required to complete a transaction, the better — each additional step increases drop-off rates. Charts should load in under one second. Use a bottom navigation bar instead of a hidden hamburger menu to optimize the mobile experience." },
+        { title: "Community", body: "Referral flows should be simple, with rewards clearly displayed. Share PnL quickly — ideally a single tap to share trades on social media. As a new product, prioritize making the partner sign-up flow easy to discover." },
+      ];
+
+  const avoidItems: { title: string; body: string }[] = vi
+    ? [
+        { title: "Onboarding phức tạp", body: "Người dùng sẽ bỏ nếu không thể thực hiện giao dịch đầu tiên trong vòng 2 phút. Mỗi bước KYC hoặc xác minh bổ sung cần được justify rõ ràng với người dùng." },
+        { title: "Thiếu minh bạch về phí và dữ liệu", body: "Ẩn phí hoặc hiển thị thông tin không đầy đủ là cách nhanh nhất để mất niềm tin từ user, đây là yếu tố quan tâm số #1 từ người dùng. Một khi niềm tin mất, rất khó lấy lại." },
+        { title: "UX writing dài dòng", body: `Ngôn từ dù ngắn nhưng phải chú ý nghĩa mỗi từ phải có giá trị. Tránh modal popup với nhiều đoạn nội dung, tránh tooltip quá chi tiết, tránh onboarding tutorial nhiều bước (Nên có nút "Bỏ qua").` },
+        { title: "Thiếu yếu tố xã hội", body: "80.5% người dùng bị ảnh hưởng bởi bạn bè và người khác trên mạng xã hội, đặc biệt là các hội nhóm trên Zalo, Telegram, Facebook. Một sản phẩm thiếu tính xã hội sẽ mất đi tính thu hút và giữ chân người dùng mạnh nhất. Đây không phải feature nice-to-have mà bắt buộc phải có." },
+      ]
+    : [
+        { title: "Complex Onboarding", body: "Users are likely to abandon the product if they cannot complete their first transaction within two minutes. Each KYC step or additional verification needs to be clearly justified to the user." },
+        { title: "Lack of Fee & Data Transparency", body: "Hidden fees or incomplete information are the fastest ways to lose user trust — this is the #1 concern for users. Once trust is lost, it is very difficult to regain." },
+        { title: "Overly Verbose UX Writing", body: `Content should be concise and every word must carry value. Avoid modals with multiple paragraphs, overly detailed tooltips, and multi-step onboarding tutorials (always include a "Skip" button).` },
+        { title: "Lack of Social Features", body: "Over 80% of users are influenced by friends and others on social media, especially communities on Zalo, Telegram, and Facebook. A product without social features loses its strongest retention and growth mechanism. This is not a nice-to-have — it's a must." },
+      ];
+
   return (
     <section className="px-[120px] py-[100px] max-md:px-6 max-md:py-[48px] w-full">
       <div className="flex flex-col gap-12 max-md:gap-10">
@@ -410,6 +436,49 @@ function Section01() {
               items={expUserItems}
             />
           </div>
+        </motion.div>
+
+        {/* Focus On */}
+        <motion.div {...fadeUp(0.15)} className="flex flex-col gap-6">
+          <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.88px] uppercase leading-normal">
+            {vi ? "🎯 Thiết kế cần tập trung gì?" : "🎯 What Should the Design Focus On?"}
+          </span>
+          <div className="flex flex-col">
+            {focusOnItems.map((item, i) => (
+              <div key={i} className="flex items-start gap-6 border-b border-[rgba(0,0,0,0.1)] py-5">
+                <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.88px] w-7 shrink-0 pt-[3px]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="flex flex-col gap-1 flex-1 min-w-0">
+                  <span className="font-inter font-bold text-[17px] text-[#1f1f1f] leading-normal">{item.title}</span>
+                  <span className="font-inter font-normal text-[14px] text-[#666] leading-[1.65]">{item.body}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Avoid */}
+        <motion.div {...fadeUp(0.2)} className="flex flex-col gap-6">
+          <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.88px] uppercase leading-normal">
+            {vi ? "🚫 Cần tránh gì?" : "🚫 What Should Be Avoided?"}
+          </span>
+          <div className="flex flex-col">
+            {avoidItems.map((item, i) => (
+              <div key={i} className="flex items-start gap-6 border-b border-[rgba(0,0,0,0.1)] py-5">
+                <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.88px] w-7 shrink-0 pt-[3px]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="flex flex-col gap-1 flex-1 min-w-0">
+                  <span className="font-inter font-bold text-[17px] text-[#1f1f1f] leading-normal">{item.title}</span>
+                  <span className="font-inter font-normal text-[14px] text-[#666] leading-[1.65]">{item.body}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="font-inter font-normal italic text-[14px] text-[#1f1f1f] tracking-[-0.14px] leading-[1.6] m-0">
+            {vi ? "Nội dung nghiên cứu & phân tích có sự hỗ trợ từ AI" : "Research and analysis supported by AI tools."}
+          </p>
         </motion.div>
       </div>
     </section>
@@ -716,7 +785,7 @@ function NamiExchangeBanner() {
             : "Digital Asset Exchange Platform with Spot, Futures, and Auto-Invest Products"}
         </h3>
         <div
-          className="flex items-center gap-4 rounded-full px-6 py-2 shrink-0 backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
+          className="group/btn flex items-center gap-4 rounded-full px-6 py-2 shrink-0 backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
           style={{
             background: "linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04))",
             boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2)",
@@ -725,7 +794,7 @@ function NamiExchangeBanner() {
           <span className="font-inter font-semibold text-[24px] text-[#1f1f1f]">
             {vi ? "Xem dự án" : "View project"}
           </span>
-          <img src={ASSETS.arrowBannerSvg} alt="" className="w-5 h-5 object-contain" />
+          <span className="arrow-bounce"><img src={ASSETS.arrowBannerSvg} alt="" className="w-5 h-5 object-contain" /></span>
         </div>
       </div>
 
@@ -737,7 +806,7 @@ function NamiExchangeBanner() {
             : "Digital Asset Exchange Platform with Spot, Futures, and Auto-Invest Products"}
         </h3>
         <div
-          className="flex items-center gap-4 rounded-full px-6 py-2 w-fit backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
+          className="group/btn flex items-center gap-4 rounded-full px-6 py-2 w-fit backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
           style={{
             background: "linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04))",
             boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2)",
@@ -746,7 +815,7 @@ function NamiExchangeBanner() {
           <span className="font-inter font-semibold text-[20px] text-[#1f1f1f]">
             {vi ? "Xem dự án" : "View project"}
           </span>
-          <img src={ASSETS.arrowMobile} alt="" className="w-5 h-5 object-contain" />
+          <span className="arrow-bounce"><img src={ASSETS.arrowMobile} alt="" className="w-5 h-5 object-contain" /></span>
         </div>
       </div>
     </a>

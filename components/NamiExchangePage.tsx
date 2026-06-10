@@ -767,13 +767,13 @@ function DesignProcess() {
             href="https://www.figma.com/design/aDrKevKe3WoEW0H2K0rwSX/2.0-KYC_WIP?node-id=660-27854&t=nE2tyDa8y78VkaSg-4"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-[7px] h-8 px-[13px] py-2 rounded-full transition-all duration-300 backdrop-blur-md bg-[rgba(255,255,255,0.55)] border border-[rgba(0,0,0,0.08)] shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.85),inset_-1px_-1px_1px_rgba(0,0,0,0.08),0px_4px_16px_rgba(0,0,0,0.08)] hover:bg-[rgba(255,255,255,0.75)] hover:shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.9),inset_-1px_-1px_1px_rgba(0,0,0,0.06),0px_6px_20px_rgba(0,0,0,0.1)]"
+            className="group/btn flex items-center gap-[7px] h-8 px-[13px] py-2 rounded-full transition-all duration-300 backdrop-blur-md bg-[rgba(255,255,255,0.55)] border border-[rgba(0,0,0,0.08)] shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.85),inset_-1px_-1px_1px_rgba(0,0,0,0.08),0px_4px_16px_rgba(0,0,0,0.08)] hover:bg-[rgba(255,255,255,0.75)] hover:shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.9),inset_-1px_-1px_1px_rgba(0,0,0,0.06),0px_6px_20px_rgba(0,0,0,0.1)]"
           >
             <img src={ASSETS.fullFeatureFlowFigmaIcon} alt="" className="w-[10px] h-[15px] object-contain" />
             <span className="font-inter font-normal text-[11px] text-[#1f1f1f] uppercase">
               {vi ? "Khám phá với Figma" : "Explore in Figma"}
             </span>
-            <img src={ASSETS.fullFeatureFlowArrow} alt="" className="w-[18px] h-[18px] object-contain" />
+            <span className="arrow-bounce"><img src={ASSETS.fullFeatureFlowArrow} alt="" className="w-[18px] h-[18px] object-contain" /></span>
           </a>
         </div>
         <div className="border border-[rgba(0,0,0,0.08)] rounded-[16px] overflow-hidden w-full">
@@ -877,14 +877,14 @@ function NamiInsuranceBanner() {
           {vi ? "Giải pháp tài chính phi tập trung, linh hoạt" : "Decentralize, adaptability, Financial"}
         </h3>
         <div
-          className="flex items-center gap-4 rounded-full px-6 py-2 shrink-0 backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
+          className="group/btn flex items-center gap-4 rounded-full px-6 py-2 shrink-0 backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
           style={{
             background: "linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04))",
             boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2)",
           }}
         >
           <span className="font-inter font-semibold text-[24px] text-white">{vi ? "Xem dự án" : "View project"}</span>
-          <img src={vi ? ASSETS.namiInsuranceArrowVI : ASSETS.namiInsuranceArrow} alt="" className="w-5 h-5 object-contain" />
+          <span className="arrow-bounce"><img src={vi ? ASSETS.namiInsuranceArrowVI : ASSETS.namiInsuranceArrow} alt="" className="w-5 h-5 object-contain" /></span>
         </div>
       </div>
 
@@ -894,11 +894,11 @@ function NamiInsuranceBanner() {
           {vi ? "Giải pháp tài chính phi tập trung, linh hoạt" : "Decentralize, adaptability, Financial"}
         </h3>
         <div
-          className="flex items-center gap-4 rounded-full px-6 py-2 w-fit backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
+          className="group/btn flex items-center gap-4 rounded-full px-6 py-2 w-fit backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
           style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04))", boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2)" }}
         >
           <span className="font-inter font-semibold text-[20px] text-white">{vi ? "Xem dự án" : "View project"}</span>
-          <img src={ASSETS.namiInsuranceArrowMobile} alt="" className="w-5 h-5 object-contain" />
+          <span className="arrow-bounce"><img src={ASSETS.namiInsuranceArrowMobile} alt="" className="w-5 h-5 object-contain" /></span>
         </div>
       </div>
     </a>

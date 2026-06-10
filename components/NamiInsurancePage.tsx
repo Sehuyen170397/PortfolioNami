@@ -446,14 +446,14 @@ function HighwayBanner() {
           {vi ? "Sở hữu tài sản số trở nên dễ dàng hơn" : "Simplifying Digital Asset Ownership"}
         </h3>
         <div
-          className="flex items-center gap-4 rounded-full px-6 py-2 shrink-0 backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
+          className="group/btn flex items-center gap-4 rounded-full px-6 py-2 shrink-0 backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
           style={{
             background: "linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04))",
             boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2)",
           }}
         >
           <span className="font-inter font-semibold text-[24px] text-white">{vi ? "Xem dự án" : "View project"}</span>
-          <img src={vi ? ASSETS.arrowVI : ASSETS.arrow} alt="" className="w-5 h-5 object-contain" />
+          <span className="arrow-bounce"><img src={vi ? ASSETS.arrowVI : ASSETS.arrow} alt="" className="w-5 h-5 object-contain" /></span>
         </div>
       </div>
 
@@ -462,14 +462,14 @@ function HighwayBanner() {
           {vi ? "Sở hữu tài sản số trở nên dễ dàng hơn" : "Simplifying Digital Asset Ownership"}
         </h3>
         <div
-          className="flex items-center gap-4 rounded-full px-6 py-2 w-fit backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
+          className="group/btn flex items-center gap-4 rounded-full px-6 py-2 w-fit backdrop-blur-[24px] border border-[rgba(255,255,255,0.12)] hover:opacity-80 transition-opacity"
           style={{
             background: "linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04))",
             boxShadow: "0 8px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2)",
           }}
         >
           <span className="font-inter font-semibold text-[20px] text-white">{vi ? "Xem dự án" : "View project"}</span>
-          <img src={ASSETS.arrowMobile} alt="" className="w-5 h-5 object-contain" />
+          <span className="arrow-bounce"><img src={ASSETS.arrowMobile} alt="" className="w-5 h-5 object-contain" /></span>
         </div>
       </div>
     </a>
