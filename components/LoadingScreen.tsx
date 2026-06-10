@@ -176,11 +176,11 @@ export default function LoadingScreen() {
         animate={exiting ? { opacity: 0 } : { opacity: 1 }}
         transition={{ duration: 0.2 }}
       >
-        <div className="flex flex-col items-center gap-[60px] md:gap-[80px]">
+        <div className="flex flex-col items-center gap-[60px] md:gap-[80px] w-full px-6">
           {/* Percentage */}
           <span
             ref={progressRef}
-            className="font-inter font-light text-[#1f1f1f] leading-normal text-[15px] md:text-[24px] text-center"
+            className="font-inter font-light text-[#1f1f1f] leading-normal text-[15px] md:text-[24px] text-center block w-full"
           >
             0%
           </span>
