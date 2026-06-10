@@ -70,6 +70,13 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
   // On non-home pages prefix hash with "/" so the browser navigates home then scrolls
   const sh = (hash: string) => isHome ? hash : `/${hash}`;
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isHome) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   // Dark hero: white text when unscrolled on pages with dark backgrounds
   const isDark = variant === "dark" && !scrolled;
   // For mobile: revert to dark when menu is open (bg becomes glassy white)
@@ -124,6 +131,7 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
         >
           <a
             href="/"
+            onClick={handleLogoClick}
             className={`font-playfair italic font-semibold text-[20px] tracking-[-0.3px] leading-normal transition-colors ${isDark ? "text-[#fafafa]" : "text-[#1f1f1f]"}`}
           >
             Truyen
@@ -206,6 +214,7 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
           <div className="flex items-center justify-between w-full">
             <a
               href="/"
+              onClick={handleLogoClick}
               className={`font-playfair italic font-semibold text-[15px] tracking-[-0.3px] transition-colors ${isMobileDark ? "text-[#fafafa]" : "text-[#1f1f1f]"}`}
             >
               Truyen
