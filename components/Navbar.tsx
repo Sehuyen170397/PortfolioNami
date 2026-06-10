@@ -143,10 +143,10 @@ export default function Navbar({ variant }: { variant?: "dark" }) {
             </div>
             <button
               onClick={toggleLang}
-              className={`rounded-full h-8 flex items-center gap-[7px] px-4 py-2 backdrop-blur-[8px] transition-colors cursor-pointer border ${
+              className={`rounded-full h-8 flex items-center gap-[7px] px-4 py-2 backdrop-blur-md transition-all duration-300 cursor-pointer border ${
                 isDark
-                  ? "border-[rgba(255,255,255,0.2)] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(255,255,255,0.2)]"
-                  : "border-[rgba(0,0,0,0.1)] bg-[rgba(255,255,255,0.1)] hover:bg-[rgba(0,0,0,0.08)]"
+                  ? "border-[rgba(255,255,255,0.2)] bg-[rgba(255,255,255,0.12)] shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.25),inset_-1px_-1px_1px_rgba(0,0,0,0.2),0px_4px_16px_rgba(0,0,0,0.2)] hover:bg-[rgba(255,255,255,0.22)] hover:shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.3),inset_-1px_-1px_1px_rgba(0,0,0,0.15),0px_6px_20px_rgba(0,0,0,0.25)]"
+                  : "border-[rgba(0,0,0,0.08)] bg-[rgba(255,255,255,0.55)] shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.85),inset_-1px_-1px_1px_rgba(0,0,0,0.08),0px_4px_16px_rgba(0,0,0,0.08)] hover:bg-[rgba(255,255,255,0.75)] hover:shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.9),inset_-1px_-1px_1px_rgba(0,0,0,0.06),0px_6px_20px_rgba(0,0,0,0.1)]"
               }`}
             >
               <span className={`font-inter text-[11px] ${lang === "en" ? "font-semibold" : "font-normal"} ${isDark ? (lang === "en" ? "text-[#fafafa]" : "text-[#adadad]") : (lang === "en" ? "text-[#1f1f1f]" : "text-[#666]")}`}>EN</span>

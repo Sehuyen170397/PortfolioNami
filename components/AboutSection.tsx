@@ -201,7 +201,7 @@ export default function AboutSection() {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-[7px] border border-[rgba(0,0,0,0.2)] bg-[rgba(255,255,255,0.1)] rounded-full h-8 px-[13px] py-2 w-fit hover:bg-[rgba(0,0,0,0.05)] transition-colors mt-2"
+            className="flex items-center gap-[7px] rounded-full h-8 px-[13px] py-2 w-fit mt-2 transition-all duration-300 backdrop-blur-md bg-[rgba(255,255,255,0.55)] border border-[rgba(0,0,0,0.08)] shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.85),inset_-1px_-1px_1px_rgba(0,0,0,0.08),0px_4px_16px_rgba(0,0,0,0.08)] hover:bg-[rgba(255,255,255,0.75)] hover:shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.9),inset_-1px_-1px_1px_rgba(0,0,0,0.06),0px_6px_20px_rgba(0,0,0,0.1)]"
           >
             <span className="font-inter font-normal text-[11px] text-[#1f1f1f] uppercase">
               {lang === "en" ? "View CV" : "Ghé xem CV"}
@@ -281,7 +281,7 @@ export default function AboutSection() {
               {skills.map((skill) => (
                 <span
                   key={skill}
-                  className="border border-[rgba(0,0,0,0.1)] rounded-full px-[15px] py-[7px] font-inter font-normal text-[11px] text-[#666] leading-[15.4px]"
+                  className="border border-[rgba(0,0,0,0.08)] rounded-full px-[15px] py-[7px] font-inter font-normal text-[11px] text-[#666] leading-[15.4px]"
                 >
                   {skill}
                 </span>

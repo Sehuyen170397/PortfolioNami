@@ -146,8 +146,10 @@ export default function ContactSection() {
                   {/* Let's talk pill — color transitions on group hover */}
                   <span
                     className="flex items-center gap-2 rounded-full px-6 py-[7px] flex-shrink-0
-                      bg-white group-hover:bg-[#37c473]
-                      transition-colors duration-300"
+                      backdrop-blur-md bg-[rgba(255,255,255,0.55)] border border-[rgba(0,0,0,0.08)]
+                      shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.85),inset_-1px_-1px_1px_rgba(0,0,0,0.08),0px_4px_16px_rgba(0,0,0,0.08)]
+                      group-hover:bg-[#37c473] group-hover:border-[#37c473] group-hover:shadow-none
+                      transition-all duration-300"
                   >
                     <span
                       className="font-inter font-semibold text-[32px] tracking-[-1px] leading-none
@@ -194,8 +196,10 @@ export default function ContactSection() {
                     {lang === "en" ? "Ready to contact?" : "Sẵn sàng kết nối?"}
                   </span>
                   <span
-                    className={`flex items-center gap-2 rounded-full px-4 py-[7px] flex-shrink-0 transition-colors duration-200 ${
-                      mobilePressing ? "bg-[#37c473]" : "bg-white"
+                    className={`flex items-center gap-2 rounded-full px-4 py-[7px] flex-shrink-0 backdrop-blur-md border transition-all duration-200 ${
+                      mobilePressing
+                        ? "bg-[#37c473] border-[#37c473] shadow-none"
+                        : "bg-[rgba(255,255,255,0.55)] border-[rgba(0,0,0,0.08)] shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.85),inset_-1px_-1px_1px_rgba(0,0,0,0.08),0px_4px_16px_rgba(0,0,0,0.08)]"
                     }`}
                   >
                     <span className={`font-inter font-semibold text-[24px] tracking-[-1px] leading-none transition-colors duration-200 ${

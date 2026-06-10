@@ -174,7 +174,7 @@ function Hero() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-        className="relative backdrop-blur-[8px] bg-[rgba(255,255,255,0.4)] border border-[rgba(255,255,255,0.7)] rounded-[200px] p-px flex overflow-hidden w-fit max-w-[800px] max-md:rounded-[20px] max-md:grid max-md:grid-cols-2 max-md:w-full max-md:max-w-full"
+        className="relative backdrop-blur-[8px] bg-[rgba(255,255,255,0.4)] border border-[rgba(0,0,0,0.08)] rounded-[200px] p-px flex overflow-hidden w-fit max-w-[800px] max-md:rounded-[20px] max-md:grid max-md:grid-cols-2 max-md:w-full max-md:max-w-full"
       >
         {stats.map((item) => (
           <div
@@ -449,7 +449,7 @@ function Research() {
       </motion.div>
 
       <motion.div {...fadeUp(0.1)} className="max-w-[640px] pt-5">
-        <div className="bg-[#f2f2f2] border border-[rgba(0,0,0,0.1)] rounded-[12px] overflow-hidden">
+        <div className="bg-[#f2f2f2] border border-[rgba(0,0,0,0.08)] rounded-[12px] overflow-hidden">
           <img src={ASSETS.competitorResearch3} alt="Research direction" className="w-full object-contain" />
         </div>
       </motion.div>
@@ -708,7 +708,7 @@ function DesignProcess() {
         <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.33px] uppercase leading-normal">
           {vi ? "Cập nhật Design System" : "New Design System"}
         </span>
-        <div className="bg-[#f2f2f2] border border-[rgba(0,0,0,0.1)] rounded-[32px] max-md:rounded-[11px] overflow-hidden">
+        <div className="bg-[#f2f2f2] border border-[rgba(0,0,0,0.08)] rounded-[32px] max-md:rounded-[11px] overflow-hidden">
           <img src={ASSETS.designSystem} alt="Design system colour updates" className="w-full object-contain" style={{ maxHeight: 676 }} />
         </div>
         <div className="flex flex-col gap-[6px] max-w-[640px]">
@@ -767,7 +767,7 @@ function DesignProcess() {
             href="https://www.figma.com/design/aDrKevKe3WoEW0H2K0rwSX/2.0-KYC_WIP?node-id=660-27854&t=nE2tyDa8y78VkaSg-4"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-[7px] h-8 px-[13px] py-2 border border-[rgba(0,0,0,0.1)] rounded-full bg-transparent hover:bg-[rgba(0,0,0,0.05)] transition-colors"
+            className="flex items-center gap-[7px] h-8 px-[13px] py-2 rounded-full transition-all duration-300 backdrop-blur-md bg-[rgba(255,255,255,0.55)] border border-[rgba(0,0,0,0.08)] shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.85),inset_-1px_-1px_1px_rgba(0,0,0,0.08),0px_4px_16px_rgba(0,0,0,0.08)] hover:bg-[rgba(255,255,255,0.75)] hover:shadow-[inset_1px_1.5px_1.5px_rgba(255,255,255,0.9),inset_-1px_-1px_1px_rgba(0,0,0,0.06),0px_6px_20px_rgba(0,0,0,0.1)]"
           >
             <img src={ASSETS.fullFeatureFlowFigmaIcon} alt="" className="w-[10px] h-[15px] object-contain" />
             <span className="font-inter font-normal text-[11px] text-[#1f1f1f] uppercase">
@@ -776,7 +776,7 @@ function DesignProcess() {
             <img src={ASSETS.fullFeatureFlowArrow} alt="" className="w-[18px] h-[18px] object-contain" />
           </a>
         </div>
-        <div className="border border-[rgba(0,0,0,0.1)] rounded-[16px] overflow-hidden w-full">
+        <div className="border border-[rgba(0,0,0,0.08)] rounded-[16px] overflow-hidden w-full">
           <img src={ASSETS.fullFeatureFlowImg} alt="Full feature flow" className="w-full object-cover" style={{ aspectRatio: "1198/866" }} />
         </div>
       </motion.div>
