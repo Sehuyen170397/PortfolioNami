@@ -405,9 +405,14 @@ function Section01() {
 
         {/* Stats cards */}
         <motion.div {...fadeUp(0.05)} className="flex flex-col gap-3">
-          <span className="font-inter font-bold text-[11px] text-[#666] tracking-[0.88px] uppercase leading-normal">
+          <a
+            href="https://coin68.com/Market-Report-2024-VIE.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-inter font-bold text-[11px] text-[#666] tracking-[0.88px] uppercase leading-normal underline underline-offset-2 hover:text-[#1f1f1f] transition-colors w-fit"
+          >
             {vi ? "Báo cáo thị trường Crypto Việt Nam 2024 từ Coin68" : "Vietnam Crypto Market Report 2024 — Coin68"}
-          </span>
+          </a>
           <div className="flex flex-wrap content-start gap-3 max-md:gap-2 pt-5">
             {statCards.map((card, i) => (
               <StatCardEl key={i} card={card} />
