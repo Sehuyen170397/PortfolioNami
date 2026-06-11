@@ -141,7 +141,7 @@ export default function ContactSection() {
                     className="font-playfair font-medium italic text-[#1f1f1f] whitespace-nowrap select-none"
                     style={{ fontSize: "clamp(32px, 4vw, 60px)" }}
                   >
-                    {lang === "en" ? "Ready to get in touch?" : "Sẵn sàng kết nối chưa?"}
+                    {lang === "en" ? "Ready to get in touch?" : "Sẵn sàng kết nối chứ?"}
                   </span>
                   {/* Let's talk pill — color transitions on group hover */}
                   <span
