@@ -131,17 +131,17 @@ function StepContent({ step, lang }: { step: number; lang: string }) {
 
   // Step 6 — final "Welcome!" + bio (resting state)
   return (
-    <div className="flex flex-col items-center gap-[10px] w-[460px] max-md:w-full max-md:px-6">
+    <div className="flex flex-col items-center gap-[10px] w-[520px] max-md:w-full max-md:px-6">
       <h1
         className="font-playfair font-medium italic text-[#1f1f1f] tracking-[-1px] leading-normal whitespace-nowrap"
         style={{ fontSize: "clamp(48px, 6.5vw, 100px)" }}
       >
-        {vi ? "Xin chào!" : "Welcome!"}
+        {vi ? "Thâú hiểu" : "Purpose"}
       </h1>
       <p className="font-inter font-light text-[15px] text-[#666] text-center leading-[24px]">
         {vi
-          ? `Lớn lên ở Vũng Tàu, hiện đang "đóng đô" tại TP.HCM. Mình có hơn 3 năm làm việc trong crypto, fintech và bảo hiểm, cùng 4+ năm "lăn lộn" trong ngành thiết kế, từ graphic design đến UX/UI.`
-          : "Vung Tau raised, Ho Chi Minh based. I have over three years of experience in crypto, fintech, and insurance. More than four years in design industry include graphic design."}
+          ? "Mình tin rằng những sản phẩm thành công được tạo nên từ sự cân bằng giữa UX và UI, với người dùng luôn là trọng tâm. Với tinh thần trách nhiệm, khả năng hợp tác và niềm đam mê giải quyết vấn đề, mình mong muốn tạo ra những sản phẩm mang trải nghiệm tốt."
+          : "I believe successful products are created by balancing User Experience and User Interface through a user-centered approach. With a passion for solving problems and collaborating with others, I strive to design products that are intuitive, meaningful, and enjoyable to use."}
       </p>
     </div>
   );
